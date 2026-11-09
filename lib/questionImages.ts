@@ -60,7 +60,8 @@ export const VERIFIED_IMAGES: Record<string, string> = {
   jun_ji_hyun: "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Jun_Ji-hyun_in_April_2026.png/330px-Jun_Ji-hyun_in_April_2026.png",
   lee_min_ho: "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5a/TIFF-2026-THE-ASSASSINS-LEE-MIN-HO-02.png/330px-TIFF-2026-THE-ASSASSINS-LEE-MIN-HO-02.png",
   seoul_tower: "https://thumb.wikimedia.org/wikipedia/en/thumb/a/a6/NamsanTower_%28Cropped%29.jpeg/330px-NamsanTower_%28Cropped%29.jpeg",
-  son_tung: "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png",
+  son_tung: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&q=80",
+  buc_tuong: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80",
   trinh_cong_son: "https://upload.wikimedia.org/wikipedia/vi/5/5b/Trinhcongson.jpg",
   microphone: "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Shure_mikrofon_55S.jpg/330px-Shure_mikrofon_55S.jpg",
   blackpink: "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/18/20240809_Blackpink_Pink_Carpet_09.png/330px-20240809_Blackpink_Pink_Carpet_09.png",
@@ -280,6 +281,7 @@ const KEYWORD_IMAGE_RULES: Array<{ keywords: string[]; imageKey: string }> = [
   { keywords: ["park bo-gum"], imageKey: "park_bo_gum" },
 
   // Âm nhạc Việt Nam
+  { keywords: ["bức tường", "trần lập", "tâm hồn của đá", "đường đến ngày vinh quang"], imageKey: "buc_tuong" },
   { keywords: ["hieuthuhai", "ngủ một mình", "gerdnang"], imageKey: "hieuthuhai" },
   { keywords: ["sơn tùng", "m-tp", "hãy trao cho anh", "chắc ai đó sẽ về"], imageKey: "son_tung" },
   { keywords: ["mỹ tâm", "họa mi tóc nâu"], imageKey: "my_tam" },

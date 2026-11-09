@@ -60,6 +60,7 @@ export default function Home() {
   const [musicFeedback, setMusicFeedback] = useState<{ type: "success" | "wrong"; message: string } | null>(null);
   const [musicSubmitted, setMusicSubmitted] = useState(false);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
+  const [revealStep, setRevealStep] = useState<"answer" | "scoreboard">("answer");
   const [isMuted, setIsMuted] = useState(false);
   const [isExitDialogOpen, setIsExitDialogOpen] = useState(false);
 
@@ -229,9 +230,10 @@ export default function Home() {
     }
   }, [state?.status]);
 
-  // Play sound on answer reveal & Auto-transition in 4.5 seconds
+  // Play sound on answer reveal -> Hiển thị Xếp hạng (Scoreboard) -> Tự động chuyển câu tiếp theo
   useEffect(() => {
     if (state?.status === "reveal") {
+      setRevealStep("answer");
       if (state.question && selected !== null) {
         if (selected === state.question.correct_index) {
           soundFX.playCorrect();
@@ -240,9 +242,14 @@ export default function Home() {
         }
       }
 
-      // Tự động chuyển câu tiếp theo sau 4.5 giây (khớp với thời gian chạy của đường line)
-      const autoNextTimeout = window.setTimeout(() => {
+      // 1. Sau 2.2 giây: Chuyển sang màn hình Bảng Xếp Hạng (như Hình 3)
+      const toScoreboardTimeout = window.setTimeout(() => {
+        setRevealStep("scoreboard");
         soundFX.playTransition();
+      }, 2200);
+
+      // 2. Sau 6.5 giây (hoàn tất hiển thị bảng xếp hạng): Tự động chuyển qua câu tiếp theo
+      const autoNextTimeout = window.setTimeout(() => {
         if (state.is_host && roomCode) {
           const token = sessionStorage.getItem(`qp-token-${roomCode}`);
           call<RoomState>("next_question", {
@@ -255,11 +262,14 @@ export default function Home() {
             })
             .catch(() => {});
         }
-      }, 4500);
+      }, 6500);
 
       return () => {
+        window.clearTimeout(toScoreboardTimeout);
         window.clearTimeout(autoNextTimeout);
       };
+    } else {
+      setRevealStep("answer");
     }
   }, [state?.status, state?.current_index]);
 
@@ -576,6 +586,23 @@ export default function Home() {
     state.question
   );
 
+  const myPlayer = useMemo(
+    () => state?.players.find((p) => p.id === state.my_player_id),
+    [state?.players, state?.my_player_id]
+  );
+
+  const myRank = useMemo(
+    () => sortedPlayers.findIndex((p) => p.id === state?.my_player_id),
+    [sortedPlayers, state?.my_player_id]
+  );
+
+  const getOrdinal = (n: number): string => {
+    if (n <= 0) return "1st";
+    const s = ["th", "st", "nd", "rd"];
+    const v = n % 100;
+    return n + (s[(v - 20) % 10] || s[v] || s[0]);
+  };
+
   /* =========================================================================
      IN-GAME / ROOM SCREEN
      ========================================================================= */
@@ -862,181 +889,237 @@ export default function Home() {
           {/* 2. IN-GAME QUESTION & REVEAL SCREEN (GIAO DIỆN THEO HÌNH THIẾT KẾ QUIZ.COM) */}
           {isPlayingOrReveal && state.question && (
             <div className="flex-1 flex flex-col justify-between my-auto w-full max-w-6xl mx-auto py-2">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-center">
-                {/* CỘT TRÁI: KHU VỰC TƯƠNG TÁC (ĐOÁN TÊN BÀI HÁT HOẶC 4 NÚT PASTEL) */}
-                <div className="lg:col-span-6 flex flex-col justify-center space-y-4">
-                  {/* --- A. CHẾ ĐỘ ÂM NHẠC: NHẬP CHỮ UNIKEY TIẾNG VIỆT (HÌNH 1) --- */}
-                  {isMusicQuestion ? (
-                    <div className="space-y-4">
-                      <h1 className="text-2xl sm:text-3xl font-black text-white text-center lg:text-left drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] tracking-tight">
-                        Đây là bài hát nào?
-                      </h1>
+              {/* --- KHI Ở TRẠNG THÁI HIỂN THỊ XẾP HẠNG GIỮA CÁC CÂU (SCOREBOARD THEO ĐÚNG HÌNH 3) --- */}
+              {state.status === "reveal" && revealStep === "scoreboard" ? (
+                <div className="flex-1 flex flex-col justify-between my-auto w-full max-w-3xl mx-auto py-4">
+                  {/* GÓC TRÊN BÊN TRÁI: ĐIỂM VÀ THỨ HẠNG CỦA BẠN (VD: Quick Fire 795 (1st)) */}
+                  <div className="text-left mb-4">
+                    {myPlayer && (
+                      <div className="font-black text-sm sm:text-base text-white/90 drop-shadow flex items-center gap-2">
+                        <span>{myPlayer.display_name}</span>
+                        <span className="font-mono text-amber-300 font-extrabold">{myPlayer.score}</span>
+                        <span className="text-white/70">({getOrdinal((myRank >= 0 ? myRank : 0) + 1)})</span>
+                      </div>
+                    )}
+                  </div>
 
-                      <form onSubmit={handleMusicSubmit} className="space-y-3">
-                        {/* Ô NHẬP TÊN BÀI HÁT (UNIKEY TIẾNG VIỆT) */}
-                        <div className="relative">
-                          <input
-                            type="text"
-                            lang="vi"
-                            autoComplete="off"
-                            autoCorrect="off"
-                            spellCheck={false}
-                            disabled={state.status !== "playing" || musicSubmitted || busy}
-                            value={musicInput}
-                            onChange={(e) => setMusicInput(e.target.value)}
-                            placeholder={musicSubmitted ? "Đã gửi câu trả lời! Đang chờ..." : "Nhập tên bài hát..."}
-                            className="w-full rounded-2xl sm:rounded-3xl bg-[#fffdf0] px-4 py-3.5 sm:py-4 text-center text-lg sm:text-xl font-black text-slate-900 border-2 border-slate-900 shadow-[0_4px_0_#1e1b2e] focus:outline-none focus:ring-4 focus:ring-emerald-400 disabled:opacity-85 transition placeholder:text-gray-400 placeholder:font-semibold"
-                          />
+                  {/* DANH SÁCH BẢNG XẾP HẠNG DẠNG VIÊN THUỐC (PILL) THEO CHUẨN HÌNH 3 */}
+                  <div className="space-y-3 w-full my-auto">
+                    {sortedPlayers.map((p, idx) => (
+                      <div
+                        key={p.id}
+                        className={`w-full flex items-center justify-between px-5 py-3 rounded-full border-2 border-black/80 shadow-[0_4px_0_rgba(0,0,0,0.35)] transition-all ${
+                          idx === 0
+                            ? "bg-[#d9f99d] text-lime-950"
+                            : idx === 1
+                            ? "bg-[#fed7aa] text-amber-950"
+                            : idx === 2
+                            ? "bg-[#a7f3d0] text-emerald-950"
+                            : "bg-[#e2e8f0] text-slate-800"
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="grid h-7 w-7 place-items-center rounded-full bg-black/15 font-black text-sm">
+                            {idx + 1}
+                          </span>
+                          <span className="text-2xl">{p.avatar || "🦊"}</span>
+                          <span className="font-black text-base sm:text-lg">{p.display_name}</span>
+                          {p.is_host && (
+                            <span className="rounded bg-black/15 px-1.5 py-0.5 text-[10px] font-black uppercase">
+                              HOST
+                            </span>
+                          )}
                         </div>
+                        <span className="font-mono text-lg sm:text-xl font-black">
+                          {p.score}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
 
-                        {/* NÚT TRY (XANH LÁ 3D) */}
+                  {/* ĐƯỜNG THẲNG TỰ ĐỘNG CHẠY HẾT ĐỂ CHUYỂN SANG CÂU TIẾP THEO */}
+                  <div className="mt-6 w-full">
+                    <div className="h-2 w-full overflow-hidden rounded-full bg-black/50 border border-white/20 shadow-inner">
+                      <div
+                        className="h-full rounded-full bg-gradient-to-r from-violet-500 via-pink-500 to-emerald-400"
+                        style={{ animation: "revealLine 4.2s linear forwards" }}
+                      />
+                    </div>
+                    {state.is_host && (
+                      <div className="mt-2 text-right">
                         <button
-                          type="submit"
-                          disabled={!musicInput.trim() || state.status !== "playing" || musicSubmitted || busy}
-                          className="w-full rounded-full bg-[#1cb06f] hover:bg-[#16995f] px-6 py-3.5 text-lg font-black text-white border-2 border-emerald-950 shadow-[0_4px_0_#064e3b] active:translate-y-1 active:shadow-none transition disabled:opacity-50 disabled:cursor-not-allowed"
+                          disabled={busy}
+                          onClick={() => hostAction("next_question")}
+                          className="text-[11px] font-bold text-violet-300 hover:text-white underline transition inline-flex items-center gap-1"
+                          title="Bỏ qua chờ và chuyển câu tiếp theo ngay lập tức"
                         >
-                          Try
+                          Bỏ qua chờ & chuyển câu ngay <ArrowRight size={12} />
                         </button>
-                      </form>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                /* --- GIAO DIỆN CHƠI GAME & MỞ ĐÁP ÁN (PLAYING & REVEAL ANSWER) --- */
+                <>
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-center">
+                    {/* CỘT TRÁI: KHU VỰC TƯƠNG TÁC (ĐOÁN TÊN BÀI HÁT HOẶC 4 NÚT PASTEL) */}
+                    <div className="lg:col-span-6 flex flex-col justify-center space-y-4">
+                      {/* --- A. CHẾ ĐỘ ÂM NHẠC: NHẬP CHỮ UNIKEY TIẾNG VIỆT (HÌNH 1) --- */}
+                      {isMusicQuestion ? (
+                        <div className="space-y-4">
+                          <h1 className="text-2xl sm:text-3xl font-black text-white text-center lg:text-left drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] tracking-tight">
+                            Đây là bài hát nào?
+                          </h1>
 
-                      {/* THÔNG BÁO FEEDBACK (ĐÚNG HOẶC SAI) */}
-                      {musicFeedback && (
-                        <div
-                          className={`text-center font-bold text-xs sm:text-sm px-3 py-1.5 rounded-xl border ${
-                            musicFeedback.type === "success"
-                              ? "bg-emerald-500/20 text-emerald-200 border-emerald-400/40"
-                              : "bg-rose-500/20 text-rose-200 border-rose-400/40 animate-pulse"
-                          }`}
-                        >
-                          {musicFeedback.message}
+                          <form onSubmit={handleMusicSubmit} className="space-y-3">
+                            {/* Ô NHẬP TÊN BÀI HÁT (UNIKEY TIẾNG VIỆT) */}
+                            <div className="relative">
+                              <input
+                                type="text"
+                                lang="vi"
+                                autoComplete="off"
+                                autoCorrect="off"
+                                spellCheck={false}
+                                disabled={state.status !== "playing" || musicSubmitted || busy}
+                                value={musicInput}
+                                onChange={(e) => setMusicInput(e.target.value)}
+                                placeholder={musicSubmitted ? "Đã gửi câu trả lời! Đang chờ..." : "Nhập tên bài hát..."}
+                                className="w-full rounded-2xl sm:rounded-3xl bg-[#fffdf0] px-4 py-3.5 sm:py-4 text-center text-lg sm:text-xl font-black text-slate-900 border-2 border-slate-900 shadow-[0_4px_0_#1e1b2e] focus:outline-none focus:ring-4 focus:ring-emerald-400 disabled:opacity-85 transition placeholder:text-gray-400 placeholder:font-semibold"
+                              />
+                            </div>
+
+                            {/* NÚT TRY (XANH LÁ 3D) */}
+                            <button
+                              type="submit"
+                              disabled={!musicInput.trim() || state.status !== "playing" || musicSubmitted || busy}
+                              className="w-full rounded-full bg-[#1cb06f] hover:bg-[#16995f] px-6 py-3.5 text-lg font-black text-white border-2 border-emerald-950 shadow-[0_4px_0_#064e3b] active:translate-y-1 active:shadow-none transition disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                              Try
+                            </button>
+                          </form>
+
+                          {/* THÔNG BÁO FEEDBACK (ĐÚNG HOẶC SAI) */}
+                          {musicFeedback && (
+                            <div
+                              className={`text-center font-bold text-xs sm:text-sm px-3 py-1.5 rounded-xl border ${
+                                musicFeedback.type === "success"
+                                  ? "bg-emerald-500/20 text-emerald-200 border-emerald-400/40"
+                                  : "bg-rose-500/20 text-rose-200 border-rose-400/40 animate-pulse"
+                              }`}
+                            >
+                              {musicFeedback.message}
+                            </div>
+                          )}
+
+                          {/* CANDY RAINBOW SCORE LINE (TỪ 1000 TRỞ XUỐNG NẾU TRẢ LỜI TRỄ) */}
+                          <div className="pt-1">
+                            <div className="flex items-center gap-3 w-full">
+                              <div className="relative flex-1 h-3.5 sm:h-4 overflow-hidden rounded-full border-2 border-black/80 bg-black/60 p-0.5 shadow-inner">
+                                <div
+                                  className="h-full rounded-full transition-all duration-100 ease-linear candy-stripes"
+                                  style={{
+                                    width: `${Math.max(5, (liveScore / (state.question.is_double_points ? 2000 : 1000)) * 100)}%`
+                                  }}
+                                />
+                              </div>
+                              <span className="font-mono text-base sm:text-lg font-black tracking-wider text-white drop-shadow-[0_2px_3px_rgba(0,0,0,0.9)]">
+                                {liveScore}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        /* --- B. CÁC QUIZ CHỦ ĐỀ KHÁC: 4 NÚT PASTEL PILL XẾP DỌC (HÌNH 2) --- */
+                        <div className="space-y-3.5">
+                          <h1 className="text-xl sm:text-2xl font-black text-white text-center lg:text-left drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] leading-snug">
+                            {state.question.prompt}
+                          </h1>
+
+                          {/* 4 NÚT PILL PASTEL XẾP DỌC BÊN TRÁI */}
+                          <div className="space-y-2.5">
+                            {state.question.options.map((option, i) => {
+                              const pastel = pastelStyles[i % pastelStyles.length];
+                              const isCorrect = state.status === "reveal" && state.question?.correct_index === i;
+                              const isChosen = selected === i;
+                              const isWrong = state.status === "reveal" && isChosen && state.question?.correct_index !== i;
+
+                              return (
+                                <button
+                                  key={i}
+                                  disabled={state.status !== "playing" || selected !== null || busy}
+                                  onClick={() => handleAnswer(i)}
+                                  className={`w-full rounded-full px-5 py-2.5 sm:py-3 text-center font-black text-sm sm:text-base transition-all active:translate-y-1 active:shadow-none flex items-center justify-between gap-2 ${
+                                    isCorrect
+                                      ? "bg-[#4ade80] text-emerald-950 border-2 border-emerald-950 shadow-[0_4px_0_#166534] scale-[1.01]"
+                                      : isWrong
+                                      ? "bg-[#f87171] text-rose-950 border-2 border-rose-950 shadow-[0_4px_0_#991b1b]"
+                                      : isChosen
+                                      ? "bg-amber-300 text-amber-950 border-2 border-amber-950 shadow-[0_4px_0_#b45309] ring-2 ring-white"
+                                      : `${pastel.bg} ${pastel.hover} ${pastel.text} ${pastel.border}`
+                                  } disabled:cursor-not-allowed`}
+                                >
+                                  <span className="w-5" />
+                                  <span className="flex-1 truncate">{option}</span>
+                                  <span className="w-5 flex justify-end">
+                                    {isCorrect && <CheckCircle2 size={18} className="text-emerald-950" />}
+                                    {isWrong && <XCircle size={18} className="text-rose-950" />}
+                                  </span>
+                                </button>
+                              );
+                            })}
+                          </div>
+
+                          {/* CANDY RAINBOW SCORE LINE (TỪ 1000 TRỞ XUỐNG NẾU CHỌN TRỄ) */}
+                          <div className="pt-1">
+                            <div className="flex items-center gap-3 w-full">
+                              <div className="relative flex-1 h-3.5 sm:h-4 overflow-hidden rounded-full border-2 border-black/80 bg-black/60 p-0.5 shadow-inner">
+                                <div
+                                  className="h-full rounded-full transition-all duration-100 ease-linear candy-stripes"
+                                  style={{
+                                    width: `${Math.max(5, (liveScore / (state.question.is_double_points ? 2000 : 1000)) * 100)}%`
+                                  }}
+                                />
+                              </div>
+                              <span className="font-mono text-base sm:text-lg font-black tracking-wider text-white drop-shadow-[0_2px_3px_rgba(0,0,0,0.9)]">
+                                {liveScore}
+                              </span>
+                            </div>
+                          </div>
                         </div>
                       )}
-
-                      {/* CANDY RAINBOW SCORE LINE (TỪ 1000 TRỞ XUỐNG NẾU TRẢ LỜI TRỄ) */}
-                      <div className="pt-1">
-                        <div className="flex items-center gap-3 w-full">
-                          <div className="relative flex-1 h-3.5 sm:h-4 overflow-hidden rounded-full border-2 border-black/80 bg-black/60 p-0.5 shadow-inner">
-                            <div
-                              className="h-full rounded-full transition-all duration-100 ease-linear candy-stripes"
-                              style={{
-                                width: `${Math.max(5, (liveScore / (state.question.is_double_points ? 2000 : 1000)) * 100)}%`
-                              }}
-                            />
-                          </div>
-                          <span className="font-mono text-base sm:text-lg font-black tracking-wider text-white drop-shadow-[0_2px_3px_rgba(0,0,0,0.9)]">
-                            {liveScore}
-                          </span>
-                        </div>
-                      </div>
                     </div>
-                  ) : (
-                    /* --- B. CÁC QUIZ CHỦ ĐỀ KHÁC: 4 NÚT PASTEL PILL XẾP DỌC (HÌNH 2) --- */
-                    <div className="space-y-3.5">
-                      <h1 className="text-xl sm:text-2xl font-black text-white text-center lg:text-left drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] leading-snug">
-                        {state.question.prompt}
-                      </h1>
 
-                      {/* 4 NÚT PILL PASTEL XẾP DỌC BÊN TRÁI */}
-                      <div className="space-y-2.5">
-                        {state.question.options.map((option, i) => {
-                          const pastel = pastelStyles[i % pastelStyles.length];
-                          const isCorrect = state.status === "reveal" && state.question?.correct_index === i;
-                          const isChosen = selected === i;
-                          const isWrong = state.status === "reveal" && isChosen && state.question?.correct_index !== i;
-
-                          return (
-                            <button
-                              key={i}
-                              disabled={state.status !== "playing" || selected !== null || busy}
-                              onClick={() => handleAnswer(i)}
-                              className={`w-full rounded-full px-5 py-2.5 sm:py-3 text-center font-black text-sm sm:text-base transition-all active:translate-y-1 active:shadow-none flex items-center justify-between gap-2 ${
-                                isCorrect
-                                  ? "bg-[#4ade80] text-emerald-950 border-2 border-emerald-950 shadow-[0_4px_0_#166534] scale-[1.01]"
-                                  : isWrong
-                                  ? "bg-[#f87171] text-rose-950 border-2 border-rose-950 shadow-[0_4px_0_#991b1b]"
-                                  : isChosen
-                                  ? "bg-amber-300 text-amber-950 border-2 border-amber-950 shadow-[0_4px_0_#b45309] ring-2 ring-white"
-                                  : `${pastel.bg} ${pastel.hover} ${pastel.text} ${pastel.border}`
-                              } disabled:cursor-not-allowed`}
-                            >
-                              <span className="w-5" />
-                              <span className="flex-1 truncate">{option}</span>
-                              <span className="w-5 flex justify-end">
-                                {isCorrect && <CheckCircle2 size={18} className="text-emerald-950" />}
-                                {isWrong && <XCircle size={18} className="text-rose-950" />}
-                              </span>
-                            </button>
-                          );
-                        })}
-                      </div>
-
-                      {/* CANDY RAINBOW SCORE LINE (TỪ 1000 TRỞ XUỐNG NẾU CHỌN TRỄ) */}
-                      <div className="pt-1">
-                        <div className="flex items-center gap-3 w-full">
-                          <div className="relative flex-1 h-3.5 sm:h-4 overflow-hidden rounded-full border-2 border-black/80 bg-black/60 p-0.5 shadow-inner">
-                            <div
-                              className="h-full rounded-full transition-all duration-100 ease-linear candy-stripes"
-                              style={{
-                                width: `${Math.max(5, (liveScore / (state.question.is_double_points ? 2000 : 1000)) * 100)}%`
-                              }}
-                            />
-                          </div>
-                          <span className="font-mono text-base sm:text-lg font-black tracking-wider text-white drop-shadow-[0_2px_3px_rgba(0,0,0,0.9)]">
-                            {liveScore}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* CỘT PHẢI: MEDIA VIEWER (YOUTUBE MV HOẶC ẢNH MINH HỌA) */}
-                <div className="lg:col-span-6 flex items-center justify-center">
-                  <MediaViewer
-                    type={state.question.question_type}
-                    imageUrl={state.question.image_url}
-                    audioUrl={state.question.audio_url}
-                    youtubeVideoId={state.question.youtube_video_id}
-                    category={state.question.category}
-                    prompt={state.question.prompt}
-                    options={state.question.options}
-                  />
-                </div>
-              </div>
-
-              {/* REVEAL NOTIFICATION & AUTO-TRANSITION LINE (ĐÁP ÁN ĐÚNG & LINE CHẠY HẾT ĐỂ QUA CÂU MỚI) */}
-              {state.status === "reveal" && (
-                <div className="mt-4 rounded-2xl bg-black/70 backdrop-blur-md border border-white/20 p-3 sm:p-4 text-white shadow-2xl max-w-3xl mx-auto w-full">
-                  <div className="flex items-center gap-2 font-black text-sm sm:text-base text-emerald-300">
-                    <CheckCircle2 size={18} className="text-emerald-400" />
-                    <span>Đáp án chính xác: {state.question.options[state.question.correct_index ?? 0]}</span>
-                  </div>
-                  {state.question.explanation && (
-                    <p className="mt-1 text-xs sm:text-sm text-slate-300 leading-snug">
-                      <b>Giải thích:</b> {state.question.explanation}
-                    </p>
-                  )}
-
-                  {/* LINE TỰ ĐỘNG CHẠY QUA CÂU MỚI (LINE CHẠY HẾT TỰ ĐỘNG CHUYỂN CÂU) */}
-                  <div className="mt-3">
-                    <div className="h-2 w-full overflow-hidden rounded-full bg-white/20 shadow-inner">
-                      <div className="h-full rounded-full bg-gradient-to-r from-violet-500 via-pink-500 to-emerald-400 animate-reveal-line" />
+                    {/* CỘT PHẢI: MEDIA VIEWER (YOUTUBE MV HOẶC ẢNH MINH HỌA) */}
+                    <div className="lg:col-span-6 flex items-center justify-center">
+                      <MediaViewer
+                        type={state.question.question_type}
+                        imageUrl={state.question.image_url}
+                        audioUrl={state.question.audio_url}
+                        youtubeVideoId={state.question.youtube_video_id}
+                        category={state.question.category}
+                        prompt={state.question.prompt}
+                        options={state.question.options}
+                        isReveal={state.status === "reveal"}
+                      />
                     </div>
                   </div>
 
-                  {state.is_host && (
-                    <div className="mt-2 text-right">
-                      <button
-                        disabled={busy}
-                        onClick={() => hostAction("next_question")}
-                        className="text-[11px] font-bold text-violet-300 hover:text-white underline transition inline-flex items-center gap-1"
-                        title="Bỏ qua chờ và chuyển câu tiếp theo ngay lập tức"
-                      >
-                        Bỏ qua chờ & chuyển câu ngay <ArrowRight size={12} />
-                      </button>
+                  {/* THÔNG BÁO ĐÁP ÁN ĐÚNG TRƯỚC KHI CHUYỂN SANG BẢNG XẾP HẠNG */}
+                  {state.status === "reveal" && (
+                    <div className="mt-4 rounded-2xl bg-black/75 backdrop-blur-md border border-white/20 p-3 sm:p-4 text-white shadow-2xl max-w-3xl mx-auto w-full">
+                      <div className="flex items-center gap-2 font-black text-sm sm:text-base text-emerald-300">
+                        <CheckCircle2 size={18} className="text-emerald-400" />
+                        <span>Đáp án chính xác: {state.question.options[state.question.correct_index ?? 0]}</span>
+                      </div>
+                      {state.question.explanation && (
+                        <p className="mt-1 text-xs sm:text-sm text-slate-300 leading-snug">
+                          <b>Giải thích:</b> {state.question.explanation}
+                        </p>
+                      )}
                     </div>
                   )}
-                </div>
+                </>
               )}
             </div>
           )}

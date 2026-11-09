@@ -13,6 +13,7 @@ interface MediaViewerProps {
   prompt?: string;
   options?: string[];
   className?: string;
+  isReveal?: boolean;
 }
 
 export function MediaViewer({
@@ -23,7 +24,8 @@ export function MediaViewer({
   category = "Quiz Party",
   prompt = "",
   options = [],
-  className = ""
+  className = "",
+  isReveal = false
 }: MediaViewerProps) {
   const [imageError, setImageError] = useState(false);
   const [fallbackTried, setFallbackTried] = useState(false);
@@ -103,27 +105,42 @@ export function MediaViewer({
       {/* 1. GUESS THE SONG: YOUTUBE EMBED HOẶC AUDIO */}
       {isSongGuess && cleanYtId && !ytBlocked && (
         <div className="relative aspect-video w-full h-[250px] sm:h-[300px] md:h-[360px] max-h-[420px] overflow-hidden rounded-3xl bg-black border-4 border-black/80 shadow-2xl mx-auto">
+          {/* LỚP MẶT NẠ CHE TIÊU ĐỀ BÀI HÁT KHI ĐANG ĐOÁN (THEO YÊU CẦU: BỎ TÊN BÀI HÁT TRÊN VIDEO ĐỂ KHÔNG BỊ LỘ) */}
+          {!isReveal && (
+            <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-black via-black/95 to-black/70 pointer-events-none z-30 flex items-center justify-center px-4">
+              <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-violet-950/90 border border-violet-500/40 text-white text-xs sm:text-sm font-extrabold shadow-2xl backdrop-blur-md">
+                <Music size={15} className="text-pink-400 animate-bounce" />
+                <span className="tracking-wide text-amber-200">🎵 Lắng nghe giai điệu & đoán tên bài hát!</span>
+              </div>
+            </div>
+          )}
+
           <iframe
-            src={`https://www.youtube-nocookie.com/embed/${cleanYtId}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1&playsinline=1`}
+            src={`https://www.youtube.com/embed/${cleanYtId}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1&playsinline=1`}
             title="Đoán tên bài hát qua MV"
-            className="h-full w-full border-0"
+            className={`h-full w-full border-0 transition-all duration-300 ${
+              !isReveal ? "scale-[1.18] -translate-y-8" : "scale-100 translate-y-0"
+            }`}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
             onError={() => setYtBlocked(true)}
           />
-          <div className="absolute bottom-2.5 right-2.5 flex items-center gap-1.5 rounded-lg bg-black/85 backdrop-blur-sm px-2.5 py-1 text-[11px] font-bold text-white shadow-md">
+
+          <div className="absolute bottom-2.5 right-2.5 z-20 flex items-center gap-1.5 rounded-lg bg-black/85 backdrop-blur-sm px-2.5 py-1 text-[11px] font-bold text-white shadow-md">
             <Youtube className="text-red-500" size={14} />
-            <span>Đoán tên bài hát qua MV</span>
-            <a
-              href={`https://www.youtube.com/watch?v=${cleanYtId}`}
-              target="_blank"
-              rel="noreferrer"
-              className="ml-1 text-[10px] text-amber-300 underline hover:text-white"
-              title="Mở nghe MV trên YouTube nếu trình duyệt chặn"
-            >
-              Mở YouTube ↗
-            </a>
+            <span>Đoán bài hát qua MV</span>
+            {isReveal && (
+              <a
+                href={`https://www.youtube.com/watch?v=${cleanYtId}`}
+                target="_blank"
+                rel="noreferrer"
+                className="ml-1 text-[10px] text-amber-300 underline hover:text-white"
+                title="Mở xem MV đầy đủ trên YouTube"
+              >
+                Mở YouTube ↗
+              </a>
+            )}
           </div>
         </div>
       )}
