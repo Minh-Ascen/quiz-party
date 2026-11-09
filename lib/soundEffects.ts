@@ -130,6 +130,31 @@ class SoundFX {
     }
   }
 
+  // Play whoosh sound when auto-transitioning questions
+  public playTransition() {
+    if (this.muted) return;
+    try {
+      this.initCtx();
+      if (!this.ctx) return;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(440, this.ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(880, this.ctx.currentTime + 0.15);
+      osc.frequency.exponentialRampToValueAtTime(1320, this.ctx.currentTime + 0.3);
+
+      gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.35);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start();
+      osc.stop(this.ctx.currentTime + 0.35);
+    } catch {
+      // Ignore
+    }
+  }
+
   // Play celebratory fanfare on game finish
   public playFanfare() {
     if (this.muted) return;

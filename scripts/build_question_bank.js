@@ -14,6 +14,7 @@ const usCartoons = require("./questions/us_cartoons");
 const famousSingers = require("./questions/singers");
 const moviesUsVn = require("./questions/movies");
 const extraQuestions = require("./extra_questions");
+const musicYoutubeMap = require("./music_youtube_map");
 
 const VERIFIED_IMAGES = JSON.parse(
   fs.readFileSync(path.join(__dirname, "verified_images.json"), "utf8")
@@ -23,6 +24,8 @@ const KEYWORD_IMAGE_RULES = [
   // 20 câu hỏi gốc trên Supabase
   { keywords: ["tỷ phú thiên tài", "giáp công nghệ cao", "iron man", "tony stark"], imageKey: "iron_man" },
   { keywords: ["harry potter", "ron weasley", "hermione", "hogwarts", "quidditch"], imageKey: "ron_weasley" },
+  // Doraemon
+  { keywords: ["túi không gian bốn chiều", "túi dự phòng", "đệm ngủ trong tủ"], imageKey: "doraemon_pocket" },
   { keywords: ["bánh rán", "dorayaki"], imageKey: "dorayaki" },
   { keywords: ["dưa lưới", "melonpan"], imageKey: "melonpan" },
   { keywords: ["fujiko"], imageKey: "fujiko" },
@@ -77,6 +80,7 @@ const KEYWORD_IMAGE_RULES = [
   { keywords: ["park bo-gum"], imageKey: "park_bo_gum" },
 
   // Âm nhạc Việt Nam
+  { keywords: ["hieuthuhai", "ngủ một mình", "gerdnang"], imageKey: "hieuthuhai" },
   { keywords: ["sơn tùng", "m-tp", "hãy trao cho anh", "chắc ai đó sẽ về"], imageKey: "son_tung" },
   { keywords: ["mỹ tâm", "họa mi tóc nâu"], imageKey: "my_tam" },
   { keywords: ["đen vâu", "đi về nhà", "nấu ăn cho em"], imageKey: "den_vau" },
@@ -145,6 +149,8 @@ const KEYWORD_IMAGE_RULES = [
   { keywords: ["grammy"], imageKey: "grammy" },
 
   // Địa lý
+  { keywords: ["cửu long", "mê kông", "mekong"], imageKey: "mekong" },
+  { keywords: ["sông hồng", "sông đà"], imageKey: "red_river" },
   { keywords: ["canberra", "nước úc", "lục địa"], imageKey: "canberra" },
   { keywords: ["ottawa", "canada"], imageKey: "ottawa" },
   { keywords: ["fansipan", "đông dương"], imageKey: "fansipan" },
@@ -322,6 +328,51 @@ categories.forEach((cat, catIdx) => {
 
     const resolvedImg = resolveImage(q, cat.name);
 
+    // Tự động gán YouTube Video ID chuẩn cho các câu hỏi thuộc chủ đề Âm nhạc (V-Pop, K-Pop, US-UK)
+    let finalYoutubeId = q.youtube_video_id || null;
+    let finalSource = q.source || null;
+    let finalType = q.question_type || "MULTIPLE_CHOICE";
+
+    const isMusicCategory =
+      cat.name === "Âm nhạc Việt Nam" ||
+      cat.name === "K-Pop" ||
+      cat.name === "US-UK";
+
+    if (isMusicCategory) {
+      const mapKey =
+        cat.name === "Âm nhạc Việt Nam"
+          ? "vpop"
+          : cat.name === "K-Pop"
+          ? "kpop"
+          : "usuk";
+      const entries = musicYoutubeMap[mapKey] || [];
+      const searchHaystack = `${q.prompt} ${(q.options || []).join(" ")}`.toLowerCase();
+
+      for (const entry of entries) {
+        if (entry.match.some((m) => searchHaystack.includes(m.toLowerCase()))) {
+          finalYoutubeId = entry.yt;
+          finalSource = entry.title;
+          finalType = "AUDIO_GUESS";
+          break;
+        }
+      }
+
+      // Nếu vẫn chưa có video riêng, gán các video MV đại diện chuẩn theo chủ đề để người chơi luôn được nghe nhạc đoán bài hát
+      if (!finalYoutubeId) {
+        if (cat.name === "Âm nhạc Việt Nam") {
+          finalYoutubeId = "gJHSDZfJrRY"; // See Tình
+          finalSource = "Hoàng Thùy Linh - See Tình";
+        } else if (cat.name === "K-Pop") {
+          finalYoutubeId = "gdZLi9oWNZg"; // Dynamite
+          finalSource = "BTS - Dynamite";
+        } else {
+          finalYoutubeId = "sOnqjkJTMaA"; // Thriller
+          finalSource = "Michael Jackson - Thriller";
+        }
+        finalType = "AUDIO_GUESS";
+      }
+    }
+
     // Đảm bảo phân bố chuẩn 3 mức độ: Dễ (easy: 18 câu), Vừa (medium: 18 câu), Khó (hard: 16 câu) cho mỗi chủ đề
     let balancedDifficulty = q.difficulty || "medium";
     if (qIdx < 18) {
@@ -354,12 +405,12 @@ categories.forEach((cat, catIdx) => {
       image_url: resolvedImg,
       audio_url: q.audio_url || null,
       video_url: q.video_url || null,
-      youtube_video_id: q.youtube_video_id || null,
-      question_type: q.question_type || (q.youtube_video_id || q.audio_url ? "AUDIO_GUESS" : q.image_url ? "IMAGE_GUESS" : "MULTIPLE_CHOICE"),
+      youtube_video_id: finalYoutubeId,
+      question_type: finalType,
       difficulty: balancedDifficulty,
       points: balancedDifficulty === "hard" ? 1200 : balancedDifficulty === "medium" ? 1000 : 1000,
       time_limit: q.time_limit || 20,
-      source: q.source || null,
+      source: finalSource,
       is_double_points: Boolean(q.is_double_points || (qIdx + 1) % 10 === 0),
       active: true
     };

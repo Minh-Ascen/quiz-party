@@ -12,3 +12,4 @@ services:
         value: https://idxhmmmurcxmsnizxbds.supabase.co
       - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
         value: sb_publishable_MEOpwqxisPakkN4gv41ONg_x1ggiKu6
+

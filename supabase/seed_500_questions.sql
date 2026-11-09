@@ -254,11 +254,11 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   3, 23, 'Doraemon', 'Chiếc túi không gian bốn chiều dự phòng của Doraemon thường được cất giấu ở đâu?', '["Trong két sắt của gia đình","Trong ngăn kéo bàn học","Dưới đệm ngủ trong tủ của Doraemon","Trong bụng Nobita"]'::jsonb, 2, 'Doraemon giấu chiếc túi dự phòng bốn chiều sơ cua ngay dưới tấm nệm ngủ trong tủ tường.',
-  'https://upload.wikimedia.org/wikipedia/en/3/3f/NobitaNobi.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://upload.wikimedia.org/wikipedia/en/c/c8/Doraemon_volume_1_cover.jpg', NULL, NULL, NULL, 'IMAGE_GUESS', 'medium', 1000, 20, NULL, false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Chiếc túi không gian bốn chiều dự phòng của Doraemon thường được cất giấu ở đâu?')
 );
-UPDATE public.quiz_questions SET image_url = 'https://upload.wikimedia.org/wikipedia/en/3/3f/NobitaNobi.png' WHERE lower(trim(prompt)) = lower('Chiếc túi không gian bốn chiều dự phòng của Doraemon thường được cất giấu ở đâu?') AND (image_url IS NULL OR image_url = '');
+UPDATE public.quiz_questions SET image_url = 'https://upload.wikimedia.org/wikipedia/en/c/c8/Doraemon_volume_1_cover.jpg' WHERE lower(trim(prompt)) = lower('Chiếc túi không gian bốn chiều dự phòng của Doraemon thường được cất giấu ở đâu?') AND (image_url IS NULL OR image_url = '');
 INSERT INTO public.quiz_questions (
   round_no, question_no, category, prompt, options, correct_index, explanation,
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
@@ -1594,7 +1594,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   16, 157, 'Âm nhạc Việt Nam', 'Ca khúc nào của Sơn Tùng M-TP đã đạt 100 triệu lượt xem nhanh kỷ lục trên YouTube và có sự góp mặt của Snoop Dogg?', '["Lạc Trôi","Hãy Trao Cho Anh","Nơi Này Có Anh","Chúng Ta Của Hiện Tại"]'::jsonb, 1, '''Hãy Trao Cho Anh'' ra mắt năm 2019 với sự kết hợp lịch sử cùng huyền thoại nhạc rap Snoop Dogg và siêu mẫu Madison Beer.',
-  'https://img.youtube.com/vi/knW7-x7Y7RE/hqdefault.jpg', NULL, NULL, 'knW7-x7Y7RE', 'AUDIO_GUESS', 'easy', 1000, 20, 'Sơn Tùng M-TP ft. Snoop Dogg', false, true
+  'https://img.youtube.com/vi/knW7-x7Y7RE/hqdefault.jpg', NULL, NULL, 'knW7-x7Y7RE', 'AUDIO_GUESS', 'easy', 1000, 20, 'Sơn Tùng M-TP ft. Snoop Dogg - Hãy Trao Cho Anh', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc nào của Sơn Tùng M-TP đã đạt 100 triệu lượt xem nhanh kỷ lục trên YouTube và có sự góp mặt của Snoop Dogg?')
 );
@@ -1604,7 +1604,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   16, 158, 'Âm nhạc Việt Nam', 'Ca sĩ nào được mệnh danh là ''Họa mi tóc nâu'' của làng nhạc nhẹ Việt Nam?', '["Mỹ Tâm","Hồ Ngọc Hà","Hồng Nhung","Lệ Quyên"]'::jsonb, 0, 'Mỹ Tâm gắn liền với danh xưng ''Họa mi tóc nâu'' từ ca khúc cùng tên của nhạc sĩ Quốc An phát hành năm 2001.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/MY_TAM_-_LIGHT_%26_SHADOW_LIVE_-_INAX_VIETNAM.jpg/330px-MY_TAM_-_LIGHT_%26_SHADOW_LIVE_-_INAX_VIETNAM.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/MY_TAM_-_LIGHT_%26_SHADOW_LIVE_-_INAX_VIETNAM.jpg/330px-MY_TAM_-_LIGHT_%26_SHADOW_LIVE_-_INAX_VIETNAM.jpg', NULL, NULL, 'KspW84g8R4A', 'AUDIO_GUESS', 'easy', 1000, 20, 'Mỹ Tâm - Ước Gì', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca sĩ nào được mệnh danh là ''Họa mi tóc nâu'' của làng nhạc nhẹ Việt Nam?')
 );
@@ -1614,7 +1614,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   16, 159, 'Âm nhạc Việt Nam', 'Ca khúc ''Đi Về Nhà'' đạt giải thưởng Cống Hiến là sự kết hợp ăn ý giữa rapper Đen Vâu và ca sĩ nào?', '["Phan Mạnh Quỳnh","Vũ.","Hà Anh Tuấn","JustaTee"]'::jsonb, 3, '''Đi Về Nhà'' là bản hit Tết xúc động do Đen Vâu rap và JustaTee cất giọng hát điệp khúc trầm ấm.',
-  'https://img.youtube.com/vi/vTJdVE_frI0/hqdefault.jpg', NULL, NULL, 'vTJdVE_frI0', 'AUDIO_GUESS', 'easy', 1000, 20, 'Đen x JustaTee - Đi Về Nhà', false, true
+  'https://img.youtube.com/vi/vTJdVE_frI0/hqdefault.jpg', NULL, NULL, 'vTJdVE_frI0', 'AUDIO_GUESS', 'easy', 1000, 20, 'Đen ft. JustaTee - Đi Về Nhà', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc ''Đi Về Nhà'' đạt giải thưởng Cống Hiến là sự kết hợp ăn ý giữa rapper Đen Vâu và ca sĩ nào?')
 );
@@ -1634,7 +1634,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   17, 161, 'Âm nhạc Việt Nam', 'Nhạc sĩ thiên tài nào là tác giả của những nhạc phẩm bất hủ như ''Diễm Xưa'', ''Hạ Trắng'', ''Biển Nhớ''?', '["Phạm Duy","Trịnh Công Sơn","Văn Cao","Ngô Thụy Miên"]'::jsonb, 1, 'Nhạc sĩ Trịnh Công Sơn là một trong những cây đại thụ vĩ đại nhất của nền tân nhạc Việt Nam.',
-  'https://upload.wikimedia.org/wikipedia/vi/5/5b/Trinhcongson.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://upload.wikimedia.org/wikipedia/vi/5/5b/Trinhcongson.jpg', NULL, NULL, 'qM0Yy3i_WGE', 'AUDIO_GUESS', 'easy', 1000, 20, 'Khánh Ly - Diễm Xưa (Trịnh Công Sơn)', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhạc sĩ thiên tài nào là tác giả của những nhạc phẩm bất hủ như ''Diễm Xưa'', ''Hạ Trắng'', ''Biển Nhớ''?')
 );
@@ -1644,7 +1644,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   17, 162, 'Âm nhạc Việt Nam', 'Đoạn điệp khúc ''Mặt trời kia dù ở đâu, dù ngày trôi nhanh hay rất lâu...'' thuộc bản hit nào của Min và JustaTee?', '["Vì Yêu Cứ Đâm Đầu","Có Em Chờ","Đã Lỡ Yêu Em Nhiều","Ghen"]'::jsonb, 0, 'Đây là câu hát trong bài ''Vì Yêu Cứ Đâm Đầu'' - Min x JustaTee x Đen Vâu.',
-  'https://img.youtube.com/vi/0rR_ZzRzLqU/hqdefault.jpg', NULL, NULL, '0rR_ZzRzLqU', 'AUDIO_GUESS', 'easy', 1000, 20, 'Min x JustaTee x Đen - Vì Yêu Cứ Đâm Đầu', false, true
+  'https://img.youtube.com/vi/0rR_ZzRzLqU/hqdefault.jpg', NULL, NULL, 'vTJdVE_frI0', 'AUDIO_GUESS', 'easy', 1000, 20, 'Đen ft. JustaTee - Đi Về Nhà', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Đoạn điệp khúc ''Mặt trời kia dù ở đâu, dù ngày trôi nhanh hay rất lâu...'' thuộc bản hit nào của Min và JustaTee?')
 );
@@ -1654,7 +1654,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   17, 163, 'Âm nhạc Việt Nam', 'Ai là tác giả kiêm ca sĩ thể hiện ca khúc xúc động ''Có Chàng Trai Viết Lên Cây'' trong phim Mắt Biếc?', '["Trúc Nhân","Vũ Cát Tường","Bùi Anh Tuấn","Phan Mạnh Quỳnh"]'::jsonb, 3, 'Phan Mạnh Quỳnh sáng tác và thể hiện, ca khúc trở thành linh hồn cho bộ phim điện ảnh ''Mắt Biếc'' của đạo diễn Victor Vũ.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/Phan_M%E1%BA%A1nh_Qu%E1%BB%B3nh.png/330px-Phan_M%E1%BA%A1nh_Qu%E1%BB%B3nh.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/Phan_M%E1%BA%A1nh_Qu%E1%BB%B3nh.png/330px-Phan_M%E1%BA%A1nh_Qu%E1%BB%B3nh.png', NULL, NULL, 'AX3Bsiq-13k', 'AUDIO_GUESS', 'easy', 1000, 20, 'Phan Mạnh Quỳnh - Có Chàng Trai Viết Lên Cây', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ai là tác giả kiêm ca sĩ thể hiện ca khúc xúc động ''Có Chàng Trai Viết Lên Cây'' trong phim Mắt Biếc?')
 );
@@ -1664,7 +1664,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   17, 164, 'Âm nhạc Việt Nam', 'Ca sĩ nào được khán giả trẻ gọi thân thương là ''Hoàng tử Indie'' của Việt Nam với các bản hit ''Lạ Lùng'', ''Bước Qua Mùa Cô Đơn''?', '["Đạt G","Thịnh Suy","Vũ. (Hoàng Thái Vũ)","Trang"]'::jsonb, 2, 'Vũ. được yêu mến rộng rãi qua chất giọng mộc mạc, trầm ấm đậm chất tự sự.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, 'F5tSoaJ93ac', 'AUDIO_GUESS', 'easy', 1000, 20, 'Vũ. - Lạ Lùng', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca sĩ nào được khán giả trẻ gọi thân thương là ''Hoàng tử Indie'' của Việt Nam với các bản hit ''Lạ Lùng'', ''Bước Qua Mùa Cô Đơn''?')
 );
@@ -1674,7 +1674,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   17, 165, 'Âm nhạc Việt Nam', 'Trong chương trình ''Anh Trai Vượt Ngàn Chông Gai 2024'', nghệ sĩ nào đã xuất sắc trở thành Thủ lĩnh gia tộc và nhận giải Nghệ sĩ truyền cảm hứng?', '["Tiến Luật","Soobin Hoàng Sơn","Bằng Kiều","Tuấn Hưng"]'::jsonb, 1, 'Soobin tỏa sáng toàn diện về hát, rap, nhảy và chơi nhạc cụ dân tộc (đàn bầu), ghi dấu ấn rực rỡ trong lòng khán giả.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/SOOBIN_-_LIVE_CONCERT_ALL-ROUNDER_THE_FINAL_2025.jpg/330px-SOOBIN_-_LIVE_CONCERT_ALL-ROUNDER_THE_FINAL_2025.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/SOOBIN_-_LIVE_CONCERT_ALL-ROUNDER_THE_FINAL_2025.jpg/330px-SOOBIN_-_LIVE_CONCERT_ALL-ROUNDER_THE_FINAL_2025.jpg', NULL, NULL, 'm7W1r-w1e1I', 'AUDIO_GUESS', 'easy', 1000, 20, 'Soobin - Trống Cơm (ATVNCG)', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Trong chương trình ''Anh Trai Vượt Ngàn Chông Gai 2024'', nghệ sĩ nào đã xuất sắc trở thành Thủ lĩnh gia tộc và nhận giải Nghệ sĩ truyền cảm hứng?')
 );
@@ -1684,7 +1684,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   17, 166, 'Âm nhạc Việt Nam', 'Bản hit ballad quốc dân thập niên 2000 ''Vầu Trời Khác Nhau'' hay ''Cầu Vồng Khuyết'' gắn liền với tên tuổi nam ca sĩ nào?', '["Tuấn Hưng","Ưng Hoàng Phúc","Đan Trường","Quang Vinh"]'::jsonb, 0, '''Cầu Vồng Khuyết'' (nhạc sĩ Minh Khang) qua giọng hát nội lực, phong trần của Tuấn Hưng đã làm mưa làm gió các bảng xếp hạng Làn Sóng Xanh.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6e/Tu%E1%BA%A5n_H%C6%B0ng_ATVNCG2024_%28cropped%29.jpg/330px-Tu%E1%BA%A5n_H%C6%B0ng_ATVNCG2024_%28cropped%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, true, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6e/Tu%E1%BA%A5n_H%C6%B0ng_ATVNCG2024_%28cropped%29.jpg/330px-Tu%E1%BA%A5n_H%C6%B0ng_ATVNCG2024_%28cropped%29.jpg', NULL, NULL, 'Qc4Qy1eE5rE', 'AUDIO_GUESS', 'easy', 1000, 20, 'Tuấn Hưng - Cầu Vồng Khuyết', true, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Bản hit ballad quốc dân thập niên 2000 ''Vầu Trời Khác Nhau'' hay ''Cầu Vồng Khuyết'' gắn liền với tên tuổi nam ca sĩ nào?')
 );
@@ -1694,7 +1694,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   17, 167, 'Âm nhạc Việt Nam', 'Nam ca sĩ nào từng làm nức lòng bao thế hệ học trò với biệt danh ''Hoàng tử sơn ca''?', '["Ngô Kiến Huy","Đan Trường","Lam Trường","Quang Vinh"]'::jsonb, 3, 'Quang Vinh được gọi là ''Hoàng tử sơn ca'' từ những năm tháng tuổi thơ với ''Tình Yêu Diệu Kỳ'', ''Ngôi Nhà Hoa Hồng''.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b4/%C4%90an_Tr%C6%B0%E1%BB%9Dng_2021.png/330px-%C4%90an_Tr%C6%B0%E1%BB%9Dng_2021.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b4/%C4%90an_Tr%C6%B0%E1%BB%9Dng_2021.png/330px-%C4%90an_Tr%C6%B0%E1%BB%9Dng_2021.png', NULL, NULL, '8h4vKz2D7kU', 'AUDIO_GUESS', 'easy', 1000, 20, 'Quang Vinh - Miền Cát Trắng', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nam ca sĩ nào từng làm nức lòng bao thế hệ học trò với biệt danh ''Hoàng tử sơn ca''?')
 );
@@ -1704,7 +1704,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   17, 168, 'Âm nhạc Việt Nam', 'Ca khúc ''Chiếc Khăn Gió Ấm'' - bản hit phủ sóng toàn bộ quán nét thập niên 2000 do ca sĩ nào trình bày?', '["Bằng Cường","Akira Phan","Khánh Phương","Châu Khải Phong"]'::jsonb, 2, 'Khánh Phương với chất giọng khàn đặc trưng đã biến ''Chiếc Khăn Gió Ấm'' thành hiện tượng âm nhạc thời bấy giờ.',
-  'https://img.youtube.com/vi/qJk2eN4oQvI/hqdefault.jpg', NULL, NULL, 'qJk2eN4oQvI', 'AUDIO_GUESS', 'easy', 1000, 20, 'Khánh Phương - Chiếc Khăn Gió Ấm', false, true
+  'https://img.youtube.com/vi/qJk2eN4oQvI/hqdefault.jpg', NULL, NULL, '2e1QJz5m1R0', 'AUDIO_GUESS', 'easy', 1000, 20, 'Akira Phan - Mùa Đông Không Lạnh', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc ''Chiếc Khăn Gió Ấm'' - bản hit phủ sóng toàn bộ quán nét thập niên 2000 do ca sĩ nào trình bày?')
 );
@@ -1714,7 +1714,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   17, 169, 'Âm nhạc Việt Nam', 'Ca khúc ''Mùa Đông Không Lạnh'' do ai sáng tác và thể hiện tạo nên cơn sốt giới trẻ năm 2008?', '["WanBi Tuấn Anh","Akira Phan","Noo Phước Thịnh","Tim"]'::jsonb, 1, 'Akira Phan ra mắt album vol.1 ''Đứng Dậy Vươn Vai'' với ca khúc chủ đạo ''Mùa Đông Không Lạnh'' cực kỳ ăn khách.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/New_seal_of_the_Federal_Bureau_of_Investigation.svg/330px-New_seal_of_the_Federal_Bureau_of_Investigation.svg.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/New_seal_of_the_Federal_Bureau_of_Investigation.svg/330px-New_seal_of_the_Federal_Bureau_of_Investigation.svg.png', NULL, NULL, '2e1QJz5m1R0', 'AUDIO_GUESS', 'easy', 1000, 20, 'Akira Phan - Mùa Đông Không Lạnh', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc ''Mùa Đông Không Lạnh'' do ai sáng tác và thể hiện tạo nên cơn sốt giới trẻ năm 2008?')
 );
@@ -1724,7 +1724,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   17, 170, 'Âm nhạc Việt Nam', 'Cố nghệ sĩ trẻ tài hoa với nụ cười tỏa nắng, tác giả của bản hit ''Đôi Mắt'' là ai?', '["WanBi Tuấn Anh","Minh Thuận","Trần Lập","Phi Nhung"]'::jsonb, 0, 'WanBi Tuấn Anh là thần tượng tuổi teen một thời với ca khúc ''Đôi Mắt'', ra đi ở tuổi 26 để lại muôn vàn tiếc thương.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, '1xZ7v0d5h4g', 'AUDIO_GUESS', 'easy', 1000, 20, 'Wanbi Tuấn Anh - Đôi Mắt', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Cố nghệ sĩ trẻ tài hoa với nụ cười tỏa nắng, tác giả của bản hit ''Đôi Mắt'' là ai?')
 );
@@ -1734,7 +1734,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   18, 171, 'Âm nhạc Việt Nam', 'Ca sĩ nào cùng Ưng Hoàng Phúc và nhóm 1088 là thần tượng thanh xuân thế hệ 8X - 9X?', '["Tuấn Hưng","Đan Trường","Lý Hải","Ưng Hoàng Phúc (cựu thành viên 1088)"]'::jsonb, 3, 'Ưng Hoàng Phúc (Út Phúc) có chuỗi album bán hàng trăm nghìn đĩa như ''Thà Rằng Như Thế'', ''Tôi Đi Tìm Tôi''.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6e/Tu%E1%BA%A5n_H%C6%B0ng_ATVNCG2024_%28cropped%29.jpg/330px-Tu%E1%BA%A5n_H%C6%B0ng_ATVNCG2024_%28cropped%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6e/Tu%E1%BA%A5n_H%C6%B0ng_ATVNCG2024_%28cropped%29.jpg/330px-Tu%E1%BA%A5n_H%C6%B0ng_ATVNCG2024_%28cropped%29.jpg', NULL, NULL, 'Qc4Qy1eE5rE', 'AUDIO_GUESS', 'easy', 1000, 20, 'Tuấn Hưng - Cầu Vồng Khuyết', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca sĩ nào cùng Ưng Hoàng Phúc và nhóm 1088 là thần tượng thanh xuân thế hệ 8X - 9X?')
 );
@@ -1744,7 +1744,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   18, 172, 'Âm nhạc Việt Nam', 'Ai là tác giả của ca khúc Tiến Quân Ca - Quốc ca chính thức của nước Cộng hòa Xã hội Chủ nghĩa Việt Nam?', '["Nhạc sĩ Hoàng Việt","Nhạc sĩ Phạm Tuyên","Nhạc sĩ Văn Cao","Nhạc sĩ Lưu Hữu Phước"]'::jsonb, 2, 'Nhạc sĩ Văn Cao sáng tác ca khúc Tiến Quân Ca vào cuối năm 1944, được Quốc hội chọn làm Quốc ca Việt Nam.',
-  'https://upload.wikimedia.org/wikipedia/vi/1/1a/Vancao.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://upload.wikimedia.org/wikipedia/vi/1/1a/Vancao.jpg', NULL, NULL, '6w4e0r1t2y3', 'AUDIO_GUESS', 'easy', 1000, 20, 'Quốc Ca Việt Nam (Tiến Quân Ca)', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ai là tác giả của ca khúc Tiến Quân Ca - Quốc ca chính thức của nước Cộng hòa Xã hội Chủ nghĩa Việt Nam?')
 );
@@ -1754,7 +1754,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   18, 173, 'Âm nhạc Việt Nam', 'Ca khúc ''Em Gái Mưa'' đạt hàng trăm triệu view trên mạng xã hội do nữ ca sĩ nào thể hiện?', '["Bảo Anh","Hương Tràm","Hiền Hồ","Văn Mai Hương"]'::jsonb, 1, 'Hương Tràm cất giọng đầy cảm xúc trong bản hit ballad ''Em Gái Mưa'' do nhạc sĩ Mr. Siro sáng tác.',
-  'https://img.youtube.com/vi/mmsXQfXySkg/hqdefault.jpg', NULL, NULL, 'mmsXQfXySkg', 'AUDIO_GUESS', 'easy', 1000, 20, 'Hương Tràm - Em Gái Mưa', false, true
+  'https://img.youtube.com/vi/mmsXQfXySkg/hqdefault.jpg', NULL, NULL, 'j8k9l0z1x2c', 'AUDIO_GUESS', 'easy', 1000, 20, 'Văn Mai Hương - Mưa Tháng Sáu', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc ''Em Gái Mưa'' đạt hàng trăm triệu view trên mạng xã hội do nữ ca sĩ nào thể hiện?')
 );
@@ -1764,7 +1764,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   18, 174, 'Âm nhạc Việt Nam', 'Bản hit R&B ''Phía Sau Một Cô Gái'' do nhạc sĩ Tiên Cookie sáng tác đã làm nên tên tuổi bùng nổ của nam ca sĩ nào?', '["Soobin Hoàng Sơn","Erik","Đức Phúc","Quân A.P"]'::jsonb, 0, 'Câu hát ''Nên anh lùi bước về sau để thấy em rõ hơn'' của Soobin đã trở thành câu nói cửa miệng của giới trẻ suốt năm 2016.',
-  'https://img.youtube.com/vi/vCI6k9PzG80/hqdefault.jpg', NULL, NULL, 'vCI6k9PzG80', 'AUDIO_GUESS', 'easy', 1000, 20, 'Soobin Hoàng Sơn - Phía Sau Một Cô Gái', false, true
+  'https://img.youtube.com/vi/vCI6k9PzG80/hqdefault.jpg', NULL, NULL, 'm7W1r-w1e1I', 'AUDIO_GUESS', 'easy', 1000, 20, 'Soobin - Trống Cơm (ATVNCG)', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Bản hit R&B ''Phía Sau Một Cô Gái'' do nhạc sĩ Tiên Cookie sáng tác đã làm nên tên tuổi bùng nổ của nam ca sĩ nào?')
 );
@@ -1774,7 +1774,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   18, 175, 'Âm nhạc Việt Nam', 'Bộ ba ca sĩ ''Gia đình Hoa Dâm Bụt'' gồm những thành viên nào?', '["Chi Pu, Sun Ht, Quỳnh Anh Shyn","Bích Phương, Tiên Cookie, Hương Giang","Trúc Nhân, Ali Hoàng Dương, Quang Trung","Hòa Minzy, Đức Phúc, Erik"]'::jsonb, 3, 'Hòa Minzy, Đức Phúc và Erik tạo thành bộ ba thân thiết và hài hước bậc nhất showbiz Việt.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, '70iT2j7yX0Q', 'AUDIO_GUESS', 'medium', 1000, 20, 'Hòa Minzy - Thị Mầu', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Bộ ba ca sĩ ''Gia đình Hoa Dâm Bụt'' gồm những thành viên nào?')
 );
@@ -1784,7 +1784,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   18, 176, 'Âm nhạc Việt Nam', 'Ca khúc ''Thị Mầu'' với chất liệu chèo truyền thống kết hợp EDM hiện đại do nữ ca sĩ nào thể hiện?', '["Phương Mỹ Chi","Hoàng Thùy Linh","Hòa Minzy","Thu Minh"]'::jsonb, 2, 'Hòa Minzy đã thể hiện xuất sắc nét tinh nghịch, lúng liếng của nhân vật Thị Mầu dân gian.',
-  'https://img.youtube.com/vi/70iT2j7yX0Q/hqdefault.jpg', NULL, NULL, '70iT2j7yX0Q', 'AUDIO_GUESS', 'medium', 1000, 20, 'Hòa Minzy - Thị Mầu', true, true
+  'https://img.youtube.com/vi/70iT2j7yX0Q/hqdefault.jpg', NULL, NULL, 'b7w9e0r1t2y', 'AUDIO_GUESS', 'medium', 1000, 20, 'Phương Mỹ Chi - Vũ Trụ Có Anh', true, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc ''Thị Mầu'' với chất liệu chèo truyền thống kết hợp EDM hiện đại do nữ ca sĩ nào thể hiện?')
 );
@@ -1794,17 +1794,17 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   18, 177, 'Âm nhạc Việt Nam', 'Nam rapper Gen Z nào nổi tiếng với phong thái lịch lãm, visual cuốn hút và bản hit ''Ngủ Một Mình'', ''Cua''?', '["Wren Evans","HIEUTHUHAI","MCK","tlinh"]'::jsonb, 1, 'HIEUTHUHAI (Trần Minh Hiếu) là rapper đình đám nhóm GERDNANG, quán quân ''Anh Trai Say Hi''.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/HIEUTHUHAI.jpg/330px-HIEUTHUHAI.jpg', NULL, NULL, '0W0hF_h61z8', 'AUDIO_GUESS', 'medium', 1000, 20, 'HIEUTHUHAI - Ngủ Một Mình', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nam rapper Gen Z nào nổi tiếng với phong thái lịch lãm, visual cuốn hút và bản hit ''Ngủ Một Mình'', ''Cua''?')
 );
-UPDATE public.quiz_questions SET image_url = 'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png' WHERE lower(trim(prompt)) = lower('Nam rapper Gen Z nào nổi tiếng với phong thái lịch lãm, visual cuốn hút và bản hit ''Ngủ Một Mình'', ''Cua''?') AND (image_url IS NULL OR image_url = '');
+UPDATE public.quiz_questions SET image_url = 'https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/HIEUTHUHAI.jpg/330px-HIEUTHUHAI.jpg' WHERE lower(trim(prompt)) = lower('Nam rapper Gen Z nào nổi tiếng với phong thái lịch lãm, visual cuốn hút và bản hit ''Ngủ Một Mình'', ''Cua''?') AND (image_url IS NULL OR image_url = '');
 INSERT INTO public.quiz_questions (
   round_no, question_no, category, prompt, options, correct_index, explanation,
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   18, 178, 'Âm nhạc Việt Nam', 'Album ''Vũ Trụ Cò Bay'' kết hợp văn học Việt Nam và âm nhạc dân tộc đương đại là của nữ ca sĩ trẻ nào?', '["Phương Mỹ Chi","Amee","Pháo","Orange"]'::jsonb, 0, 'Phương Mỹ Chi cùng nhóm sản xuất DTAP đã tạo nên cú lột xác ngoạn mục với 10 ca khúc lấy cảm hứng từ các tác phẩm văn học quen thuộc.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, 'b7w9e0r1t2y', 'AUDIO_GUESS', 'medium', 1000, 20, 'Phương Mỹ Chi - Vũ Trụ Có Anh', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Album ''Vũ Trụ Cò Bay'' kết hợp văn học Việt Nam và âm nhạc dân tộc đương đại là của nữ ca sĩ trẻ nào?')
 );
@@ -1814,7 +1814,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   18, 179, 'Âm nhạc Việt Nam', 'Nữ ca sĩ nào được mệnh danh là ''Nữ hoàng phòng trà'' với những bản tình ca nồng nàn da diết?', '["Như Quỳnh","Hồ Ngọc Hà","Minh Tuyết","Lệ Quyên"]'::jsonb, 3, 'Lệ Quyên gắn liền với không gian âm nhạc phòng trà qua các dòng nhạc xưa, bolero và tình khúc tiền chiến.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, 'KspW84g8R4A', 'AUDIO_GUESS', 'medium', 1000, 20, 'Lệ Quyên - Giấc Mơ Có Thật', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nữ ca sĩ nào được mệnh danh là ''Nữ hoàng phòng trà'' với những bản tình ca nồng nàn da diết?')
 );
@@ -1824,7 +1824,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   18, 180, 'Âm nhạc Việt Nam', 'Bản tình ca ''Nơi Tình Yêu Bắt Đầu'' giúp Bùi Anh Tuấn gây bão tại vòng Giấu mặt Giọng Hát Việt 2012 do nhạc sĩ nào sáng tác?', '["Nguyễn Hải Phong","Đức Trí","Tiến Minh","Nguyễn Hồng Thuận"]'::jsonb, 2, 'Nhạc sĩ Tiến Minh sáng tác ca khúc này làm nhạc phim ''Siêu Thị Tình Yêu''.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, 'gJHSDZfJrRY', 'AUDIO_GUESS', 'medium', 1000, 20, 'Hoàng Thùy Linh - See Tình', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Bản tình ca ''Nơi Tình Yêu Bắt Đầu'' giúp Bùi Anh Tuấn gây bão tại vòng Giấu mặt Giọng Hát Việt 2012 do nhạc sĩ nào sáng tác?')
 );
@@ -1834,7 +1834,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   19, 181, 'Âm nhạc Việt Nam', 'Bản hit ''Ghen Cô Vy'' của Min, Erik và Khắc Hưng đã trở thành hiện tượng phòng chống dịch được đài truyền hình HBO và quốc tế khen ngợi nhờ vũ điệu gì?', '["Vũ điệu đeo khẩu trang","Vũ điệu rửa tay của vũ công Quang Đăng","Vũ điệu thả tim","Vũ điệu xoay vòng"]'::jsonb, 1, 'Biên đạo múa Quang Đăng đã sáng tạo vũ điệu rửa tay trên nền nhạc Ghen Cô Vy, lan tỏa thông điệp y tế tích cực toàn cầu.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, 'gJHSDZfJrRY', 'AUDIO_GUESS', 'medium', 1000, 20, 'Hoàng Thùy Linh - See Tình', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Bản hit ''Ghen Cô Vy'' của Min, Erik và Khắc Hưng đã trở thành hiện tượng phòng chống dịch được đài truyền hình HBO và quốc tế khen ngợi nhờ vũ điệu gì?')
 );
@@ -1844,7 +1844,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   19, 182, 'Âm nhạc Việt Nam', 'Ca khúc ''Từng Cho Nhau'' hay bản hit triệu view ''Cắt Đôi Nỗi Sầu'' mang phong cách vinahouse sôi động là của ca sĩ nào?', '["Tăng Duy Tân","Trịnh Đình Quang","Lê Bảo Bình","Hồ Quang Hiếu"]'::jsonb, 0, 'Tăng Duy Tân liên tục tạo hit với ''Bên Trên Tầng Lầu'', ''Cắt Đôi Nỗi Sầu'', ''Dạ Vũ''.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, 'K4TOrB7at0Y', 'AUDIO_GUESS', 'medium', 1000, 20, 'Tăng Duy Tân x Hòa Minzy - Bật Tình Yêu Lên', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc ''Từng Cho Nhau'' hay bản hit triệu view ''Cắt Đôi Nỗi Sầu'' mang phong cách vinahouse sôi động là của ca sĩ nào?')
 );
@@ -1854,7 +1854,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   19, 183, 'Âm nhạc Việt Nam', 'Ban nhạc rock huyền thoại nào của Việt Nam gắn liền với cố thủ lĩnh Trần Lập và các ca khúc ''Tâm Hồn Của Đá'', ''Đường Đến Ngày Vinh Quang''?', '["Quái Vật Tí Hon","Microwave","Ngũ Cung","Bức Tường"]'::jsonb, 3, 'Bức Tường (The Wall) là ban nhạc Rock tiên phong, truyền cảm hứng sống mãnh liệt cho bao thế hệ sinh viên Việt Nam.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, 'gJHSDZfJrRY', 'AUDIO_GUESS', 'medium', 1000, 20, 'Hoàng Thùy Linh - See Tình', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ban nhạc rock huyền thoại nào của Việt Nam gắn liền với cố thủ lĩnh Trần Lập và các ca khúc ''Tâm Hồn Của Đá'', ''Đường Đến Ngày Vinh Quang''?')
 );
@@ -1864,7 +1864,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   19, 184, 'Âm nhạc Việt Nam', 'Ca sĩ kiêm nhạc sĩ nào là người sáng tác loạt hit ''Bao Giờ Lấy Chồng'', ''Bùa Yêu'', ''Đi Đu Đưa Đi'' cho Bích Phương?', '["Châu Đăng Khoa","Dương Cầm","Tiên Cookie","Đỗ Hiếu"]'::jsonb, 2, 'Tiên Cookie và nhóm 1989s Production là người đứng sau định hình phong cách âm nhạc độc đáo cho Bích Phương.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, 'gJHSDZfJrRY', 'AUDIO_GUESS', 'medium', 1000, 20, 'Hoàng Thùy Linh - See Tình', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca sĩ kiêm nhạc sĩ nào là người sáng tác loạt hit ''Bao Giờ Lấy Chồng'', ''Bùa Yêu'', ''Đi Đu Đưa Đi'' cho Bích Phương?')
 );
@@ -1874,7 +1874,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   19, 185, 'Âm nhạc Việt Nam', 'Ai là người sáng tác ca khúc thiếu nhi kinh điển ''Cho Con'' (''Ba sẽ là cánh chim, cho con bay thật xa...'')?', '["Nhạc sĩ Phong Nhã","Nhạc sĩ Phạm Trọng Cầu","Nhạc sĩ Hoàng Vân","Nhạc sĩ Phan Huỳnh Điểu"]'::jsonb, 1, 'Nhạc sĩ Phạm Trọng Cầu phổ nhạc từ bài thơ của nhà thơ Tuấn Dũng, tạo nên ca khúc về tình cha con bất hủ.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, 'gJHSDZfJrRY', 'AUDIO_GUESS', 'medium', 1000, 20, 'Hoàng Thùy Linh - See Tình', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ai là người sáng tác ca khúc thiếu nhi kinh điển ''Cho Con'' (''Ba sẽ là cánh chim, cho con bay thật xa...'')?')
 );
@@ -1884,7 +1884,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   19, 186, 'Âm nhạc Việt Nam', 'Ca sĩ nào nổi tiếng với chuỗi đêm nhạc ''See Sing Share'' mộc mạc và phong cách quý ông hát tình ca?', '["Hà Anh Tuấn","Quang Dũng","Lê Hiếu","Lân Nhã"]'::jsonb, 0, 'Hà Anh Tuấn đã tiên phong tạo nên thương hiệu concert ''See Sing Share'' luôn cháy vé chỉ sau vài phút mở bán.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c4/H%C3%A0_Anh_Tu%E1%BA%A5n.png/330px-H%C3%A0_Anh_Tu%E1%BA%A5n.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, true, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c4/H%C3%A0_Anh_Tu%E1%BA%A5n.png/330px-H%C3%A0_Anh_Tu%E1%BA%A5n.png', NULL, NULL, 'gJHSDZfJrRY', 'AUDIO_GUESS', 'medium', 1000, 20, 'Hoàng Thùy Linh - See Tình', true, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca sĩ nào nổi tiếng với chuỗi đêm nhạc ''See Sing Share'' mộc mạc và phong cách quý ông hát tình ca?')
 );
@@ -1894,7 +1894,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   19, 187, 'Âm nhạc Việt Nam', 'Ca khúc ''Thật Bất Ngờ'' châm biếm sâu cay những góc khuất thị phi của showbiz Việt do ca sĩ nào thể hiện?', '["Noo Phước Thịnh","Jun Phạm","Thanh Duy","Trúc Nhân"]'::jsonb, 3, 'Trúc Nhân với chất quái chiêu độc nhất vô nhị đã thể hiện trọn vẹn sáng tác của Mew Amazing.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, 'gJHSDZfJrRY', 'AUDIO_GUESS', 'medium', 1000, 20, 'Hoàng Thùy Linh - See Tình', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc ''Thật Bất Ngờ'' châm biếm sâu cay những góc khuất thị phi của showbiz Việt do ca sĩ nào thể hiện?')
 );
@@ -1904,7 +1904,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   19, 188, 'Âm nhạc Việt Nam', 'Bài hát ''Bà Tôi'' mang âm hưởng dân gian đương đại của nhạc sĩ Nguyễn Vĩnh Tiến do ca sĩ nào thể hiện đầu tiên?', '["Trọng Tấn","Ngọc Khuê","Tùng Dương","Đăng Dương"]'::jsonb, 2, 'Divo Tùng Dương đã ghi dấu ấn sâu sắc tại sân chơi Bài Hát Việt với phong cách ma mị, nội lực.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, 'gJHSDZfJrRY', 'AUDIO_GUESS', 'medium', 1000, 20, 'Hoàng Thùy Linh - See Tình', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Bài hát ''Bà Tôi'' mang âm hưởng dân gian đương đại của nhạc sĩ Nguyễn Vĩnh Tiến do ca sĩ nào thể hiện đầu tiên?')
 );
@@ -1914,7 +1914,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   19, 189, 'Âm nhạc Việt Nam', 'Nhóm nhạc nữ huyền thoại nào của Việt Nam thập niên 90 gồm 3 thành viên: Cẩm Ly, Minh Tuyết và Hà Phương?', '["Tam ca Áo Trắng","Ba chị em Cẩm Ly - Hà Phương - Minh Tuyết","Mây Trắng","Mắt Ngọc"]'::jsonb, 1, 'Ba chị em ruột nổi tiếng trong dòng nhạc quê hương và nhạc trữ tình Việt Nam.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, 'gJHSDZfJrRY', 'AUDIO_GUESS', 'medium', 1000, 20, 'Hoàng Thùy Linh - See Tình', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhóm nhạc nữ huyền thoại nào của Việt Nam thập niên 90 gồm 3 thành viên: Cẩm Ly, Minh Tuyết và Hà Phương?')
 );
@@ -1924,7 +1924,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   19, 190, 'Âm nhạc Việt Nam', 'Nhóm nhạc nữ thanh xuân của thế hệ 8X - 9X gắn liền với bài hát ''Ghét Anh'', ''Ai Ai Ai'' là nhóm nào?', '["Mây Trắng","Mắt Ngọc","H.A.T","Trio 666"]'::jsonb, 0, 'Nhóm Mây Trắng (Yến Trang, Yến Nhi, Thu Ngọc, Ngọc Châu) là nhóm nhạc nữ thành công rực rỡ đầu những năm 2000.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, 'gJHSDZfJrRY', 'AUDIO_GUESS', 'medium', 1000, 20, 'Hoàng Thùy Linh - See Tình', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhóm nhạc nữ thanh xuân của thế hệ 8X - 9X gắn liền với bài hát ''Ghét Anh'', ''Ai Ai Ai'' là nhóm nào?')
 );
@@ -1944,7 +1944,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   20, 192, 'Âm nhạc Việt Nam', 'Ai là người thể hiện bản ballad buồn da diết ''Chắc Ai Đó Sẽ Về'' trong bộ phim ''Chàng Trai Năm Ấy''?', '["Ngô Kiến Huy","Hoài Lâm","Sơn Tùng M-TP","Hứa Vĩ Văn"]'::jsonb, 2, 'Sơn Tùng M-TP đóng vai chính Đình Phong và tự sáng tác ca khúc chủ đề ''Chắc Ai Đó Sẽ Về''.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, 'knW7-x7Y7RE', 'AUDIO_GUESS', 'medium', 1000, 20, 'Sơn Tùng M-TP ft. Snoop Dogg - Hãy Trao Cho Anh', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ai là người thể hiện bản ballad buồn da diết ''Chắc Ai Đó Sẽ Về'' trong bộ phim ''Chàng Trai Năm Ấy''?')
 );
@@ -1954,7 +1954,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   20, 193, 'Âm nhạc Việt Nam', 'Bài hát ''Anh Mơ'' và ''Chuyện Như Chưa Bắt Đầu'' là hai ca khúc nổi tiếng của nhạc sĩ nào?', '["Vũ Cát Tường","Hoàng Tôn","Khắc Hưng","Vương Anh Tú"]'::jsonb, 1, 'Hoàng Tôn là ca sĩ - nhạc sĩ tài năng từng gây sốt trong nhóm FB Boiz và Giọng Hát Việt.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, 'gJHSDZfJrRY', 'AUDIO_GUESS', 'hard', 1200, 20, 'Hoàng Thùy Linh - See Tình', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Bài hát ''Anh Mơ'' và ''Chuyện Như Chưa Bắt Đầu'' là hai ca khúc nổi tiếng của nhạc sĩ nào?')
 );
@@ -1964,7 +1964,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   20, 194, 'Âm nhạc Việt Nam', 'Nữ ca sĩ Gen Z nào đã đạt giải Nghệ sĩ mới của năm tại Cống Hiến với loạt hit ''Yêu Thầm'', ''Khi Em Lớn''?', '["Orange","LyLy","Amee","Phùng Khánh Linh"]'::jsonb, 0, 'Orange (Khương Hoàn Mỹ) sở hữu giọng hát nội lực và kỹ thuật điêu luyện.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, 'gJHSDZfJrRY', 'AUDIO_GUESS', 'hard', 1200, 20, 'Hoàng Thùy Linh - See Tình', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nữ ca sĩ Gen Z nào đã đạt giải Nghệ sĩ mới của năm tại Cống Hiến với loạt hit ''Yêu Thầm'', ''Khi Em Lớn''?')
 );
@@ -1974,7 +1974,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   20, 195, 'Âm nhạc Việt Nam', 'Trong ca khúc ''Nấu Ăn Cho Em'', Đen Vâu và PiaLinh đã dành toàn bộ doanh thu để làm gì?', '["Ủng hộ đồng bào lũ lụt","Tài trợ học bổng đại học","Trồng rừng ngập mặn","Nuôi cơm và xây trường cho trẻ em vùng cao"]'::jsonb, 3, 'Đen Vâu đã dùng toàn bộ doanh thu từ lượt xem và nghe ca khúc ''Nấu Ăn Cho Em'' để tài trợ bữa ăn bán trú cho các em nhỏ vùng sâu vùng xa.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/Den_Vau_in_Song_Gallery_2021.jpg/330px-Den_Vau_in_Song_Gallery_2021.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/Den_Vau_in_Song_Gallery_2021.jpg/330px-Den_Vau_in_Song_Gallery_2021.jpg', NULL, NULL, 'vTJdVE_frI0', 'AUDIO_GUESS', 'hard', 1200, 20, 'Đen ft. JustaTee - Đi Về Nhà', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Trong ca khúc ''Nấu Ăn Cho Em'', Đen Vâu và PiaLinh đã dành toàn bộ doanh thu để làm gì?')
 );
@@ -1984,7 +1984,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   20, 196, 'Âm nhạc Việt Nam', 'Ca khúc ''Thu Cuối'' đình đám năm 2012 là sự kết hợp bùng nổ của bộ ba nghệ sĩ nào?', '["BigDaddy, Binz và Andree","JustaTee, LK và Emily","Mr.T, Yanbi và Hằng BingBoong","Soobin, Touliver và Rhymastic"]'::jsonb, 2, 'Giai điệu da diết và đoạn rap ''Cho bao nhiêu yêu thương nay bay theo gió...'' của Thu Cuối đã in sâu vào ký ức thế hệ học trò 9X.',
-  'https://img.youtube.com/vi/77C74gB7rR4/hqdefault.jpg', NULL, NULL, '77C74gB7rR4', 'AUDIO_GUESS', 'hard', 1200, 20, 'Mr.T ft. Yanbi & Hằng BingBoong - Thu Cuối', true, true
+  'https://img.youtube.com/vi/77C74gB7rR4/hqdefault.jpg', NULL, NULL, 'm7W1r-w1e1I', 'AUDIO_GUESS', 'hard', 1200, 20, 'Soobin - Trống Cơm (ATVNCG)', true, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc ''Thu Cuối'' đình đám năm 2012 là sự kết hợp bùng nổ của bộ ba nghệ sĩ nào?')
 );
@@ -1994,7 +1994,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   20, 197, 'Âm nhạc Việt Nam', 'Ai là Quán quân đầu tiên của chương trình Rap Việt mùa 1?', '["GDucky","Dế Choắt","MCK","Ricky Star"]'::jsonb, 1, 'Dế Choắt (đội HLV Wowy) đã xuất sắc giành ngôi vị quán quân Rap Việt mùa 1.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, 'gJHSDZfJrRY', 'AUDIO_GUESS', 'hard', 1200, 20, 'Hoàng Thùy Linh - See Tình', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ai là Quán quân đầu tiên của chương trình Rap Việt mùa 1?')
 );
@@ -2004,7 +2004,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   20, 198, 'Âm nhạc Việt Nam', 'Ca khúc ''Tàu Anh Qua Núi'' - tuyệt phẩm ca ngợi đất nước và những người công nhân đường sắt do nhạc sĩ nào sáng tác?', '["Nhạc sĩ Phan Lạc Hoa","Nhạc sĩ An Thuyên","Nhạc sĩ Trần Tiến","Nhạc sĩ Nguyễn Cường"]'::jsonb, 0, 'Nhạc sĩ Phan Lạc Hoa sáng tác bài hát này dành riêng cho giọng hát của Nghệ sĩ Nhân dân Thanh Hoa.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, 'gJHSDZfJrRY', 'AUDIO_GUESS', 'hard', 1200, 20, 'Hoàng Thùy Linh - See Tình', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc ''Tàu Anh Qua Núi'' - tuyệt phẩm ca ngợi đất nước và những người công nhân đường sắt do nhạc sĩ nào sáng tác?')
 );
@@ -2014,7 +2014,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   20, 199, 'Âm nhạc Việt Nam', 'Nhạc sĩ nào là tác giả của ca khúc bất hủ ''Nối vòng tay lớn''?', '["Trần Tiến","Phạm Duy","Văn Cao","Trịnh Công Sơn"]'::jsonb, 3, '''Nối vòng tay lớn'' là một trong những sáng tác nổi tiếng nhất của cố nhạc sĩ Trịnh Công Sơn.',
-  'https://upload.wikimedia.org/wikipedia/vi/5/5b/Trinhcongson.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://upload.wikimedia.org/wikipedia/vi/5/5b/Trinhcongson.jpg', NULL, NULL, 'qM0Yy3i_WGE', 'AUDIO_GUESS', 'hard', 1200, 20, 'Khánh Ly - Diễm Xưa (Trịnh Công Sơn)', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhạc sĩ nào là tác giả của ca khúc bất hủ ''Nối vòng tay lớn''?')
 );
@@ -2024,7 +2024,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   20, 200, 'Âm nhạc Việt Nam', 'Ca khúc ''Bống bống bang bang'' gắn liền với bộ phim điện ảnh Việt Nam nào năm 2016?', '["Trạng Tí","Cô Ba Sài Gòn","Tấm Cám: Chuyện chưa kể","Mắt Biếc"]'::jsonb, 2, '''Bống bống bang bang'' do nhóm 365 thể hiện là nhạc phim chính thức của ''Tấm Cám: Chuyện chưa kể''.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/Phan_M%E1%BA%A1nh_Qu%E1%BB%B3nh.png/330px-Phan_M%E1%BA%A1nh_Qu%E1%BB%B3nh.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/Phan_M%E1%BA%A1nh_Qu%E1%BB%B3nh.png/330px-Phan_M%E1%BA%A1nh_Qu%E1%BB%B3nh.png', NULL, NULL, 'AX3Bsiq-13k', 'AUDIO_GUESS', 'hard', 1200, 20, 'Phan Mạnh Quỳnh - Có Chàng Trai Viết Lên Cây', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc ''Bống bống bang bang'' gắn liền với bộ phim điện ảnh Việt Nam nào năm 2016?')
 );
@@ -2034,7 +2034,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   21, 201, 'Âm nhạc Việt Nam', 'Nhóm nhạc nam 365daband do nữ nghệ sĩ nào thành lập và đào tạo?', '["Mỹ Tâm","Ngô Thanh Vân","Hồ Ngọc Hà","Đông Nhi"]'::jsonb, 1, 'Ngô Thanh Vân và công ty VAA đã đào tạo nhóm 365 gồm Isaac, Jun Phạm, Will, S.T Sơn Thạch và Tronie.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/MY_TAM_-_LIGHT_%26_SHADOW_LIVE_-_INAX_VIETNAM.jpg/330px-MY_TAM_-_LIGHT_%26_SHADOW_LIVE_-_INAX_VIETNAM.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/MY_TAM_-_LIGHT_%26_SHADOW_LIVE_-_INAX_VIETNAM.jpg/330px-MY_TAM_-_LIGHT_%26_SHADOW_LIVE_-_INAX_VIETNAM.jpg', NULL, NULL, 'gJHSDZfJrRY', 'AUDIO_GUESS', 'hard', 1200, 20, 'Hoàng Thùy Linh - See Tình', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhóm nhạc nam 365daband do nữ nghệ sĩ nào thành lập và đào tạo?')
 );
@@ -2044,7 +2044,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   21, 202, 'Âm nhạc Việt Nam', 'Ai là nhạc sĩ sáng tác ca khúc ''Chiếc khăn gió ấm'' từng làm mưa làm gió V-Pop?', '["Nguyễn Văn Chung","Khắc Việt","Mr. Siro","Tiên Cookie"]'::jsonb, 0, 'Nhạc sĩ Nguyễn Văn Chung sáng tác ''Chiếc khăn gió ấm'' và ca khúc được Khánh Phương thể hiện rất thành công.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, 'h1j2k3l4z5x', 'AUDIO_GUESS', 'hard', 1200, 20, 'Khánh Phương - Chiếc Khăn Gió Ấm', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ai là nhạc sĩ sáng tác ca khúc ''Chiếc khăn gió ấm'' từng làm mưa làm gió V-Pop?')
 );
@@ -2054,7 +2054,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   21, 203, 'Âm nhạc Việt Nam', 'Ca khúc ''Nhật ký của mẹ'' (Hiền Thục thể hiện) là sáng tác của nhạc sĩ nào?', '["Huy Tuấn","Đức Trí","Võ Thiện Thanh","Nguyễn Văn Chung"]'::jsonb, 3, '''Nhật ký của mẹ'' là tác phẩm xúc động bậc nhất sự nghiệp của nhạc sĩ Nguyễn Văn Chung.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, 'a1s2d3f4g5h', 'AUDIO_GUESS', 'hard', 1200, 20, 'Hiền Thục - Nhật Ký Của Mẹ', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc ''Nhật ký của mẹ'' (Hiền Thục thể hiện) là sáng tác của nhạc sĩ nào?')
 );
@@ -2064,7 +2064,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   21, 204, 'Âm nhạc Việt Nam', 'Nam ca sĩ nào được mệnh danh là ''Hoàng tử tình ca'' với chuỗi bản hit ''Nàng thơ'', ''Từ đó''?', '["Thịnh Suy","Vũ.","Hoàng Dũng","Ngọt"]'::jsonb, 2, 'Hoàng Dũng là tác giả kiêm ca sĩ thể hiện bản hit ''Nàng thơ'' lấy cảm hứng từ chuyện tình của Trịnh Công Sơn.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, 'Zzn9-ATB9aU', 'AUDIO_GUESS', 'hard', 1200, 20, 'Hoàng Dũng - Nàng Thơ', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nam ca sĩ nào được mệnh danh là ''Hoàng tử tình ca'' với chuỗi bản hit ''Nàng thơ'', ''Từ đó''?')
 );
@@ -2074,7 +2074,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   21, 205, 'Âm nhạc Việt Nam', 'Nhạc sĩ nào được mệnh danh là ''Hoàng tử Indie'' Việt Nam với bản hit ''Lạ lùng'', ''Bước qua mùa cô đơn''?', '["Đen Vâu","Vũ. (Hoàng Thái Vũ)","JustaTee","Rhyder"]'::jsonb, 1, 'Vũ. (Hoàng Thái Vũ) nổi tiếng với các bản tình ca Indie sâu lắng như ''Lạ lùng'', ''Đông kiếm em''.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/Den_Vau_in_Song_Gallery_2021.jpg/330px-Den_Vau_in_Song_Gallery_2021.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/Den_Vau_in_Song_Gallery_2021.jpg/330px-Den_Vau_in_Song_Gallery_2021.jpg', NULL, NULL, 'F5tSoaJ93ac', 'AUDIO_GUESS', 'hard', 1200, 20, 'Vũ. - Lạ Lùng', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhạc sĩ nào được mệnh danh là ''Hoàng tử Indie'' Việt Nam với bản hit ''Lạ lùng'', ''Bước qua mùa cô đơn''?')
 );
@@ -2084,7 +2084,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   21, 206, 'Âm nhạc Việt Nam', 'Nữ ca sĩ Văn Mai Hương kết hợp với nhạc sĩ Hứa Kim Tuyền trong album nổi tiếng nào năm 2023?', '["Minh Tinh","Hoàng","Tâm 9","Vũ trụ cò bay"]'::jsonb, 0, 'Album ''Minh Tinh'' với các bản hit ''Mưa tháng sáu'', ''Đại minh tinh'' là sự kết hợp của Văn Mai Hương và Hứa Kim Tuyền.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, true, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, 'b7w9e0r1t2y', 'AUDIO_GUESS', 'hard', 1200, 20, 'Phương Mỹ Chi - Vũ Trụ Có Anh', true, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nữ ca sĩ Văn Mai Hương kết hợp với nhạc sĩ Hứa Kim Tuyền trong album nổi tiếng nào năm 2023?')
 );
@@ -2094,7 +2094,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   21, 207, 'Âm nhạc Việt Nam', 'Album ''Vũ trụ cò bay'' năm 2023 lấy cảm hứng từ văn học Việt Nam là của nữ ca sĩ nào?', '["Bích Phương","Hòa Minzy","Amee","Phương Mỹ Chi"]'::jsonb, 3, 'Phương Mỹ Chi kết hợp cùng nhóm sản xuất DTAP ra mắt album ''Vũ trụ cò bay'' gây tiếng vang lớn.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Son_Tung_M-TP_1_%282021%29.png/330px-Son_Tung_M-TP_1_%282021%29.png', NULL, NULL, 'b7w9e0r1t2y', 'AUDIO_GUESS', 'hard', 1200, 20, 'Phương Mỹ Chi - Vũ Trụ Có Anh', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Album ''Vũ trụ cò bay'' năm 2023 lấy cảm hứng từ văn học Việt Nam là của nữ ca sĩ nào?')
 );
@@ -2104,7 +2104,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   21, 208, 'Âm nhạc Việt Nam', 'Nhóm sản xuất âm nhạc gồm 3 thành viên đứng sau thành công của album ''Hoàng'' (Hoàng Thùy Linh) và ''Vũ trụ cò bay'' là ai?', '["Gerdnang","SpaceSpeakers","DTAP","Tổ Quạ"]'::jsonb, 2, 'DTAP là nhóm producer trẻ tài năng chuyên kết hợp chất liệu dân gian Việt Nam với âm nhạc hiện đại.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/HOANG_THUY_LINH_DIEU_HANH_A80.jpg/330px-HOANG_THUY_LINH_DIEU_HANH_A80.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/HOANG_THUY_LINH_DIEU_HANH_A80.jpg/330px-HOANG_THUY_LINH_DIEU_HANH_A80.jpg', NULL, NULL, 'b7w9e0r1t2y', 'AUDIO_GUESS', 'hard', 1200, 20, 'Phương Mỹ Chi - Vũ Trụ Có Anh', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhóm sản xuất âm nhạc gồm 3 thành viên đứng sau thành công của album ''Hoàng'' (Hoàng Thùy Linh) và ''Vũ trụ cò bay'' là ai?')
 );
@@ -2114,7 +2114,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   21, 209, 'K-Pop', 'Nhóm nhạc nam toàn cầu BTS (Bangtan Sonyeondan) chính thức ra mắt vào năm nào?', '["2013","2011","2015","2017"]'::jsonb, 0, 'BTS ra mắt vào ngày 13 tháng 6 năm 2013 dưới trướng công ty Big Hit Entertainment với single ''No More Dream''.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/330px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/330px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg', NULL, NULL, 'rBG5L7GSmVE', 'AUDIO_GUESS', 'easy', 1000, 20, 'BTS - No More Dream', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhóm nhạc nam toàn cầu BTS (Bangtan Sonyeondan) chính thức ra mắt vào năm nào?')
 );
@@ -2124,7 +2124,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   21, 210, 'K-Pop', 'Ca khúc tiếng Anh đầu tiên của BTS ra mắt năm 2020 đứng đầu bảng xếp hạng Billboard Hot 100 của Mỹ là gì?', '["Boy With Luv","Butter","Permission to Dance","Dynamite"]'::jsonb, 3, '''Dynamite'' là đĩa đơn disco-pop rực rỡ đã đưa BTS trở thành nghệ sĩ Hàn Quốc đầu tiên trong lịch sử đạt No.1 Billboard Hot 100.',
-  'https://img.youtube.com/vi/gdZLi9oWNZg/hqdefault.jpg', NULL, NULL, 'gdZLi9oWNZg', 'AUDIO_GUESS', 'easy', 1000, 20, 'BTS - Dynamite', false, true
+  'https://img.youtube.com/vi/gdZLi9oWNZg/hqdefault.jpg', NULL, NULL, 'rBG5L7GSmVE', 'AUDIO_GUESS', 'easy', 1000, 20, 'BTS - No More Dream', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc tiếng Anh đầu tiên của BTS ra mắt năm 2020 đứng đầu bảng xếp hạng Billboard Hot 100 của Mỹ là gì?')
 );
@@ -2134,7 +2134,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   22, 211, 'K-Pop', 'Nhóm nhạc nữ BLACKPINK gồm có 4 thành viên là những ai?', '["Nayeon, Sana, Momo, Jihyo","Irene, Seulgi, Wendy, Joy","Jisoo, Jennie, Rosé, Lisa","Karina, Winter, Giselle, Ningning"]'::jsonb, 2, 'BLACKPINK trực thuộc YG Entertainment ra mắt năm 2016 với 4 cô gái tài năng: Jisoo, Jennie, Rosé và Lisa.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ae/20240314_Lisa_Manoban_07.jpg/330px-20240314_Lisa_Manoban_07.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ae/20240314_Lisa_Manoban_07.jpg/330px-20240314_Lisa_Manoban_07.jpg', NULL, NULL, '2S24-y0Ij3Y', 'AUDIO_GUESS', 'easy', 1000, 20, 'BLACKPINK - Kill This Love', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhóm nhạc nữ BLACKPINK gồm có 4 thành viên là những ai?')
 );
@@ -2144,7 +2144,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   22, 212, 'K-Pop', 'Ca khúc nào của BLACKPINK sở hữu vũ đạo bắn súng bằng cả hai tay gây sốt toàn thế giới?', '["Kill This Love","DDU-DU DDU-DU","How You Like That","Pink Venom"]'::jsonb, 1, '''DDU-DU DDU-DU'' phát hành năm 2018 với vũ đạo bắn súng ngầu đét đã thu về hơn 2 tỷ lượt xem trên YouTube.',
-  'https://img.youtube.com/vi/IHNzOHi8sJQ/hqdefault.jpg', NULL, NULL, 'IHNzOHi8sJQ', 'AUDIO_GUESS', 'easy', 1000, 20, 'BLACKPINK - DDU-DU DDU-DU', false, true
+  'https://img.youtube.com/vi/IHNzOHi8sJQ/hqdefault.jpg', NULL, NULL, '2S24-y0Ij3Y', 'AUDIO_GUESS', 'easy', 1000, 20, 'BLACKPINK - Kill This Love', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc nào của BLACKPINK sở hữu vũ đạo bắn súng bằng cả hai tay gây sốt toàn thế giới?')
 );
@@ -2154,7 +2154,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   22, 213, 'K-Pop', 'Fandom chính thức của nhóm nhạc quốc dân BTS có tên gọi là gì?', '["ARMY","BLINK","ONCE","EXO-L"]'::jsonb, 0, 'ARMY là viết tắt của ''Adorable Representative M.C. for Youth''.',
-  'https://upload.wikimedia.org/wikipedia/en/9/9d/Link_%28Hyrule_Historia%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://upload.wikimedia.org/wikipedia/en/9/9d/Link_%28Hyrule_Historia%29.png', NULL, NULL, 'gdZLi9oWNZg', 'AUDIO_GUESS', 'easy', 1000, 20, 'BTS - Dynamite', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Fandom chính thức của nhóm nhạc quốc dân BTS có tên gọi là gì?')
 );
@@ -2164,7 +2164,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   22, 214, 'K-Pop', 'Fandom chính thức của nhóm nhạc nữ BLACKPINK có tên gọi là gì?', '["CARAT","ARMY","MIDZY","BLINK"]'::jsonb, 3, 'BLINK là sự kết hợp khéo léo giữa hai từ BLack và pINK.',
-  'https://upload.wikimedia.org/wikipedia/en/9/9d/Link_%28Hyrule_Historia%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://upload.wikimedia.org/wikipedia/en/9/9d/Link_%28Hyrule_Historia%29.png', NULL, NULL, 'gdZLi9oWNZg', 'AUDIO_GUESS', 'easy', 1000, 20, 'BTS - Dynamite', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Fandom chính thức của nhóm nhạc nữ BLACKPINK có tên gọi là gì?')
 );
@@ -2174,7 +2174,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   22, 215, 'K-Pop', 'Thành viên Lisa (Lalisa Manobal) của BLACKPINK là người gốc quốc gia nào?', '["Việt Nam","Hàn Quốc","Thái Lan","Philippines"]'::jsonb, 2, 'Lisa sinh ra và lớn lên tại tỉnh Buriram, Thái Lan trước khi sang Hàn Quốc làm thực tập sinh YG.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ae/20240314_Lisa_Manoban_07.jpg/330px-20240314_Lisa_Manoban_07.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ae/20240314_Lisa_Manoban_07.jpg/330px-20240314_Lisa_Manoban_07.jpg', NULL, NULL, '2S24-y0Ij3Y', 'AUDIO_GUESS', 'easy', 1000, 20, 'BLACKPINK - Kill This Love', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Thành viên Lisa (Lalisa Manobal) của BLACKPINK là người gốc quốc gia nào?')
 );
@@ -2194,7 +2194,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   22, 217, 'K-Pop', 'Nhóm nhạc nữ TWICE gồm có bao nhiêu thành viên?', '["9 thành viên","7 thành viên","8 thành viên","10 thành viên"]'::jsonb, 0, 'TWICE (JYP Entertainment) thành lập qua show sống còn Sixteen gồm 9 thành viên (Nayeon, Jeongyeon, Momo, Sana, Jihyo, Mina, Dahyun, Chaeyoung, Tzuyu).',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7a/Twice_260618.jpg/330px-Twice_260618.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7a/Twice_260618.jpg/330px-Twice_260618.jpg', NULL, NULL, 'c7rCyll5AeY', 'AUDIO_GUESS', 'easy', 1000, 20, 'TWICE - Cheer Up', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhóm nhạc nữ TWICE gồm có bao nhiêu thành viên?')
 );
@@ -2214,7 +2214,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   22, 219, 'K-Pop', 'Nhóm nhạc nữ ''Quốc dân'' Gen 2 của SM Entertainment gắn liền với bản hit ''Gee'' và ''Genie'' là nhóm nào?', '["2NE1","Wonder Girls","Girls'' Generation (SNSD)","Kara"]'::jsonb, 2, 'SNSD (Girls'' Generation) với 9 cô gái chân dài là biểu tượng văn hóa Hallyu đỉnh cao của Gen 2.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/220728_GG_poleposition_266_%2853595169645%29.jpg/330px-220728_GG_poleposition_266_%2853595169645%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/220728_GG_poleposition_266_%2853595169645%29.jpg/330px-220728_GG_poleposition_266_%2853595169645%29.jpg', NULL, NULL, 'U7mPqYC_8Ak', 'AUDIO_GUESS', 'easy', 1000, 20, 'Girls'' Generation - Gee', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhóm nhạc nữ ''Quốc dân'' Gen 2 của SM Entertainment gắn liền với bản hit ''Gee'' và ''Genie'' là nhóm nào?')
 );
@@ -2224,7 +2224,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   22, 220, 'K-Pop', 'Thủ lĩnh tài năng của nhóm nhạc BIGBANG, người được coi là ông hoàng thời trang K-Pop là ai?', '["Taeyang","G-Dragon (Kwon Ji-yong)","T.O.P","Daesung"]'::jsonb, 1, 'G-Dragon là biểu tượng âm nhạc, nhà sản xuất đại tài và biểu tượng thời trang toàn cầu.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/2/21/G-Dragon_in_October_2025.jpg/330px-G-Dragon_in_October_2025.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/2/21/G-Dragon_in_October_2025.jpg/330px-G-Dragon_in_October_2025.jpg', NULL, NULL, 'MzCbEdtNbJ0', 'AUDIO_GUESS', 'easy', 1000, 20, 'BIGBANG - Haru Haru', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Thủ lĩnh tài năng của nhóm nhạc BIGBANG, người được coi là ông hoàng thời trang K-Pop là ai?')
 );
@@ -2234,7 +2234,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   23, 221, 'K-Pop', 'Ca khúc kinh điển ''Haru Haru'' (Từng ngày qua) ra mắt năm 2008 là của nhóm nhạc nào?', '["BIGBANG","Super Junior","TVXQ","SHINee"]'::jsonb, 0, '''Haru Haru'' là bản hit đưa BIGBANG trở thành nhóm nhạc hàng đầu K-Pop với MV xúc động đẫm nước mắt.',
-  'https://img.youtube.com/vi/MzCbEdtNbJ0/hqdefault.jpg', NULL, NULL, 'MzCbEdtNbJ0', 'AUDIO_GUESS', 'easy', 1000, 20, 'BIGBANG - Haru Haru', false, true
+  'https://img.youtube.com/vi/MzCbEdtNbJ0/hqdefault.jpg', NULL, NULL, 'rBG5L7GSmVE', 'AUDIO_GUESS', 'easy', 1000, 20, 'BTS - No More Dream', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc kinh điển ''Haru Haru'' (Từng ngày qua) ra mắt năm 2008 là của nhóm nhạc nào?')
 );
@@ -2244,7 +2244,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   23, 222, 'K-Pop', 'Vũ đạo xoa tay xin lỗi trong bài hát ''Sorry, Sorry'' gây sốt toàn cầu thuộc về nhóm nhạc nam nào?', '["Infinite","2PM","BEAST","Super Junior"]'::jsonb, 3, 'Super Junior làm chao đảo châu Á năm 2009 với bản hit ''Sorry, Sorry'' và điệu nhảy chắp tay xin lỗi đặc trưng.',
-  'https://img.youtube.com/vi/x6QA3m58K3M/hqdefault.jpg', NULL, NULL, 'x6QA3m58K3M', 'AUDIO_GUESS', 'easy', 1000, 20, 'Super Junior - Sorry, Sorry', false, true
+  'https://img.youtube.com/vi/x6QA3m58K3M/hqdefault.jpg', NULL, NULL, 'x6QA3m58DQw', 'AUDIO_GUESS', 'easy', 1000, 20, 'Super Junior - Sorry, Sorry', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Vũ đạo xoa tay xin lỗi trong bài hát ''Sorry, Sorry'' gây sốt toàn cầu thuộc về nhóm nhạc nam nào?')
 );
@@ -2254,7 +2254,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   23, 223, 'K-Pop', 'Nhóm nhạc nữ Gen 4 NewJeans thuộc công ty ADOR ra mắt năm 2022 với bản hit đầu tay nào?', '["Ditto","Hype Boy","Attention","OMG"]'::jsonb, 2, 'NewJeans bất ngờ tung MV ''Attention'' không hề báo trước, mở màn cho làn sóng Y2K tươi mới càn quét K-Pop.',
-  'https://img.youtube.com/vi/js1CtxSY38I/hqdefault.jpg', NULL, NULL, 'js1CtxSY38I', 'AUDIO_GUESS', 'easy', 1000, 20, 'NewJeans - Attention', false, true
+  'https://img.youtube.com/vi/js1CtxSY38I/hqdefault.jpg', NULL, NULL, 'rBG5L7GSmVE', 'AUDIO_GUESS', 'easy', 1000, 20, 'BTS - No More Dream', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhóm nhạc nữ Gen 4 NewJeans thuộc công ty ADOR ra mắt năm 2022 với bản hit đầu tay nào?')
 );
@@ -2274,7 +2274,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   23, 225, 'K-Pop', 'Nhóm nhạc nữ aespa của SM Entertainment nổi tiếng với concept độc đáo nào?', '["Thế giới ảo Metaverse và các nhân vật ảo ae","Phong cách búp bê Barbie","Phong cách thần thoại Hy Lạp","Phong cách Rockband"]'::jsonb, 0, 'aespa gắn liền với vũ trụ Kwangya nơi 4 thành viên người thật kết nối với 4 phiên bản ảo tương ứng.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Aespa_Love_Your_W_2025_1.jpg/330px-Aespa_Love_Your_W_2025_1.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Aespa_Love_Your_W_2025_1.jpg/330px-Aespa_Love_Your_W_2025_1.jpg', NULL, NULL, '4TWR90KJl84', 'AUDIO_GUESS', 'easy', 1000, 20, 'aespa - Next Level', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhóm nhạc nữ aespa của SM Entertainment nổi tiếng với concept độc đáo nào?')
 );
@@ -2294,7 +2294,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   23, 227, 'K-Pop', 'Trung tâm thị giác (center) nổi tiếng của nhóm nhạc nữ IVE với chiều cao ấn tượng và visual búp bê là ai?', '["Liz","An Yu-jin","Jang Won-young","Rei"]'::jsonb, 2, 'Jang Won-young là ''it-girl'' hàng đầu thế hệ mới của K-Pop, tạo ra vô số trào lưu trang điểm và thời trang.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/330px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/330px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg', NULL, NULL, 'Y8JFxS1HlDo', 'AUDIO_GUESS', 'medium', 1000, 20, 'IVE - LOVE DIVE', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Trung tâm thị giác (center) nổi tiếng của nhóm nhạc nữ IVE với chiều cao ấn tượng và visual búp bê là ai?')
 );
@@ -2304,7 +2304,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   23, 228, 'K-Pop', 'Bản hit ''Love Dive'' đã mang về giải Daesang ''Bài hát của năm'' cho nhóm nhạc nào năm 2022?', '["NewJeans","IVE","LE SSERAFIM","(G)I-DLE"]'::jsonb, 1, 'IVE thắng lớn Daesang Song of the Year tại MAMA 2022 với bản hit ''Love Dive''.',
-  'https://img.youtube.com/vi/Y8JFxS1HlDo/hqdefault.jpg', NULL, NULL, 'Y8JFxS1HlDo', 'AUDIO_GUESS', 'medium', 1000, 20, 'IVE - Love Dive', true, true
+  'https://img.youtube.com/vi/Y8JFxS1HlDo/hqdefault.jpg', NULL, NULL, '11cta61Wi0g', 'AUDIO_GUESS', 'medium', 1000, 20, 'NewJeans - Hype Boy', true, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Bản hit ''Love Dive'' đã mang về giải Daesang ''Bài hát của năm'' cho nhóm nhạc nào năm 2022?')
 );
@@ -2314,7 +2314,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   23, 229, 'K-Pop', 'Nhóm nhạc nam SEVENTEEN gồm có bao nhiêu thành viên chính thức?', '["13 thành viên","17 thành viên","11 thành viên","9 thành viên"]'::jsonb, 0, 'Dù tên là SEVENTEEN nhưng nhóm có 13 thành viên + 3 unit phụ + 1 nhóm hợp nhất = 17.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Seventeen_Carat_Land_24.jpg/330px-Seventeen_Carat_Land_24.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Seventeen_Carat_Land_24.jpg/330px-Seventeen_Carat_Land_24.jpg', NULL, NULL, 'zSQ48zyWZrY', 'AUDIO_GUESS', 'medium', 1000, 20, 'SEVENTEEN - Don''t Wanna Cry', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhóm nhạc nam SEVENTEEN gồm có bao nhiêu thành viên chính thức?')
 );
@@ -2324,7 +2324,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   23, 230, 'K-Pop', 'Nhóm nhạc nam EXO khi mới ra mắt năm 2012 được chia thành 2 nhóm nhỏ hoạt động tại Hàn Quốc và Trung Quốc là gì?', '["EXO-Alpha và EXO-Beta","EXO-KR và EXO-CN","EXO-East và EXO-West","EXO-K và EXO-M"]'::jsonb, 3, 'EXO-K biểu diễn bằng tiếng Hàn và EXO-M biểu diễn bằng tiếng Quan Thoại.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Exo_monster_160618_suwon.png/330px-Exo_monster_160618_suwon.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Exo_monster_160618_suwon.png/330px-Exo_monster_160618_suwon.png', NULL, NULL, 'rBG5L7GSmVE', 'AUDIO_GUESS', 'medium', 1000, 20, 'BTS - No More Dream', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhóm nhạc nam EXO khi mới ra mắt năm 2012 được chia thành 2 nhóm nhỏ hoạt động tại Hàn Quốc và Trung Quốc là gì?')
 );
@@ -2334,7 +2334,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   24, 231, 'K-Pop', 'Ca khúc ''Growl'' (Gầm gừ) với MV quay một cú máy liền mạch (one-take) ấn tượng là bước ngoặt của nhóm nào?', '["GOT7","BTS","EXO","VIXX"]'::jsonb, 2, '''Growl'' phát hành năm 2013 đưa EXO trở thành hiện tượng triệu bản đĩa đầu tiên của K-Pop sau 12 năm.',
-  'https://img.youtube.com/vi/I3dezFzsNss/hqdefault.jpg', NULL, NULL, 'I3dezFzsNss', 'AUDIO_GUESS', 'medium', 1000, 20, 'EXO - Growl', false, true
+  'https://img.youtube.com/vi/I3dezFzsNss/hqdefault.jpg', NULL, NULL, 'gdZLi9oWNZg', 'AUDIO_GUESS', 'medium', 1000, 20, 'BTS - Dynamite', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc ''Growl'' (Gầm gừ) với MV quay một cú máy liền mạch (one-take) ấn tượng là bước ngoặt của nhóm nào?')
 );
@@ -2344,7 +2344,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   24, 232, 'K-Pop', 'Nhóm nhạc nữ cá tính 2NE1 dưới trướng YG gồm 4 thành viên nào?', '["Jisoo, Jennie, Rosé, Lisa","CL, Park Bom, Dara, Minzy","Hyuna, Sohyun, Jiyoon, Gayoon","Sunmi, Yeeun, Sohee, Yubin"]'::jsonb, 1, '2NE1 tiên phong phong cách girl-crush mạnh mẽ với thủ lĩnh CL, giọng ca chính Park Bom, visual Dara và cỗ máy nhảy Minzy.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ae/20240314_Lisa_Manoban_07.jpg/330px-20240314_Lisa_Manoban_07.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ae/20240314_Lisa_Manoban_07.jpg/330px-20240314_Lisa_Manoban_07.jpg', NULL, NULL, '2S24-y0Ij3Y', 'AUDIO_GUESS', 'medium', 1000, 20, 'BLACKPINK - Kill This Love', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhóm nhạc nữ cá tính 2NE1 dưới trướng YG gồm 4 thành viên nào?')
 );
@@ -2374,7 +2374,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   24, 235, 'K-Pop', 'Ba công ty giải trí lớn nhất định hình lịch sử K-Pop thường được gọi chung là gì?', '["Top 3 K-Pop","The Holy Trinity","BIG 3 (SM, JYP, YG)","Hallyu Big 3"]'::jsonb, 2, 'Big 3 bao gồm SM Entertainment, JYP Entertainment và YG Entertainment thống trị nền công nghiệp giải trí Hàn Quốc suốt nhiều thập kỷ.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/330px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/330px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg', NULL, NULL, 'gdZLi9oWNZg', 'AUDIO_GUESS', 'medium', 1000, 20, 'BTS - Dynamite', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ba công ty giải trí lớn nhất định hình lịch sử K-Pop thường được gọi chung là gì?')
 );
@@ -2384,7 +2384,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   24, 236, 'K-Pop', 'Ca sĩ solo IU có biệt danh thân thương được truyền thông và công chúng Hàn Quốc trao tặng là gì?', '["Mối tình đầu quốc dân","Em gái quốc dân","Nữ hoàng ballad","Nàng tiên K-Pop"]'::jsonb, 1, 'IU (Lee Ji-eun) được phong danh hiệu ''Em gái quốc dân'' nhờ hình tượng trong sáng và giọng hát 3 nốt cao vút trong ''Good Day''.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1a/IU_at_the_Est%C3%A9e_Lauder_launch_event%2C_26_February_2026_%2810%29.png/330px-IU_at_the_Est%C3%A9e_Lauder_launch_event%2C_26_February_2026_%2810%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1a/IU_at_the_Est%C3%A9e_Lauder_launch_event%2C_26_February_2026_%2810%29.png/330px-IU_at_the_Est%C3%A9e_Lauder_launch_event%2C_26_February_2026_%2810%29.png', NULL, NULL, 'gdZLi9oWNZg', 'AUDIO_GUESS', 'medium', 1000, 20, 'BTS - Dynamite', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca sĩ solo IU có biệt danh thân thương được truyền thông và công chúng Hàn Quốc trao tặng là gì?')
 );
@@ -2394,7 +2394,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   24, 237, 'K-Pop', 'Bài hát ''Good Day'' của IU nổi tiếng khắp các sân khấu âm nhạc nhờ điều đặc biệt gì?', '["Đoạn ngân 3 nốt cao liên tiếp ở cuối bài","Màn nhảy hip-hop điêu luyện","Màn rap nhanh như súng liên thanh","Tiếng đàn tranh cổ"]'::jsonb, 0, 'Kỹ thuật thanh nhạc phi thường với 3 nốt cao liên hồi không lấy hơi trong Good Day đã khẳng định đẳng cấp giọng hát của IU.',
-  'https://img.youtube.com/vi/jeqdYqsrsA0/hqdefault.jpg', NULL, NULL, 'jeqdYqsrsA0', 'AUDIO_GUESS', 'medium', 1000, 20, 'IU - Good Day', false, true
+  'https://img.youtube.com/vi/jeqdYqsrsA0/hqdefault.jpg', NULL, NULL, 'KhTeiaCezwM', 'AUDIO_GUESS', 'medium', 1000, 20, 'MAMAMOO - HIP', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Bài hát ''Good Day'' của IU nổi tiếng khắp các sân khấu âm nhạc nhờ điều đặc biệt gì?')
 );
@@ -2404,7 +2404,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   24, 238, 'K-Pop', 'Thành viên kiêm nhà sản xuất chính sáng tác hầu hết các bản hit của (G)I-DLE như ''Tomboy'', ''Queencard'' là ai?', '["Yuqi","Miyeon","Minnie","Soyeon (Jeon So-yeon)"]'::jsonb, 3, 'Trưởng nhóm Soyeon là thiên tài sáng tác và rapper cực chất đứng sau linh hồn của (G)I-DLE.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ec/Queen_A_Night_At_The_Opera_%281975_Elektra_publicity_photo_02%29.jpg/330px-Queen_A_Night_At_The_Opera_%281975_Elektra_publicity_photo_02%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, true, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ec/Queen_A_Night_At_The_Opera_%281975_Elektra_publicity_photo_02%29.jpg/330px-Queen_A_Night_At_The_Opera_%281975_Elektra_publicity_photo_02%29.jpg', NULL, NULL, 'gdZLi9oWNZg', 'AUDIO_GUESS', 'medium', 1000, 20, 'BTS - Dynamite', true, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Thành viên kiêm nhà sản xuất chính sáng tác hầu hết các bản hit của (G)I-DLE như ''Tomboy'', ''Queencard'' là ai?')
 );
@@ -2424,7 +2424,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   24, 240, 'K-Pop', 'Thành viên nào của BTS đã phát hành album solo ''Golden'' và bản hit ''Seven'' hợp tác với Latto đạt quán quân Billboard Hot 100?', '["Jimin","Jungkook","V (Taehyung)","Suga"]'::jsonb, 1, 'Em út vàng Jungkook đã lập nên vô số kỷ lục thế giới với single mở đường ''Seven''.',
-  'https://img.youtube.com/vi/QU9c0053UAU/hqdefault.jpg', NULL, NULL, 'QU9c0053UAU', 'AUDIO_GUESS', 'medium', 1000, 20, 'Jung Kook - Seven (feat. Latto)', false, true
+  'https://img.youtube.com/vi/QU9c0053UAU/hqdefault.jpg', NULL, NULL, 'gdZLi9oWNZg', 'AUDIO_GUESS', 'medium', 1000, 20, 'BTS - Dynamite', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Thành viên nào của BTS đã phát hành album solo ''Golden'' và bản hit ''Seven'' hợp tác với Latto đạt quán quân Billboard Hot 100?')
 );
@@ -2444,7 +2444,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   25, 242, 'K-Pop', 'Nhóm nhạc nữ LE SSERAFIM gồm có cựu thành viên của nhóm IZ*ONE là ai?', '["Kang Hye-won và Kim Min-ju","Jang Won-young và An Yu-jin","Choi Ye-na và Jo Yu-ri","Miyawaki Sakura và Kim Chae-won"]'::jsonb, 3, 'Sakura và Chaewon cùng nhau tái xuất bùng nổ trong đội hình nhóm nhạc nữ LE SSERAFIM.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/330px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/330px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg', NULL, NULL, 'pyf8cbqyfPs', 'AUDIO_GUESS', 'medium', 1000, 20, 'LE SSERAFIM - ANTIFRAGILE', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhóm nhạc nữ LE SSERAFIM gồm có cựu thành viên của nhóm IZ*ONE là ai?')
 );
@@ -2454,7 +2454,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   25, 243, 'K-Pop', 'Ca khúc solo ''Flower'' với vũ đạo nở hoa ở lòng bàn tay gây sốt toàn cầu là của thành viên nào thuộc BLACKPINK?', '["Rosé","Jennie","Jisoo","Lisa"]'::jsonb, 2, 'Chị cả Jisoo đã làm khuynh đảo mạng xã hội với điệu nhảy xoay cổ tay hoa nở trong MV ''Flower''.',
-  'https://img.youtube.com/vi/YudHcBIxlYw/hqdefault.jpg', NULL, NULL, 'YudHcBIxlYw', 'AUDIO_GUESS', 'medium', 1000, 20, 'JISOO - FLOWER', false, true
+  'https://img.youtube.com/vi/YudHcBIxlYw/hqdefault.jpg', NULL, NULL, '2S24-y0Ij3Y', 'AUDIO_GUESS', 'medium', 1000, 20, 'BLACKPINK - Kill This Love', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc solo ''Flower'' với vũ đạo nở hoa ở lòng bàn tay gây sốt toàn cầu là của thành viên nào thuộc BLACKPINK?')
 );
@@ -2464,7 +2464,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   25, 244, 'K-Pop', 'Vật phẩm cầm tay phát sáng đặc trưng mà fan K-Pop mang theo cổ vũ thần tượng trong concert được gọi là gì?', '["Flashlight","Lightstick","Glowstick","Fanstay"]'::jsonb, 1, 'Mỗi nhóm nhạc đều thiết kế riêng một chiếc Lightstick độc quyền với biểu tượng, màu sắc và điều khiển bluetooth đổi màu theo nhạc concert.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/330px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/330px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg', NULL, NULL, 'gdZLi9oWNZg', 'AUDIO_GUESS', 'medium', 1000, 20, 'BTS - Dynamite', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Vật phẩm cầm tay phát sáng đặc trưng mà fan K-Pop mang theo cổ vũ thần tượng trong concert được gọi là gì?')
 );
@@ -2474,7 +2474,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   25, 245, 'K-Pop', 'Lightstick hình chiếc búa hơi đồ chơi phát ra tiếng kêu ''chíp chíp'' màu đen hồng là của nhóm nhạc nào?', '["BLACKPINK (Bi-ping-bong)","BTS","TWICE","Red Velvet"]'::jsonb, 0, 'Chiếc búa đồ chơi bóp kêu chíp chíp độc nhất vô nhị của BLACKPINK được thiết kế bởi chính 4 cô gái.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/330px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/330px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg', NULL, NULL, 'gdZLi9oWNZg', 'AUDIO_GUESS', 'hard', 1200, 20, 'BTS - Dynamite', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Lightstick hình chiếc búa hơi đồ chơi phát ra tiếng kêu ''chíp chíp'' màu đen hồng là của nhóm nhạc nào?')
 );
@@ -2484,7 +2484,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   25, 246, 'K-Pop', 'Ca khúc ''Mirotic'' (2008) với câu hát huyền thoại ''I got you under my skin'' là của nhóm nhạc huyền thoại nào?', '["2PM","Super Junior","SS501","TVXQ (DBSK)"]'::jsonb, 3, 'Những vị thần phương Đông TVXQ với đội hình 5 người đã tạo nên kiệt tác ''Mirotic'' bất hủ.',
-  'https://img.youtube.com/vi/HtJS32n6LNQ/hqdefault.jpg', NULL, NULL, 'HtJS32n6LNQ', 'AUDIO_GUESS', 'hard', 1200, 20, 'TVXQ! - Mirotic', false, true
+  'https://img.youtube.com/vi/HtJS32n6LNQ/hqdefault.jpg', NULL, NULL, 'x6QA3m58DQw', 'AUDIO_GUESS', 'hard', 1200, 20, 'Super Junior - Sorry, Sorry', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc ''Mirotic'' (2008) với câu hát huyền thoại ''I got you under my skin'' là của nhóm nhạc huyền thoại nào?')
 );
@@ -2494,7 +2494,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   25, 247, 'K-Pop', 'Thành viên Rosé (Park Chae-young) của BLACKPINK sinh ra ở New Zealand và lớn lên tại thành phố nào của nước Úc?', '["Brisbane","Sydney","Melbourne","Perth"]'::jsonb, 2, 'Rosé lớn lên tại thành phố Melbourne (Australia) trước khi xuất sắc vượt qua buổi tuyển chọn của YG Entertainment.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b3/Blackpink_Ros%C3%A9_Rimowa_1.jpg/330px-Blackpink_Ros%C3%A9_Rimowa_1.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b3/Blackpink_Ros%C3%A9_Rimowa_1.jpg/330px-Blackpink_Ros%C3%A9_Rimowa_1.jpg', NULL, NULL, '2S24-y0Ij3Y', 'AUDIO_GUESS', 'hard', 1200, 20, 'BLACKPINK - Kill This Love', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Thành viên Rosé (Park Chae-young) của BLACKPINK sinh ra ở New Zealand và lớn lên tại thành phố nào của nước Úc?')
 );
@@ -2504,7 +2504,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   25, 248, 'K-Pop', 'Nam ca sĩ Taeyang (BIGBANG) đã kết hợp cùng ai trong bản hit ballad lãng mạn ''VIBE'' năm 2023?', '["Jungkook (BTS)","Jimin (BTS)","G-Dragon","Jay Park"]'::jsonb, 1, 'Màn kết hợp lịch sử giữa hai giọng ca vàng Taeyang và Jimin (BTS) đã tạo nên bản hit ''VIBE''.',
-  'https://img.youtube.com/vi/cXCBiF67jLM/hqdefault.jpg', NULL, NULL, 'cXCBiF67jLM', 'AUDIO_GUESS', 'hard', 1200, 20, 'TAEYANG - ''VIBE (feat. Jimin of BTS)''', true, true
+  'https://img.youtube.com/vi/cXCBiF67jLM/hqdefault.jpg', NULL, NULL, 'gdZLi9oWNZg', 'AUDIO_GUESS', 'hard', 1200, 20, 'BTS - Dynamite', true, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nam ca sĩ Taeyang (BIGBANG) đã kết hợp cùng ai trong bản hit ballad lãng mạn ''VIBE'' năm 2023?')
 );
@@ -2524,7 +2524,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   25, 250, 'K-Pop', 'Công ty giải trí nào là công ty mẹ đã tạo nên nhóm nhạc toàn cầu BTS và TXT?', '["YG Entertainment","SM Entertainment","JYP Entertainment","HYBE (tiền thân là Big Hit Entertainment)"]'::jsonb, 3, 'Chủ tịch Bang Si-hyuk đã dẫn dắt Big Hit Entertainment vươn mình thành tập đoàn giải trí khổng lồ HYBE Labels.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/330px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/330px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg', NULL, NULL, 'gdZLi9oWNZg', 'AUDIO_GUESS', 'hard', 1200, 20, 'BTS - Dynamite', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Công ty giải trí nào là công ty mẹ đã tạo nên nhóm nhạc toàn cầu BTS và TXT?')
 );
@@ -2534,7 +2534,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   26, 251, 'K-Pop', 'Nhóm nhạc nam K-Pop nào của công ty Pledis (HYBE) được chia thành 3 nhóm nhỏ: Hip-Hop Team, Vocal Team và Performance Team?', '["Stray Kids","NCT","SEVENTEEN","TXT"]'::jsonb, 2, 'SEVENTEEN gồm 13 thành viên + 3 nhóm nhỏ + 1 tập thể = 17.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Seventeen_Carat_Land_24.jpg/330px-Seventeen_Carat_Land_24.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Seventeen_Carat_Land_24.jpg/330px-Seventeen_Carat_Land_24.jpg', NULL, NULL, 'zSQ48zyWZrY', 'AUDIO_GUESS', 'hard', 1200, 20, 'SEVENTEEN - Don''t Wanna Cry', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhóm nhạc nam K-Pop nào của công ty Pledis (HYBE) được chia thành 3 nhóm nhỏ: Hip-Hop Team, Vocal Team và Performance Team?')
 );
@@ -2544,7 +2544,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   26, 252, 'K-Pop', 'Trong nhóm nhạc Stray Kids (JYP Entertainment), bộ ba tự sáng tác và sản xuất âm nhạc của nhóm có tên là gì?', '["BSS (BooSeokSoon)","3RACHA","NCT DoJaeJung","GD&TOP"]'::jsonb, 1, '3RACHA gồm Bang Chan, Changbin và Han là đội ngũ sản xuất âm nhạc chính của Stray Kids.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/330px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/330px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg', NULL, NULL, 'TQTlCHxyuu8', 'AUDIO_GUESS', 'hard', 1200, 20, 'Stray Kids - God''s Menu', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Trong nhóm nhạc Stray Kids (JYP Entertainment), bộ ba tự sáng tác và sản xuất âm nhạc của nhóm có tên là gì?')
 );
@@ -2554,7 +2554,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   26, 253, 'K-Pop', 'Nhóm nhạc nữ thế hệ 4 nào trực thuộc Starship Entertainment có hai thành viên từng hoạt động trong IZ*ONE là Jang Won-young và An Yu-jin?', '["IVE","LE SSERAFIM","NewJeans","NMIXX"]'::jsonb, 0, 'IVE ra mắt năm 2021 với loạt bản hit ''Eleven'', ''Love Dive'', ''After LIKE'', ''I AM''.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7b/NewJeans_2023_MelonMusicAwards_composite.jpg/330px-NewJeans_2023_MelonMusicAwards_composite.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7b/NewJeans_2023_MelonMusicAwards_composite.jpg/330px-NewJeans_2023_MelonMusicAwards_composite.jpg', NULL, NULL, '11cta61Wi0g', 'AUDIO_GUESS', 'hard', 1200, 20, 'NewJeans - Hype Boy', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhóm nhạc nữ thế hệ 4 nào trực thuộc Starship Entertainment có hai thành viên từng hoạt động trong IZ*ONE là Jang Won-young và An Yu-jin?')
 );
@@ -2564,7 +2564,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   26, 254, 'K-Pop', 'Ca khúc ''Love Dive'' của nhóm nhạc IVE đã giành giải Bài hát của năm (Daesang) vào năm nào?', '["2024","2020","2018","2022"]'::jsonb, 3, '''Love Dive'' thống trị các bảng xếp hạng Hàn Quốc và giành hàng loạt giải Daesang cuối năm 2022.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/330px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/330px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg', NULL, NULL, 'Y8JFxS1HlDo', 'AUDIO_GUESS', 'hard', 1200, 20, 'IVE - LOVE DIVE', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc ''Love Dive'' của nhóm nhạc IVE đã giành giải Bài hát của năm (Daesang) vào năm nào?')
 );
@@ -2574,7 +2574,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   26, 255, 'K-Pop', 'Nhóm nhạc nữ LE SSERAFIM trực thuộc công ty con nào của tập đoàn HYBE?', '["Belift Lab","ADOR","Source Music","Pledis"]'::jsonb, 2, 'LE SSERAFIM là nhóm nhạc nữ trực thuộc Source Music (HYBE) với các bản hit ''Antifragile'', ''Unforgiven''.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Seventeen_Carat_Land_24.jpg/330px-Seventeen_Carat_Land_24.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Seventeen_Carat_Land_24.jpg/330px-Seventeen_Carat_Land_24.jpg', NULL, NULL, 'pyf8cbqyfPs', 'AUDIO_GUESS', 'hard', 1200, 20, 'LE SSERAFIM - ANTIFRAGILE', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhóm nhạc nữ LE SSERAFIM trực thuộc công ty con nào của tập đoàn HYBE?')
 );
@@ -2584,7 +2584,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   26, 256, 'K-Pop', 'Nhóm nhạc nam đầu tiên của nhà YG Entertainment gây sốt với bản hit ''Really Really'' năm 2017 là nhóm nào?', '["iKON","WINNER","TREASURE","BIGBANG"]'::jsonb, 1, 'WINNER ra mắt sau chương trình sống còn WIN: Who Is Next và có siêu hit ''Really Really''.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ce/BIGBANG_2011_%28current_members_since_2023%29.jpg/330px-BIGBANG_2011_%28current_members_since_2023%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ce/BIGBANG_2011_%28current_members_since_2023%29.jpg/330px-BIGBANG_2011_%28current_members_since_2023%29.jpg', NULL, NULL, 'MzCbEdtNbJ0', 'AUDIO_GUESS', 'hard', 1200, 20, 'BIGBANG - Haru Haru', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhóm nhạc nam đầu tiên của nhà YG Entertainment gây sốt với bản hit ''Really Really'' năm 2017 là nhóm nào?')
 );
@@ -2594,7 +2594,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   26, 257, 'K-Pop', 'Siêu hit ''Love Scenario'' được học sinh tiểu học Hàn Quốc thuộc nằm lòng năm 2018 là của nhóm nhạc nào?', '["iKON","WINNER","BTOB","MONSTA X"]'::jsonb, 0, '''Love Scenario'' của nhóm iKON từng tạo cơn sốt toàn quốc và thắng giải Bài hát của năm tại MMA 2018.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/330px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/330px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg', NULL, NULL, 'vecSVX1QYbQ', 'AUDIO_GUESS', 'hard', 1200, 20, 'iKON - LOVE SCENARIO', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Siêu hit ''Love Scenario'' được học sinh tiểu học Hàn Quốc thuộc nằm lòng năm 2018 là của nhóm nhạc nào?')
 );
@@ -2604,7 +2604,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   26, 258, 'K-Pop', 'Nhóm nhạc nữ Red Velvet của SM Entertainment có 5 thành viên gồm Irene, Seulgi, Wendy, Joy và ai?', '["Ningning","Winter","Karina","Yeri"]'::jsonb, 3, 'Yeri là em út (maknae) gia nhập Red Velvet vào năm 2015 trong đợt quảng bá ''Ice Cream Cake''.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/330px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, true, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/330px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg', NULL, NULL, 'WyiIGEHQP8o', 'AUDIO_GUESS', 'hard', 1200, 20, 'Red Velvet - Red Flavor', true, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhóm nhạc nữ Red Velvet của SM Entertainment có 5 thành viên gồm Irene, Seulgi, Wendy, Joy và ai?')
 );
@@ -2614,7 +2614,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   26, 259, 'K-Pop', 'Bản hit mùa hè ''Red Flavor'' và bản hit ma mị ''Psycho'' là của nhóm nhạc nữ nào?', '["MAMAMOO","TWICE","Red Velvet","GFRIEND"]'::jsonb, 2, 'Red Velvet nổi tiếng với 2 phong cách âm nhạc ''Red'' (tươi sáng) và ''Velvet'' (quyến rũ, ma mị).',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/PSY_EMTV_logo_27_%288198008711%29.jpg/330px-PSY_EMTV_logo_27_%288198008711%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/PSY_EMTV_logo_27_%288198008711%29.jpg/330px-PSY_EMTV_logo_27_%288198008711%29.jpg', NULL, NULL, '9bZkp7q19f0', 'AUDIO_GUESS', 'hard', 1200, 20, 'PSY - Gangnam Style', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Bản hit mùa hè ''Red Flavor'' và bản hit ma mị ''Psycho'' là của nhóm nhạc nữ nào?')
 );
@@ -2624,7 +2624,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   26, 260, 'K-Pop', 'Nhóm nhạc nữ tài năng gồm 4 thành viên Solar, Moonbyul, Wheein và Hwasa có tên là gì?', '["SISTAR","MAMAMOO","2NE1","Brown Eyed Girls"]'::jsonb, 1, 'MAMAMOO nổi tiếng với khả năng hát live đỉnh cao và các bản hit ''HIP'', ''Starry Night''.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f9/2NE1_2013_kpop_hologram_%28cropped%29.jpg/330px-2NE1_2013_kpop_hologram_%28cropped%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f9/2NE1_2013_kpop_hologram_%28cropped%29.jpg/330px-2NE1_2013_kpop_hologram_%28cropped%29.jpg', NULL, NULL, 'j7_lSP8Vc3o', 'AUDIO_GUESS', 'hard', 1200, 20, '2NE1 - I Am The Best', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhóm nhạc nữ tài năng gồm 4 thành viên Solar, Moonbyul, Wheein và Hwasa có tên là gì?')
 );
@@ -2634,7 +2634,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   27, 261, 'US-UK', 'Ai được mệnh danh là ''Ông hoàng nhạc Pop'' (King of Pop) với những bước nhảy Moonwalk huyền thoại?', '["Freddie Mercury","Elvis Presley","Prince","Michael Jackson"]'::jsonb, 3, 'Michael Jackson là nghệ sĩ giải trí vĩ đại nhất mọi thời đại với album bán chạy nhất lịch sử ''Thriller''.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, 'sOnqjkJTMaA', 'AUDIO_GUESS', 'easy', 1000, 20, 'Michael Jackson - Thriller', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ai được mệnh danh là ''Ông hoàng nhạc Pop'' (King of Pop) với những bước nhảy Moonwalk huyền thoại?')
 );
@@ -2654,7 +2654,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   27, 263, 'US-UK', 'Nữ ca sĩ nào là chủ nhân của chuyến lưu diễn kỷ lục lịch sử ''The Eras Tour'' và có fandom mang tên Swifties?', '["Beyoncé","Taylor Swift","Katy Perry","Ariana Grande"]'::jsonb, 1, 'Taylor Swift là một trong những nghệ sĩ có tầm ảnh hưởng văn hóa và kinh tế lớn nhất thế kỷ 21.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b1/Taylor_Swift_at_the_2023_MTV_Video_Music_Awards_%283%29.png/330px-Taylor_Swift_at_the_2023_MTV_Video_Music_Awards_%283%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b1/Taylor_Swift_at_the_2023_MTV_Video_Music_Awards_%283%29.png/330px-Taylor_Swift_at_the_2023_MTV_Video_Music_Awards_%283%29.png', NULL, NULL, 'nfWlot6h_JM', 'AUDIO_GUESS', 'easy', 1000, 20, 'Taylor Swift - Shake It Off', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nữ ca sĩ nào là chủ nhân của chuyến lưu diễn kỷ lục lịch sử ''The Eras Tour'' và có fandom mang tên Swifties?')
 );
@@ -2684,7 +2684,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   27, 266, 'US-UK', 'Ban nhạc rock huyền thoại người Anh với giọng ca chính Freddie Mercury và kiệt tác ''Bohemian Rhapsody'' là nhóm nào?', '["The Rolling Stones","The Beatles","Queen","Pink Floyd"]'::jsonb, 2, 'Ban nhạc Queen nổi tiếng toàn cầu với ''Bohemian Rhapsody'', ''We Will Rock You'' và ''We Are The Champions''.',
-  'https://img.youtube.com/vi/fJ9rUzIMcZQ/hqdefault.jpg', NULL, NULL, 'fJ9rUzIMcZQ', 'AUDIO_GUESS', 'easy', 1000, 20, 'Queen – Bohemian Rhapsody', false, true
+  'https://img.youtube.com/vi/fJ9rUzIMcZQ/hqdefault.jpg', NULL, NULL, 'fJ9rUzIMcZQ', 'AUDIO_GUESS', 'easy', 1000, 20, 'Queen - Bohemian Rhapsody', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ban nhạc rock huyền thoại người Anh với giọng ca chính Freddie Mercury và kiệt tác ''Bohemian Rhapsody'' là nhóm nào?')
 );
@@ -2694,7 +2694,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   27, 267, 'US-UK', 'Tứ quái thành phố cảng Liverpool (The Fab Four) gồm John Lennon, Paul McCartney, George Harrison và Ringo Starr thuộc ban nhạc nào?', '["Oasis","The Beatles","U2","The Who"]'::jsonb, 1, 'The Beatles là ban nhạc có sức ảnh hưởng sâu sắc nhất đến lịch sử âm nhạc hiện đại nhân loại.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/The_Beatles_1963_Dezo_Hoffman_Capitol_Records_press_photo_2.jpg/330px-The_Beatles_1963_Dezo_Hoffman_Capitol_Records_press_photo_2.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/The_Beatles_1963_Dezo_Hoffman_Capitol_Records_press_photo_2.jpg/330px-The_Beatles_1963_Dezo_Hoffman_Capitol_Records_press_photo_2.jpg', NULL, NULL, 'A_MjCqQoLLA', 'AUDIO_GUESS', 'easy', 1000, 20, 'The Beatles - Hey Jude', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Tứ quái thành phố cảng Liverpool (The Fab Four) gồm John Lennon, Paul McCartney, George Harrison và Ringo Starr thuộc ban nhạc nào?')
 );
@@ -2704,7 +2704,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   27, 268, 'US-UK', 'Ca khúc nào được coi là bài thánh ca Giáng sinh bất hủ của Mariah Carey cứ đến tháng 12 hàng năm lại leo lên No.1 Billboard?', '["All I Want for Christmas Is You","Last Christmas","Jingle Bell Rock","Santa Tell Me"]'::jsonb, 0, 'Mariah Carey được mệnh danh là ''Nữ hoàng Giáng sinh'' nhờ bản hit All I Want for Christmas Is You ra đời từ năm 1994.',
-  'https://img.youtube.com/vi/yXQViqx6GMY/hqdefault.jpg', NULL, NULL, 'yXQViqx6GMY', 'AUDIO_GUESS', 'easy', 1000, 20, 'Mariah Carey - All I Want for Christmas Is You', false, true
+  'https://img.youtube.com/vi/yXQViqx6GMY/hqdefault.jpg', NULL, NULL, 'yXQViqx6GMY', 'AUDIO_GUESS', 'easy', 1000, 20, 'Mariah Carey - All I Want For Christmas Is You', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc nào được coi là bài thánh ca Giáng sinh bất hủ của Mariah Carey cứ đến tháng 12 hàng năm lại leo lên No.1 Billboard?')
 );
@@ -2714,7 +2714,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   27, 269, 'US-UK', 'Nam ca sĩ người Canada từng gây sốt toàn thế giới ở tuổi thiếu niên với siêu hit ''Baby'' (2010) là ai?', '["Drake","Shawn Mendes","The Weeknd","Justin Bieber"]'::jsonb, 3, 'Justin Bieber trở thành thần tượng tuổi teen toàn cầu với ca khúc ''Baby'' và cộng đồng Beliebers hùng hậu.',
-  'https://img.youtube.com/vi/kffacxfA7G4/hqdefault.jpg', NULL, NULL, 'kffacxfA7G4', 'AUDIO_GUESS', 'easy', 1000, 20, 'Justin Bieber - Baby ft. Ludacris', false, true
+  'https://img.youtube.com/vi/kffacxfA7G4/hqdefault.jpg', NULL, NULL, 'kffacxfA7G4', 'AUDIO_GUESS', 'easy', 1000, 20, 'Justin Bieber - Baby', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nam ca sĩ người Canada từng gây sốt toàn thế giới ở tuổi thiếu niên với siêu hit ''Baby'' (2010) là ai?')
 );
@@ -2724,7 +2724,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   27, 270, 'US-UK', 'Ca khúc ''See You Again'' tưởng nhớ cố diễn viên Paul Walker trong phim Fast & Furious 7 là của Wiz Khalifa và ai?', '["Justin Bieber","Bruno Mars","Charlie Puth","John Legend"]'::jsonb, 2, 'Charlie Puth thể hiện đoạn điệp khúc piano xúc động đã đưa ''See You Again'' vượt mốc 6 tỷ lượt xem.',
-  'https://img.youtube.com/vi/RgKAFK5djSk/hqdefault.jpg', NULL, NULL, 'RgKAFK5djSk', 'AUDIO_GUESS', 'easy', 1000, 20, 'Wiz Khalifa - See You Again ft. Charlie Puth', true, true
+  'https://img.youtube.com/vi/RgKAFK5djSk/hqdefault.jpg', NULL, NULL, 'kffacxfA7G4', 'AUDIO_GUESS', 'easy', 1000, 20, 'Justin Bieber - Baby', true, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc ''See You Again'' tưởng nhớ cố diễn viên Paul Walker trong phim Fast & Furious 7 là của Wiz Khalifa và ai?')
 );
@@ -2734,7 +2734,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   28, 271, 'US-UK', 'Nữ ca sĩ nào được mệnh danh là ''Queen Bey'' và là nghệ sĩ đoạt nhiều giải Grammy nhất trong lịch sử?', '["Rihanna","Beyoncé","Madonna","Lady Gaga"]'::jsonb, 1, 'Beyoncé nắm giữ kỷ lục vô tiền khoáng hậu với hơn 32 chiếc kèn vàng Grammy danh giá.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ec/Queen_A_Night_At_The_Opera_%281975_Elektra_publicity_photo_02%29.jpg/330px-Queen_A_Night_At_The_Opera_%281975_Elektra_publicity_photo_02%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ec/Queen_A_Night_At_The_Opera_%281975_Elektra_publicity_photo_02%29.jpg/330px-Queen_A_Night_At_The_Opera_%281975_Elektra_publicity_photo_02%29.jpg', NULL, NULL, 'fJ9rUzIMcZQ', 'AUDIO_GUESS', 'easy', 1000, 20, 'Queen - Bohemian Rhapsody', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nữ ca sĩ nào được mệnh danh là ''Queen Bey'' và là nghệ sĩ đoạt nhiều giải Grammy nhất trong lịch sử?')
 );
@@ -2744,7 +2744,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   28, 272, 'US-UK', 'Ca khúc retro funk bùng nổ ''Uptown Funk'' là sản phẩm hợp tác giữa nhà sản xuất Mark Ronson và nam ca sĩ nào?', '["Bruno Mars","The Weeknd","Pharrell Williams","Justin Timberlake"]'::jsonb, 0, 'Bruno Mars thể hiện năng lượng nhảy và giọng hát đỉnh cao trong bản hit ''Uptown Funk'' khuynh đảo năm 2014.',
-  'https://img.youtube.com/vi/OPf0YbXqDm0/hqdefault.jpg', NULL, NULL, 'OPf0YbXqDm0', 'AUDIO_GUESS', 'easy', 1000, 20, 'Mark Ronson - Uptown Funk ft. Bruno Mars', false, true
+  'https://img.youtube.com/vi/OPf0YbXqDm0/hqdefault.jpg', NULL, NULL, 'OPf0YbXqDm0', 'AUDIO_GUESS', 'easy', 1000, 20, 'Mark Ronson ft. Bruno Mars - Uptown Funk', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc retro funk bùng nổ ''Uptown Funk'' là sản phẩm hợp tác giữa nhà sản xuất Mark Ronson và nam ca sĩ nào?')
 );
@@ -2754,7 +2754,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   28, 273, 'US-UK', 'Nữ ca sĩ Gen Z với phong cách tóc hai màu nổi loạn, sở hữu 9 giải Grammy và 2 tượng vàng Oscar cho nhạc phim là ai?', '["Dua Lipa","Olivia Rodrigo","Sabrina Carpenter","Billie Eilish"]'::jsonb, 3, 'Billie Eilish sinh năm 2001 đã viết nên lịch sử khi đoạt cả giải Oscar cho ca khúc ''No Time To Die'' và ''What Was I Made For?''.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/BillieEilishO2140725-39_-_54665577407_%28cropped%29.jpg/330px-BillieEilishO2140725-39_-_54665577407_%28cropped%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/BillieEilishO2140725-39_-_54665577407_%28cropped%29.jpg/330px-BillieEilishO2140725-39_-_54665577407_%28cropped%29.jpg', NULL, NULL, 'DyDfgMOUjCI', 'AUDIO_GUESS', 'easy', 1000, 20, 'Billie Eilish - bad guy', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nữ ca sĩ Gen Z với phong cách tóc hai màu nổi loạn, sở hữu 9 giải Grammy và 2 tượng vàng Oscar cho nhạc phim là ai?')
 );
@@ -2774,7 +2774,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   28, 275, 'US-UK', 'Rapper da trắng nào được công nhận là một trong những rapper vĩ đại nhất lịch sử với biệt danh ''Rap God''?', '["Machine Gun Kelly","Eminem (Slim Shady)","Post Malone","Macklemore"]'::jsonb, 1, 'Eminem (Marshall Mathers) nổi tiếng với tốc độ bắn chữ thần tốc và kỹ thuật gieo vần đỉnh cao trong ''Lose Yourself'', ''Rap God''.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Eminem_2021_Color_Corrected.jpg/330px-Eminem_2021_Color_Corrected.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Eminem_2021_Color_Corrected.jpg/330px-Eminem_2021_Color_Corrected.jpg', NULL, NULL, '_Yhyp-_hX2s', 'AUDIO_GUESS', 'easy', 1000, 20, 'Eminem - Lose Yourself', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Rapper da trắng nào được công nhận là một trong những rapper vĩ đại nhất lịch sử với biệt danh ''Rap God''?')
 );
@@ -2784,7 +2784,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   28, 276, 'US-UK', 'Ca khúc ''Lose Yourself'' trong bộ phim ''8 Mile'' đã mang về cho Eminem giải thưởng điện ảnh danh giá nào?', '["Giải Oscar cho Ca khúc nhạc phim xuất sắc nhất","Giải Cành cọ vàng","Giải BAFTA","Giải Sư tử vàng"]'::jsonb, 0, 'Eminem là nghệ sĩ hip-hop đầu tiên trong lịch sử thắng giải Oscar cho hạng mục Ca khúc nhạc phim xuất sắc nhất.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Eminem_2021_Color_Corrected.jpg/330px-Eminem_2021_Color_Corrected.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Eminem_2021_Color_Corrected.jpg/330px-Eminem_2021_Color_Corrected.jpg', NULL, NULL, '_Yhyp-_hX2s', 'AUDIO_GUESS', 'easy', 1000, 20, 'Eminem - Lose Yourself', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc ''Lose Yourself'' trong bộ phim ''8 Mile'' đã mang về cho Eminem giải thưởng điện ảnh danh giá nào?')
 );
@@ -2804,7 +2804,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   28, 278, 'US-UK', 'Nữ ca sĩ nào từng biểu diễn tại Super Bowl với hình tượng diện váy thịt bò nổi tiếng và bản hit ''Bad Romance''?', '["Nicki Minaj","Katy Perry","Lady Gaga","Miley Cyrus"]'::jsonb, 2, 'Lady Gaga là biểu tượng âm nhạc quái chiêu với giọng hát opera nội lực và các bản hit ''Poker Face'', ''Born This Way'', ''Shallow''.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Lady_Gaga_at_Joe_Biden%27s_inauguration_%28cropped_5%29.jpg/330px-Lady_Gaga_at_Joe_Biden%27s_inauguration_%28cropped_5%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'easy', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Lady_Gaga_at_Joe_Biden%27s_inauguration_%28cropped_5%29.jpg/330px-Lady_Gaga_at_Joe_Biden%27s_inauguration_%28cropped_5%29.jpg', NULL, NULL, 'qrO4YZeyl0I', 'AUDIO_GUESS', 'easy', 1000, 20, 'Lady Gaga - Bad Romance', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nữ ca sĩ nào từng biểu diễn tại Super Bowl với hình tượng diện váy thịt bò nổi tiếng và bản hit ''Bad Romance''?')
 );
@@ -2814,7 +2814,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   28, 279, 'US-UK', 'Ai là nữ ca sĩ tỉ phú đến từ đảo quốc Barbados sở hữu đế chế mỹ phẩm Fenty Beauty và bản hit ''Umbrella''?', '["Beyoncé","Rihanna","Nicki Minaj","Cardi B"]'::jsonb, 1, 'Rihanna sở hữu 14 đĩa đơn No.1 Billboard Hot 100 và là một trong những nữ doanh nhân âm nhạc giàu nhất thế giới.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b7/Beyonc%C3%A9_-_Tottenham_Hotspur_Stadium_-_1st_June_2023_%2810_of_118%29_%2852946364598%29_%28best_crop%29.jpg/330px-Beyonc%C3%A9_-_Tottenham_Hotspur_Stadium_-_1st_June_2023_%2810_of_118%29_%2852946364598%29_%28best_crop%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b7/Beyonc%C3%A9_-_Tottenham_Hotspur_Stadium_-_1st_June_2023_%2810_of_118%29_%2852946364598%29_%28best_crop%29.jpg/330px-Beyonc%C3%A9_-_Tottenham_Hotspur_Stadium_-_1st_June_2023_%2810_of_118%29_%2852946364598%29_%28best_crop%29.jpg', NULL, NULL, 'kZhuwYyJmTE', 'AUDIO_GUESS', 'medium', 1000, 20, 'Rihanna - Diamonds', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ai là nữ ca sĩ tỉ phú đến từ đảo quốc Barbados sở hữu đế chế mỹ phẩm Fenty Beauty và bản hit ''Umbrella''?')
 );
@@ -2824,7 +2824,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   28, 280, 'US-UK', 'Ca khúc ''Roar'' và ''Dark Horse'' với hàng tỷ lượt xem là của nữ ca sĩ nhạc pop người Mỹ nào?', '["Katy Perry","Taylor Swift","Selena Gomez","Demi Lovato"]'::jsonb, 0, 'Katy Perry từng làm nên lịch sử khi có 5 đĩa đơn quán quân trong cùng một album ''Teenage Dream'' (ngang bằng kỷ lục của Michael Jackson).',
-  'https://img.youtube.com/vi/CevxZvSJLk8/hqdefault.jpg', NULL, NULL, 'CevxZvSJLk8', 'AUDIO_GUESS', 'medium', 1000, 20, 'Katy Perry - Roar', true, true
+  'https://img.youtube.com/vi/CevxZvSJLk8/hqdefault.jpg', NULL, NULL, 'nfWlot6h_JM', 'AUDIO_GUESS', 'medium', 1000, 20, 'Taylor Swift - Shake It Off', true, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc ''Roar'' và ''Dark Horse'' với hàng tỷ lượt xem là của nữ ca sĩ nhạc pop người Mỹ nào?')
 );
@@ -2854,7 +2854,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   29, 283, 'US-UK', 'Ca khúc ''Believer'' và ''Demons'' tràn đầy năng lượng mạnh mẽ thuộc về ban nhạc rock nào?', '["OneRepublic","Imagine Dragons","Fall Out Boy","Linkin Park"]'::jsonb, 1, 'Imagine Dragons nổi tiếng với tiếng trống dồn dập và giọng hát đầy nhiệt huyết của Dan Reynolds.',
-  'https://img.youtube.com/vi/7wtfhZwyrcc/hqdefault.jpg', NULL, NULL, '7wtfhZwyrcc', 'AUDIO_GUESS', 'medium', 1000, 20, 'Imagine Dragons - Believer', false, true
+  'https://img.youtube.com/vi/7wtfhZwyrcc/hqdefault.jpg', NULL, NULL, 'eVTXPUF4Oz4', 'AUDIO_GUESS', 'medium', 1000, 20, 'Linkin Park - In The End', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc ''Believer'' và ''Demons'' tràn đầy năng lượng mạnh mẽ thuộc về ban nhạc rock nào?')
 );
@@ -2874,7 +2874,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   29, 285, 'US-UK', 'Nữ ca sĩ nào có biệt danh ''Tiểu diva'' với chất giọng 4 quãng tám và bản hit ''7 Rings'', ''Thank U, Next''?', '["Bebe Rexha","Camila Cabello","Dua Lipa","Ariana Grande"]'::jsonb, 3, 'Ariana Grande sở hữu kỹ thuật whistle register (giọng sáo) siêu đẳng kế thừa phong cách của Mariah Carey.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/Ariana_Grande_promoting_Wicked_%282024%29.jpg/330px-Ariana_Grande_promoting_Wicked_%282024%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/Ariana_Grande_promoting_Wicked_%282024%29.jpg/330px-Ariana_Grande_promoting_Wicked_%282024%29.jpg', NULL, NULL, 'QYh6mYIJG2Y', 'AUDIO_GUESS', 'medium', 1000, 20, 'Ariana Grande - 7 rings', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nữ ca sĩ nào có biệt danh ''Tiểu diva'' với chất giọng 4 quãng tám và bản hit ''7 Rings'', ''Thank U, Next''?')
 );
@@ -2904,7 +2904,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   29, 288, 'US-UK', 'Nữ ca sĩ nhạc pop người Anh gốc Albania sở hữu loạt hit disco ''Levitating'', ''Don''t Start Now'' là ai?', '["Dua Lipa","Rita Ora","Ava Max","Anne-Marie"]'::jsonb, 0, 'Dua Lipa đã hồi sinh dòng nhạc Disco hiện đại rực rỡ qua album ''Future Nostalgia''.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, 'TUVcZfQe-Kw', 'AUDIO_GUESS', 'medium', 1000, 20, 'Dua Lipa - Levitating', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nữ ca sĩ nhạc pop người Anh gốc Albania sở hữu loạt hit disco ''Levitating'', ''Don''t Start Now'' là ai?')
 );
@@ -2914,7 +2914,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   29, 289, 'US-UK', 'Nhóm nhạc nam nước Anh từng gây sốt toàn cầu bước ra từ cuộc thi The X Factor 2010 gồm 5 chàng trai là nhóm nào?', '["Jonas Brothers","The Wanted","5 Seconds of Summer","One Direction"]'::jsonb, 3, 'One Direction (Harry Styles, Zayn Malik, Liam Payne, Louis Tomlinson, Niall Horan) là boyband đình đám nhất thập niên 2010.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, 'sOnqjkJTMaA', 'AUDIO_GUESS', 'medium', 1000, 20, 'Michael Jackson - Thriller', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhóm nhạc nam nước Anh từng gây sốt toàn cầu bước ra từ cuộc thi The X Factor 2010 gồm 5 chàng trai là nhóm nào?')
 );
@@ -2924,7 +2924,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   29, 290, 'US-UK', 'Bản tình ca acoustic ''Thinking Out Loud'' đã giúp Ed Sheeran lần đầu tiên giành giải Grammy ''Bài hát của năm'' vào năm nào?', '["2018","2013","2016","2020"]'::jsonb, 2, '''Thinking Out Loud'' là một trong những bản nhạc đám cưới lãng mạn được yêu thích nhất mọi thời đại.',
-  'https://img.youtube.com/vi/lp-EO5I60KA/hqdefault.jpg', NULL, NULL, 'lp-EO5I60KA', 'AUDIO_GUESS', 'medium', 1000, 20, 'Ed Sheeran - Thinking Out Loud', true, true
+  'https://img.youtube.com/vi/lp-EO5I60KA/hqdefault.jpg', NULL, NULL, 'JGwWNGJdvx8', 'AUDIO_GUESS', 'medium', 1000, 20, 'Ed Sheeran - Shape of You', true, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Bản tình ca acoustic ''Thinking Out Loud'' đã giúp Ed Sheeran lần đầu tiên giành giải Grammy ''Bài hát của năm'' vào năm nào?')
 );
@@ -2934,7 +2934,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   30, 291, 'US-UK', 'Ca khúc bất hủ ''My Heart Will Go On'' trong bộ phim kinh điển Titanic do diva huyền thoại nào thể hiện?', '["Whitney Houston","Céline Dion","Mariah Carey","Barbra Streisand"]'::jsonb, 1, 'Céline Dion với chất giọng cao vút, dạt dào cảm xúc đã biến ca khúc của James Horner thành bản tình ca vĩ đại.',
-  'https://img.youtube.com/vi/WNIPqafd4As/hqdefault.jpg', NULL, NULL, 'WNIPqafd4As', 'AUDIO_GUESS', 'medium', 1000, 20, 'Céline Dion - My Heart Will Go On', false, true
+  'https://img.youtube.com/vi/WNIPqafd4As/hqdefault.jpg', NULL, NULL, 'yXQViqx6GMY', 'AUDIO_GUESS', 'medium', 1000, 20, 'Mariah Carey - All I Want For Christmas Is You', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc bất hủ ''My Heart Will Go On'' trong bộ phim kinh điển Titanic do diva huyền thoại nào thể hiện?')
 );
@@ -2954,7 +2954,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   30, 293, 'US-UK', 'Ca khúc ''Espresso'' và ''Please Please Please'' gây sốt toàn cầu mùa hè năm 2024 do nữ ca sĩ trẻ nào thể hiện?', '["Gracie Abrams","Chappell Roan","Olivia Rodrigo","Sabrina Carpenter"]'::jsonb, 3, 'Sabrina Carpenter với ca từ hóm hỉnh ''That''s that me espresso'' đã chiếm lĩnh các bảng xếp hạng thế giới suốt năm 2024.',
-  'https://img.youtube.com/vi/eVli-tstM5E/hqdefault.jpg', NULL, NULL, 'eVli-tstM5E', 'AUDIO_GUESS', 'medium', 1000, 20, 'Sabrina Carpenter - Espresso', false, true
+  'https://img.youtube.com/vi/eVli-tstM5E/hqdefault.jpg', NULL, NULL, 'ZmDBbnmKpqQ', 'AUDIO_GUESS', 'medium', 1000, 20, 'Olivia Rodrigo - drivers license', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc ''Espresso'' và ''Please Please Please'' gây sốt toàn cầu mùa hè năm 2024 do nữ ca sĩ trẻ nào thể hiện?')
 );
@@ -2964,7 +2964,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   30, 294, 'US-UK', 'Bản hit tuổi teen ''Drivers License'' đã đưa nữ ca sĩ sinh năm 2003 nào vụt sáng thành hiện tượng toàn cầu năm 2021?', '["Tate McRae","Billie Eilish","Olivia Rodrigo","Conan Gray"]'::jsonb, 2, 'Olivia Rodrigo lập kỷ lục lượt stream Spotify chỉ sau tuần đầu phát hành album ''SOUR''.',
-  'https://img.youtube.com/vi/ZmDBbnmKpqQ/hqdefault.jpg', NULL, NULL, 'ZmDBbnmKpqQ', 'AUDIO_GUESS', 'medium', 1000, 20, 'Olivia Rodrigo - drivers license', false, true
+  'https://img.youtube.com/vi/ZmDBbnmKpqQ/hqdefault.jpg', NULL, NULL, 'DyDfgMOUjCI', 'AUDIO_GUESS', 'medium', 1000, 20, 'Billie Eilish - bad guy', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Bản hit tuổi teen ''Drivers License'' đã đưa nữ ca sĩ sinh năm 2003 nào vụt sáng thành hiện tượng toàn cầu năm 2021?')
 );
@@ -2974,7 +2974,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   30, 295, 'US-UK', 'Nữ ca sĩ nào từng đóng vai chính trong phim nhạc kịch ''A Star Is Born'' và cùng Bradley Cooper hát bài ''Shallow'' đoạt giải Oscar?', '["Beyoncé","Lady Gaga","Taylor Swift","Jennifer Lopez"]'::jsonb, 1, 'Màn song ca trực tiếp tại lễ trao giải Oscar giữa Lady Gaga và Bradley Cooper cho ca khúc ''Shallow'' đã đi vào lịch sử.',
-  'https://img.youtube.com/vi/bo_efYhVmWk/hqdefault.jpg', NULL, NULL, 'bo_efYhVmWk', 'AUDIO_GUESS', 'medium', 1000, 20, 'Lady Gaga, Bradley Cooper - Shallow', false, true
+  'https://img.youtube.com/vi/bo_efYhVmWk/hqdefault.jpg', NULL, NULL, 'nfWlot6h_JM', 'AUDIO_GUESS', 'medium', 1000, 20, 'Taylor Swift - Shake It Off', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nữ ca sĩ nào từng đóng vai chính trong phim nhạc kịch ''A Star Is Born'' và cùng Bradley Cooper hát bài ''Shallow'' đoạt giải Oscar?')
 );
@@ -2984,7 +2984,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   30, 296, 'US-UK', 'Nhóm nhạc electronic người Pháp Daft Punk nổi tiếng với bộ trang phục biểu diễn độc đáo nào?', '["Mũ bảo hiểm robot kim loại che kín mặt","Mặt nạ hóa trang Guy Fawkes","Trang phục phi hành gia NASA","Mặt nạ chú hề"]'::jsonb, 0, 'Daft Punk (Thomas Bangalter và Guy-Manuel de Homem-Christo) luôn xuất hiện trong hình tượng robot đội nón mạ chrome và vàng.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, 'sOnqjkJTMaA', 'AUDIO_GUESS', 'medium', 1000, 20, 'Michael Jackson - Thriller', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhóm nhạc electronic người Pháp Daft Punk nổi tiếng với bộ trang phục biểu diễn độc đáo nào?')
 );
@@ -2994,7 +2994,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   30, 297, 'US-UK', 'Bản hit ''Counting Stars'' đạt hàng tỷ view là của ban nhạc pop-rock người Mỹ nào do Ryan Tedder làm thủ lĩnh?', '["Snow Patrol","The Fray","Coldplay","OneRepublic"]'::jsonb, 3, 'Ryan Tedder - nhạc sĩ mát tay cho hàng loạt ngôi sao lớn - đã dẫn dắt OneRepublic tạo nên siêu hit ''Counting Stars''.',
-  'https://img.youtube.com/vi/hT_nvWreIhg/hqdefault.jpg', NULL, NULL, 'hT_nvWreIhg', 'AUDIO_GUESS', 'hard', 1200, 20, 'OneRepublic - Counting Stars', false, true
+  'https://img.youtube.com/vi/hT_nvWreIhg/hqdefault.jpg', NULL, NULL, 'dvgZkm1xWPE', 'AUDIO_GUESS', 'hard', 1200, 20, 'Coldplay - Viva La Vida', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Bản hit ''Counting Stars'' đạt hàng tỷ view là của ban nhạc pop-rock người Mỹ nào do Ryan Tedder làm thủ lĩnh?')
 );
@@ -3004,7 +3004,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   30, 298, 'US-UK', 'Ca sĩ/nhạc sĩ mù người Mỹ sở hữu 25 giải Grammy và các bản tình ca ''I Just Called to Say I Love You'', ''Isn''t She Lovely'' là ai?', '["Andrea Bocelli","Ray Charles","Stevie Wonder","Lionel Richie"]'::jsonb, 2, 'Stevie Wonder là thiên tài âm nhạc chơi thành thạo piano, harmonica và trống từ thuở nhỏ.',
-  'https://thumb.wikimedia.org/wikipedia/en/thumb/6/62/Grammy_Awards_logo.svg/330px-Grammy_Awards_logo.svg.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/en/thumb/6/62/Grammy_Awards_logo.svg/330px-Grammy_Awards_logo.svg.png', NULL, NULL, 'sOnqjkJTMaA', 'AUDIO_GUESS', 'hard', 1200, 20, 'Michael Jackson - Thriller', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca sĩ/nhạc sĩ mù người Mỹ sở hữu 25 giải Grammy và các bản tình ca ''I Just Called to Say I Love You'', ''Isn''t She Lovely'' là ai?')
 );
@@ -3014,7 +3014,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   30, 299, 'US-UK', 'Album ''21'' của Adele lấy cảm hứng từ sự việc nào trong đời sống riêng của cô?', '["Lễ mừng sinh nhật tròn 21 tuổi","Cuộc chia tay đau đớn với mối tình ở tuổi 21","Kỷ niệm 21 năm ca hát","21 thành phố cô từng lưu diễn"]'::jsonb, 1, 'Adele đặt tên các album theo số tuổi quan trọng của mình (19, 21, 25, 30), trong đó album 21 viết về nỗi đau thất tình tan vỡ.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/Adele_2016.jpg/330px-Adele_2016.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/Adele_2016.jpg/330px-Adele_2016.jpg', NULL, NULL, 'rYEDA3JcQqw', 'AUDIO_GUESS', 'hard', 1200, 20, 'Adele - Rolling in the Deep', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Album ''21'' của Adele lấy cảm hứng từ sự việc nào trong đời sống riêng của cô?')
 );
@@ -3024,7 +3024,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   30, 300, 'US-UK', 'Ca khúc ''Hotel California'' (1976) với đoạn solo guitar kết thúc kinh điển là của ban nhạc rock nào?', '["Eagles","Aerosmith","Guns N'' Roses","Fleetwood Mac"]'::jsonb, 0, 'Ban nhạc Eagles đã tạo ra tuyệt phẩm ''Hotel California'' - một trong những bài hát rock bất hủ nhất thế kỷ 20.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, true, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, '09839DpTctU', 'AUDIO_GUESS', 'hard', 1200, 20, 'Eagles - Hotel California', true, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc ''Hotel California'' (1976) với đoạn solo guitar kết thúc kinh điển là của ban nhạc rock nào?')
 );
@@ -3044,7 +3044,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   31, 302, 'US-UK', 'Lễ trao giải âm nhạc danh giá và lâu đời nhất thế giới được tổ chức thường niên bởi Viện hàn lâm Thu âm Hoa Kỳ là giải gì?', '["American Music Awards (AMA)","Billboard Music Awards","Giải Grammy (Grammy Awards)","BRIT Awards"]'::jsonb, 2, 'Giải thưởng Grammy với chiếc cúp hình máy hát đĩa mạ vàng là đỉnh cao danh vọng cao quý nhất của mọi nghệ sĩ âm nhạc.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/180417_%EB%B3%B4%EC%95%84_03_%28cropped%29_02.png/330px-180417_%EB%B3%B4%EC%95%84_03_%28cropped%29_02.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/180417_%EB%B3%B4%EC%95%84_03_%28cropped%29_02.png/330px-180417_%EB%B3%B4%EC%95%84_03_%28cropped%29_02.png', NULL, NULL, 'sOnqjkJTMaA', 'AUDIO_GUESS', 'hard', 1200, 20, 'Michael Jackson - Thriller', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Lễ trao giải âm nhạc danh giá và lâu đời nhất thế giới được tổ chức thường niên bởi Viện hàn lâm Thu âm Hoa Kỳ là giải gì?')
 );
@@ -3054,7 +3054,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   31, 303, 'US-UK', 'Ban nhạc rock huyền thoại nào của Anh là chủ nhân của album ''The Dark Side of the Moon'' với bìa hình lăng kính tán sắc ánh sáng?', '["Led Zeppelin","Pink Floyd","The Rolling Stones","Deep Purple"]'::jsonb, 1, '''The Dark Side of the Moon'' (1973) của Pink Floyd là một trong những album bán chạy và vĩ đại nhất lịch sử.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, 'sOnqjkJTMaA', 'AUDIO_GUESS', 'hard', 1200, 20, 'Michael Jackson - Thriller', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ban nhạc rock huyền thoại nào của Anh là chủ nhân của album ''The Dark Side of the Moon'' với bìa hình lăng kính tán sắc ánh sáng?')
 );
@@ -3064,7 +3064,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   31, 304, 'US-UK', 'Ca khúc bất hủ ''Hotel California'' (1976) là tác phẩm để đời của ban nhạc rock Mỹ nào?', '["Eagles","Aerosmith","Bon Jovi","Guns N'' Roses"]'::jsonb, 0, 'Ban nhạc Eagles đã tạo nên kiệt tác ''Hotel California'' với đoạn solo guitar huyền thoại.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, '09839DpTctU', 'AUDIO_GUESS', 'hard', 1200, 20, 'Eagles - Hotel California', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc bất hủ ''Hotel California'' (1976) là tác phẩm để đời của ban nhạc rock Mỹ nào?')
 );
@@ -3074,7 +3074,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   31, 305, 'US-UK', 'Ai là giọng ca chính của ban nhạc rock альтернатив Nirvana với ca khúc ''Smells Like Teen Spirit''?', '["Dave Grohl","Chester Bennington","Axl Rose","Kurt Cobain"]'::jsonb, 3, 'Kurt Cobain là thủ lĩnh biểu tượng của dòng nhạc Grunge và ban nhạc Nirvana thập niên 1990.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, 'hTWKbfoikeg', 'AUDIO_GUESS', 'hard', 1200, 20, 'Nirvana - Smells Like Teen Spirit', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ai là giọng ca chính của ban nhạc rock альтернатив Nirvana với ca khúc ''Smells Like Teen Spirit''?')
 );
@@ -3084,7 +3084,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   31, 306, 'US-UK', 'Cố ca sĩ Chester Bennington là giọng ca chính huyền thoại của ban nhạc rock Mỹ nào?', '["My Chemical Romance","Green Day","Linkin Park","Imagine Dragons"]'::jsonb, 2, 'Chester Bennington cùng Mike Shinoda đã đưa Linkin Park trở thành tượng đài Nu-metal với ''In the End'', ''Numb''.',
-  'https://upload.wikimedia.org/wikipedia/en/9/9d/Link_%28Hyrule_Historia%29.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://upload.wikimedia.org/wikipedia/en/9/9d/Link_%28Hyrule_Historia%29.png', NULL, NULL, 'eVTXPUF4Oz4', 'AUDIO_GUESS', 'hard', 1200, 20, 'Linkin Park - In The End', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Cố ca sĩ Chester Bennington là giọng ca chính huyền thoại của ban nhạc rock Mỹ nào?')
 );
@@ -3094,7 +3094,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   31, 307, 'US-UK', 'Bộ đôi nhạc điện tử người Pháp từng đội mũ bảo hiểm robot nổi tiếng với bản hit ''Get Lucky'' là ai?', '["The Chainsmokers","Daft Punk","Disclosure","Swedish House Mafia"]'::jsonb, 1, 'Daft Punk (Thomas Bangalter và Guy-Manuel) là bộ đôi nhạc điện tử huyền thoại của Pháp.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, 'sOnqjkJTMaA', 'AUDIO_GUESS', 'hard', 1200, 20, 'Michael Jackson - Thriller', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Bộ đôi nhạc điện tử người Pháp từng đội mũ bảo hiểm robot nổi tiếng với bản hit ''Get Lucky'' là ai?')
 );
@@ -3104,7 +3104,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   31, 308, 'US-UK', 'Nữ ca sĩ người Anh Dua Lipa phát hành album phòng thu thứ hai mang đậm phong cách Disco-pop năm 2020 có tên là gì?', '["Future Nostalgia","Radical Optimism","Renaissance","Midnights"]'::jsonb, 0, 'Album ''Future Nostalgia'' với bản hit ''Levitating'', ''Don''t Start Now'' đã mang về giải Grammy cho Dua Lipa.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, 'TUVcZfQe-Kw', 'AUDIO_GUESS', 'hard', 1200, 20, 'Dua Lipa - Levitating', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nữ ca sĩ người Anh Dua Lipa phát hành album phòng thu thứ hai mang đậm phong cách Disco-pop năm 2020 có tên là gì?')
 );
@@ -3114,7 +3114,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   31, 309, 'US-UK', 'Nam ca sĩ Harry Styles từng là thành viên của nhóm nhạc nam đình đám nào trước khi hoạt động solo?', '["Jonas Brothers","Backstreet Boys","Westlife","One Direction"]'::jsonb, 3, 'Harry Styles bước ra từ nhóm nhạc One Direction và gặt hái thành công vang dội với ''As It Was'', ''Watermelon Sugar''.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, 'H5v3kku4y6Q', 'AUDIO_GUESS', 'hard', 1200, 20, 'Harry Styles - As It Was', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nam ca sĩ Harry Styles từng là thành viên của nhóm nhạc nam đình đám nào trước khi hoạt động solo?')
 );
@@ -3124,7 +3124,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   31, 310, 'US-UK', 'Ca khúc ''As It Was'' thống trị bảng xếp hạng Billboard Hot 100 suốt 15 tuần năm 2022 nằm trong album nào của Harry Styles?', '["Four","Fine Line","Harry''s House","Midnight Memories"]'::jsonb, 2, 'Album ''Harry''s House'' đã giành giải Album của năm tại lễ trao giải Grammy lần thứ 65.',
-  'https://upload.wikimedia.org/wikipedia/en/3/3f/Case_Closed_Volume_36.png', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, true, true
+  'https://upload.wikimedia.org/wikipedia/en/3/3f/Case_Closed_Volume_36.png', NULL, NULL, 'H5v3kku4y6Q', 'AUDIO_GUESS', 'hard', 1200, 20, 'Harry Styles - As It Was', true, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Ca khúc ''As It Was'' thống trị bảng xếp hạng Billboard Hot 100 suốt 15 tuần năm 2022 nằm trong album nào của Harry Styles?')
 );
@@ -3134,7 +3134,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   32, 311, 'US-UK', 'Nữ ca sĩ trẻ Olivia Rodrigo bùng nổ toàn cầu năm 2021 với đĩa đơn đầu tay nào?', '["good 4 u","drivers license","vampire","deja vu"]'::jsonb, 1, '''drivers license'' nằm trong album đầu tay ''SOUR'' đã đưa Olivia Rodrigo thành ngôi sao nhạc Pop thế hệ mới.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg/330px-Michael_Jackson_1983_%283x4_cropped%29_%28contrast%29.jpg', NULL, NULL, 'ZmDBbnmKpqQ', 'AUDIO_GUESS', 'hard', 1200, 20, 'Olivia Rodrigo - drivers license', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nữ ca sĩ trẻ Olivia Rodrigo bùng nổ toàn cầu năm 2021 với đĩa đơn đầu tay nào?')
 );
@@ -3144,7 +3144,7 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   32, 312, 'US-UK', 'Nhóm nhạc pop-rock Imagine Dragons nổi tiếng toàn cầu với các bản hit ''Believer'', ''Thunder'' và ca khúc nào sau đây?', '["Radioactive","Counting Stars","Viva La Vida","Wake Me Up"]'::jsonb, 0, '''Radioactive'' là một trong những đĩa đơn kim cương nổi tiếng nhất của Imagine Dragons.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cc/ColdplayWembley120925_%28cropped%29.jpg/330px-ColdplayWembley120925_%28cropped%29.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'hard', 1200, 20, NULL, false, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cc/ColdplayWembley120925_%28cropped%29.jpg/330px-ColdplayWembley120925_%28cropped%29.jpg', NULL, NULL, 'dvgZkm1xWPE', 'AUDIO_GUESS', 'hard', 1200, 20, 'Coldplay - Viva La Vida', false, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Nhóm nhạc pop-rock Imagine Dragons nổi tiếng toàn cầu với các bản hit ''Believer'', ''Thunder'' và ca khúc nào sau đây?')
 );
@@ -3344,11 +3344,11 @@ INSERT INTO public.quiz_questions (
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active
 ) SELECT
   34, 332, 'Địa lý cơ bản', 'Đồng bằng sông Cửu Long của Việt Nam được bồi đắp bởi hệ thống sông nào?', '["Sông Đà","Sông Hồng","Sông Đồng Nai","Sông Mê Kông (Mekong)"]'::jsonb, 3, 'Sông Mekong bắt nguồn từ cao nguyên Tây Tạng chảy qua 6 quốc gia trước khi đổ ra biển Đông qua 9 cửa sông Cửu Long.',
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Meteosat-12-fci-march-equinox-2025-noon.jpg/330px-Meteosat-12-fci-march-equinox-2025-noon.jpg', NULL, NULL, NULL, 'MULTIPLE_CHOICE', 'medium', 1000, 20, NULL, true, true
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/Mekong_river_basin.png/330px-Mekong_river_basin.png', NULL, NULL, NULL, 'IMAGE_GUESS', 'medium', 1000, 20, NULL, true, true
 WHERE NOT EXISTS (
   SELECT 1 FROM public.quiz_questions WHERE lower(trim(prompt)) = lower('Đồng bằng sông Cửu Long của Việt Nam được bồi đắp bởi hệ thống sông nào?')
 );
-UPDATE public.quiz_questions SET image_url = 'https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Meteosat-12-fci-march-equinox-2025-noon.jpg/330px-Meteosat-12-fci-march-equinox-2025-noon.jpg' WHERE lower(trim(prompt)) = lower('Đồng bằng sông Cửu Long của Việt Nam được bồi đắp bởi hệ thống sông nào?') AND (image_url IS NULL OR image_url = '');
+UPDATE public.quiz_questions SET image_url = 'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/Mekong_river_basin.png/330px-Mekong_river_basin.png' WHERE lower(trim(prompt)) = lower('Đồng bằng sông Cửu Long của Việt Nam được bồi đắp bởi hệ thống sông nào?') AND (image_url IS NULL OR image_url = '');
 INSERT INTO public.quiz_questions (
   round_no, question_no, category, prompt, options, correct_index, explanation,
   image_url, audio_url, video_url, youtube_video_id, question_type, difficulty, points, time_limit, source, is_double_points, active

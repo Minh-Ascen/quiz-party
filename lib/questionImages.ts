@@ -207,6 +207,12 @@ export const VERIFIED_IMAGES: Record<string, string> = {
   keanu_reeves: "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b4/Keanu_Reeves_at_TIFF_2025_02_%28Cropped%29.jpg/330px-Keanu_Reeves_at_TIFF_2025_02_%28Cropped%29.jpg",
   forrest_gump: "https://upload.wikimedia.org/wikipedia/en/6/67/Forrest_Gump_poster.jpg",
   home_alone: "https://upload.wikimedia.org/wikipedia/en/7/76/Home_alone_poster.jpg",
+  mekong: "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/Mekong_river_basin.png/330px-Mekong_river_basin.png",
+  mekong_delta: "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/84/Ph%C6%B0%E1%BB%9Dng_M%E1%BB%B9_Tho.jpg/330px-Ph%C6%B0%E1%BB%9Dng_M%E1%BB%B9_Tho.jpg",
+  hieuthuhai: "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/HIEUTHUHAI.jpg/330px-HIEUTHUHAI.jpg",
+  doraemon_pocket: "https://upload.wikimedia.org/wikipedia/en/c/c8/Doraemon_volume_1_cover.jpg",
+  red_river: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/39/Redriverasiamap.png/330px-Redriverasiamap.png",
+  fansipan_peak: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Fansipan_Peak.jpg/640px-Fansipan_Peak.jpg",
   ao_dai: "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1a/%C3%81o_d%C3%A0i_hoa_ph%C6%B0%E1%BB%A3ng_-_Ph%C3%A1t_Tr%C6%B0%C6%A1ng_-_51231007393_%28cropped%29.jpg/330px-%C3%81o_d%C3%A0i_hoa_ph%C6%B0%E1%BB%A3ng_-_Ph%C3%A1t_Tr%C6%B0%C6%A1ng_-_51231007393_%28cropped%29.jpg",
   cinema: "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b1/Ptuj%2C_city_cinema.jpg/330px-Ptuj%2C_city_cinema.jpg"
 };
@@ -218,6 +224,8 @@ const KEYWORD_IMAGE_RULES: Array<{ keywords: string[]; imageKey: string }> = [
   // 20 câu hỏi gốc trên Supabase
   { keywords: ["tỷ phú thiên tài", "giáp công nghệ cao", "iron man", "tony stark"], imageKey: "iron_man" },
   { keywords: ["harry potter", "ron weasley", "hermione", "hogwarts", "quidditch"], imageKey: "ron_weasley" },
+  // Doraemon
+  { keywords: ["túi không gian bốn chiều", "túi dự phòng", "đệm ngủ trong tủ"], imageKey: "doraemon_pocket" },
   { keywords: ["bánh rán", "dorayaki"], imageKey: "dorayaki" },
   { keywords: ["dưa lưới", "melonpan"], imageKey: "melonpan" },
   { keywords: ["fujiko"], imageKey: "fujiko" },
@@ -272,6 +280,7 @@ const KEYWORD_IMAGE_RULES: Array<{ keywords: string[]; imageKey: string }> = [
   { keywords: ["park bo-gum"], imageKey: "park_bo_gum" },
 
   // Âm nhạc Việt Nam
+  { keywords: ["hieuthuhai", "ngủ một mình", "gerdnang"], imageKey: "hieuthuhai" },
   { keywords: ["sơn tùng", "m-tp", "hãy trao cho anh", "chắc ai đó sẽ về"], imageKey: "son_tung" },
   { keywords: ["mỹ tâm", "họa mi tóc nâu"], imageKey: "my_tam" },
   { keywords: ["đen vâu", "đi về nhà", "nấu ăn cho em"], imageKey: "den_vau" },
@@ -340,6 +349,8 @@ const KEYWORD_IMAGE_RULES: Array<{ keywords: string[]; imageKey: string }> = [
   { keywords: ["grammy"], imageKey: "grammy" },
 
   // Địa lý
+  { keywords: ["cửu long", "mê kông", "mekong"], imageKey: "mekong" },
+  { keywords: ["sông hồng", "sông đà"], imageKey: "red_river" },
   { keywords: ["canberra", "nước úc", "lục địa"], imageKey: "canberra" },
   { keywords: ["ottawa", "canada"], imageKey: "ottawa" },
   { keywords: ["fansipan", "đông dương"], imageKey: "fansipan" },

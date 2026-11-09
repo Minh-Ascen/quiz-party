@@ -205,7 +205,8 @@ module.exports = [
     correct_index: 0,
     explanation: "Doraemon giấu chiếc túi dự phòng bốn chiều sơ cua ngay dưới tấm nệm ngủ trong tủ tường.",
     difficulty: "medium",
-    question_type: "MULTIPLE_CHOICE"
+    question_type: "IMAGE_GUESS",
+    image_url: "https://upload.wikimedia.org/wikipedia/en/c/c8/Doraemon_volume_1_cover.jpg"
   },
   {
     category: "Doraemon",

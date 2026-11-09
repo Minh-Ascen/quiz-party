@@ -184,7 +184,8 @@ module.exports = [
     correct_index: 0,
     explanation: "Sông Mekong bắt nguồn từ cao nguyên Tây Tạng chảy qua 6 quốc gia trước khi đổ ra biển Đông qua 9 cửa sông Cửu Long.",
     difficulty: "easy",
-    question_type: "MULTIPLE_CHOICE"
+    question_type: "IMAGE_GUESS",
+    image_url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/Mekong_river_basin.png/330px-Mekong_river_basin.png"
   },
   {
     category: "Địa lý cơ bản",

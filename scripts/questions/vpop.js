@@ -203,7 +203,10 @@ module.exports = [
     correct_index: 0,
     explanation: "HIEUTHUHAI (Trần Minh Hiếu) là rapper đình đám nhóm GERDNANG, quán quân 'Anh Trai Say Hi'.",
     difficulty: "easy",
-    question_type: "MULTIPLE_CHOICE"
+    question_type: "AUDIO_GUESS",
+    youtube_video_id: "0W0hF_h61z8",
+    image_url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/HIEUTHUHAI.jpg/330px-HIEUTHUHAI.jpg",
+    source: "HIEUTHUHAI - Ngủ Một Mình"
   },
   {
     category: "Âm nhạc Việt Nam",

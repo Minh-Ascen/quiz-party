@@ -54,7 +54,9 @@ export default function Home() {
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [seconds, setSeconds] = useState(20);
+  const [autoNextCountdown, setAutoNextCountdown] = useState<number | null>(null);
   const [isMuted, setIsMuted] = useState(false);
+  const [isExitDialogOpen, setIsExitDialogOpen] = useState(false);
 
   // Modals
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -182,21 +184,64 @@ export default function Home() {
 
   // Reset selected answer on new question
   useEffect(() => {
+    setSelected(null);
+  }, [state?.current_index]);
+
+  // Reset selected answer when entering playing state
+  useEffect(() => {
     if (state?.status === "playing") {
       setSelected(null);
     }
-  }, [state?.current_index, state?.status]);
+  }, [state?.status]);
 
-  // Play sound on answer reveal
+  // Play sound on answer reveal & Auto-transition countdown in 5 seconds
   useEffect(() => {
-    if (state?.status === "reveal" && state.question && selected !== null) {
-      if (selected === state.question.correct_index) {
-        soundFX.playCorrect();
-      } else {
-        soundFX.playWrong();
+    if (state?.status === "reveal") {
+      if (state.question && selected !== null) {
+        if (selected === state.question.correct_index) {
+          soundFX.playCorrect();
+        } else {
+          soundFX.playWrong();
+        }
       }
+
+      // Đếm ngược 5 giây tự động chuyển câu tiếp theo
+      setAutoNextCountdown(5);
+      const countdownTimer = window.setInterval(() => {
+        setAutoNextCountdown((prev) => {
+          if (prev === null || prev <= 1) {
+            window.clearInterval(countdownTimer);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+
+      // Khi đếm về 0 (sau 5s): Nếu là Host thì tự động gọi next_question
+      const autoNextTimeout = window.setTimeout(() => {
+        soundFX.playTransition();
+        if (state.is_host && roomCode) {
+          const token = sessionStorage.getItem(`qp-token-${roomCode}`);
+          call<RoomState>("next_question", {
+            p_code: roomCode,
+            p_player_token: token
+          })
+            .then((nextState) => {
+              if (nextState) setState(nextState);
+              broadcast();
+            })
+            .catch(() => {});
+        }
+      }, 5000);
+
+      return () => {
+        window.clearInterval(countdownTimer);
+        window.clearTimeout(autoNextTimeout);
+      };
+    } else {
+      setAutoNextCountdown(null);
     }
-  }, [state?.status, state?.question, selected]);
+  }, [state?.status, state?.current_index]);
 
   const broadcast = async () => {
     if (!roomCode) return;
@@ -427,46 +472,50 @@ export default function Home() {
      ========================================================================= */
   if (screen === "room" && state) {
     return (
-      <main className="min-h-screen bg-[#f3f2f8] px-3 py-4 md:px-8 md:py-6">
-        <div className="mx-auto max-w-6xl">
+      <main className="min-h-screen bg-[#f3f2f8] px-2 py-2 md:px-6 md:py-4 flex flex-col justify-between">
+        <div className="mx-auto w-full max-w-5xl">
           {/* TOP BAR */}
-          <header className="mb-5 flex flex-wrap items-center justify-between gap-3">
+          <header className="mb-3 flex flex-wrap items-center justify-between gap-2">
             <button
-              onClick={() => {
-                setScreen("home");
-                setState(null);
-                setSelected(null);
-              }}
-              className="flex items-center gap-2 font-black text-xl text-slate-900"
+              onClick={() => setIsExitDialogOpen(true)}
+              className="flex items-center gap-2 font-black text-lg text-slate-900 hover:opacity-80 transition"
             >
-              <span className="grid h-10 w-10 place-items-center rounded-2xl bg-violet-600 text-white shadow-md shadow-violet-500/20">
-                <Gamepad2 size={22} />
+              <span className="grid h-8 w-8 place-items-center rounded-xl bg-violet-600 text-white shadow-md shadow-violet-500/20">
+                <Gamepad2 size={18} />
               </span>
-              <span>Quiz Party</span>
+              <span className="hidden sm:inline">Quiz Party</span>
             </button>
 
             <div className="flex items-center gap-2">
+              {/* Nút thoát / chuyển màn hình */}
+              <button
+                onClick={() => setIsExitDialogOpen(true)}
+                className="flex items-center gap-1.5 rounded-xl border border-gray-200 bg-white px-3 py-1.5 text-xs font-bold text-gray-700 shadow-sm hover:bg-gray-50 transition"
+              >
+                <span>Rời phòng</span>
+              </button>
+
               {/* Sound Toggle */}
               <button
                 onClick={toggleSound}
                 title={isMuted ? "Bật âm thanh" : "Tắt âm thanh"}
-                className="grid h-10 w-10 place-items-center rounded-xl border border-gray-200 bg-white text-gray-600 shadow-sm hover:bg-gray-50"
+                className="grid h-8 w-8 place-items-center rounded-xl border border-gray-200 bg-white text-gray-600 shadow-sm hover:bg-gray-50"
               >
-                {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+                {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
               </button>
 
               {/* Room Code Badge */}
-              <div className="flex items-center gap-2 rounded-xl border border-violet-100 bg-white px-3.5 py-2 text-xs font-bold shadow-sm">
+              <div className="flex items-center gap-1.5 rounded-xl border border-violet-100 bg-white px-3 py-1 text-xs font-bold shadow-sm">
                 <span className="text-gray-400">Mã:</span>
-                <span className="font-mono text-sm tracking-widest text-violet-700">
+                <span className="font-mono text-xs md:text-sm tracking-wider text-violet-700">
                   {state.room_code}
                 </span>
                 <button
                   onClick={copyRoomCode}
-                  className="ml-1 text-violet-600 hover:text-violet-800"
+                  className="ml-0.5 text-violet-600 hover:text-violet-800"
                   title="Sao chép mã phòng"
                 >
-                  {copied ? <CheckCircle2 size={15} className="text-green-600" /> : <Copy size={15} />}
+                  {copied ? <CheckCircle2 size={14} className="text-green-600" /> : <Copy size={14} />}
                 </button>
               </div>
             </div>
@@ -668,14 +717,14 @@ export default function Home() {
             <div className="grid gap-5 lg:grid-cols-[1fr_290px]">
               <section className="card overflow-hidden">
                 {/* QUESTION HEADER BAR */}
-                <div className="bg-gradient-to-r from-violet-700 via-indigo-700 to-purple-800 p-5 text-white md:p-6">
-                  <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-black">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="rounded-full bg-white/15 px-3 py-1 uppercase tracking-wider backdrop-blur-md">
+                <div className="bg-gradient-to-r from-violet-700 via-indigo-700 to-purple-800 p-3 md:p-4 text-white">
+                  <div className="flex flex-wrap items-center justify-between gap-1.5 text-xs font-black">
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <span className="rounded-full bg-white/15 px-2.5 py-0.5 text-[11px] uppercase tracking-wider backdrop-blur-md">
                         {state.question.category} · CÂU {state.current_index + 1}/{state.total_questions}
                       </span>
                       <span
-                        className={`rounded-full px-2.5 py-1 uppercase tracking-wider ${
+                        className={`rounded-full px-2 py-0.5 text-[10px] uppercase tracking-wider ${
                           state.question.difficulty === "easy"
                             ? "bg-emerald-400/25 text-emerald-200 border border-emerald-300/30"
                             : state.question.difficulty === "hard"
@@ -683,7 +732,6 @@ export default function Home() {
                             : "bg-amber-400/25 text-amber-200 border border-amber-300/30"
                         }`}
                       >
-                        Mức độ:{" "}
                         {state.question.difficulty === "easy"
                           ? "Dễ"
                           : state.question.difficulty === "hard"
@@ -691,7 +739,7 @@ export default function Home() {
                           : "Vừa"}
                       </span>
                       {state.question.is_double_points && (
-                        <span className="rounded-full bg-amber-400 px-2.5 py-1 text-slate-950 shadow-sm animate-pulse">
+                        <span className="rounded-full bg-amber-400 px-2 py-0.5 text-[10px] font-black text-slate-950 shadow-sm animate-pulse">
                           ⚡ x2 ĐIỂM
                         </span>
                       )}
@@ -699,21 +747,21 @@ export default function Home() {
 
                     {/* COUNTDOWN TIMER BADGE */}
                     <div
-                      className={`flex items-center gap-1.5 rounded-full px-3.5 py-1 font-mono text-sm shadow-md transition ${
+                      className={`flex items-center gap-1 rounded-full px-2.5 py-0.5 font-mono text-xs md:text-sm shadow-md transition ${
                         seconds <= 5 && state.status === "playing"
                           ? "bg-red-500 text-white animate-pulse"
                           : "bg-white/20 text-white"
                       }`}
                     >
-                      <Clock3 size={16} />
+                      <Clock3 size={14} />
                       {state.status === "playing"
                         ? `${seconds}s`
-                        : "Đã chốt đáp án"}
+                        : "Đã chốt"}
                     </div>
                   </div>
 
                   {/* SMOOTH TIME PROGRESS BAR */}
-                  <div className="mt-4 h-2.5 w-full overflow-hidden rounded-full bg-black/25">
+                  <div className="mt-2.5 h-1.5 w-full overflow-hidden rounded-full bg-black/25">
                     <div
                       className={`h-full rounded-full transition-all duration-1000 ${
                         seconds <= 5
@@ -726,7 +774,7 @@ export default function Home() {
                     />
                   </div>
 
-                  <div className="mt-2 flex items-center justify-between text-[11px] text-white/70">
+                  <div className="mt-1 flex items-center justify-between text-[10px] text-white/70">
                     <span>Tiến trình: {Math.round(questionProgress)}% ván đấu</span>
                     <span>
                       Đã trả lời: {state.answered_count} / {state.players.length} người
@@ -735,8 +783,8 @@ export default function Home() {
                 </div>
 
                 {/* QUESTION CONTENT */}
-                <div className="p-5 md:p-8">
-                  <h1 className="mx-auto max-w-3xl text-center text-lg font-extrabold leading-relaxed tracking-tight text-slate-900 md:text-2xl">
+                <div className="p-3 md:p-5">
+                  <h1 className="mx-auto max-w-2xl text-center text-sm md:text-lg font-bold leading-snug tracking-tight text-slate-900">
                     {state.question.prompt}
                   </h1>
 
@@ -752,7 +800,7 @@ export default function Home() {
                   />
 
                   {/* 4 KAHOOT-STYLE ANSWER BUTTONS */}
-                  <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                  <div className="mt-3 grid grid-cols-2 gap-2 md:gap-3">
                     {state.question.options.map((option, i) => {
                       const style = answerStyles[i % answerStyles.length];
                       const isCorrect =
@@ -769,9 +817,9 @@ export default function Home() {
                           key={i}
                           disabled={state.status !== "playing" || selected !== null || busy}
                           onClick={() => handleAnswer(i)}
-                          className={`relative flex min-h-[72px] items-center gap-3.5 rounded-2xl p-4 text-left font-extrabold shadow-md transition-all active:scale-95 ${
+                          className={`relative flex min-h-[52px] md:min-h-[64px] items-center gap-2.5 rounded-xl p-2.5 md:p-3.5 text-left font-bold shadow-sm transition-all active:scale-95 ${
                             isCorrect
-                              ? "bg-emerald-600 text-white ring-4 ring-emerald-300 scale-[1.02]"
+                              ? "bg-emerald-600 text-white ring-4 ring-emerald-300 scale-[1.01]"
                               : isWrong
                               ? "bg-rose-600 text-white opacity-90 ring-4 ring-rose-300"
                               : isChosen
@@ -779,17 +827,17 @@ export default function Home() {
                               : `${style.bg} ${style.hover} ${style.text}`
                           } disabled:cursor-not-allowed`}
                         >
-                          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-black/20 text-base font-black">
+                          <span className="grid h-7 w-7 md:h-8 md:w-8 shrink-0 place-items-center rounded-lg bg-black/20 text-xs md:text-sm font-black">
                             {style.shape}
                           </span>
-                          <span className="flex-1 text-sm md:text-base leading-snug">
+                          <span className="flex-1 text-xs md:text-sm leading-snug line-clamp-2">
                             {option}
                           </span>
                           {isCorrect && (
-                            <CheckCircle2 size={24} className="text-white shrink-0 animate-bounce" />
+                            <CheckCircle2 size={20} className="text-white shrink-0 animate-bounce" />
                           )}
                           {isWrong && (
-                            <XCircle size={24} className="text-white shrink-0" />
+                            <XCircle size={20} className="text-white shrink-0" />
                           )}
                         </button>
                       );
@@ -798,46 +846,47 @@ export default function Home() {
 
                   {/* IN-GAME STATUS NOTICE */}
                   {state.status === "playing" && (
-                    <div className="mt-5 text-center text-xs font-semibold text-gray-500">
+                    <div className="mt-2 text-center text-[11px] font-semibold text-gray-500">
                       {selected !== null ? (
-                        <span className="text-violet-700 font-bold flex items-center justify-center gap-1.5">
-                          <CheckCircle2 size={16} /> Bạn đã chốt câu trả lời! Đang chờ đối thủ…
+                        <span className="text-violet-700 font-bold flex items-center justify-center gap-1">
+                          <CheckCircle2 size={14} /> Bạn đã chọn câu trả lời! Đang chờ đối thủ…
                         </span>
                       ) : (
-                        "Hãy nhanh tay chọn đáp án chính xác nhất để nhận thưởng tốc độ!"
+                        "Hãy nhanh tay chọn đáp án chính xác để nhận thưởng tốc độ!"
                       )}
                     </div>
                   )}
 
-                  {/* REVEAL EXPLANATION */}
+                  {/* REVEAL EXPLANATION & AUTO-TRANSITION BANNER */}
                   {state.status === "reveal" && (
-                    <div className="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-xs md:text-sm text-emerald-950">
-                      <div className="font-black text-emerald-900 flex items-center gap-1.5 text-sm">
-                        <CheckCircle2 size={18} className="text-emerald-600" />
-                        Đáp án chính xác:{" "}
-                        {state.question.options[state.question.correct_index ?? 0]}
+                    <div className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 p-2.5 md:p-3 text-xs text-emerald-950">
+                      <div className="flex flex-wrap items-center justify-between gap-1.5 font-black text-emerald-900">
+                        <span className="flex items-center gap-1.5">
+                          <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+                          Đáp án đúng: {state.question.options[state.question.correct_index ?? 0]}
+                        </span>
+                        {autoNextCountdown !== null && (
+                          <span className="rounded-full bg-emerald-200 px-2 py-0.5 text-[11px] font-black text-emerald-900 animate-pulse">
+                            Tự chuyển câu sau {autoNextCountdown}s ⏳
+                          </span>
+                        )}
                       </div>
                       {state.question.explanation && (
-                        <p className="mt-1.5 text-emerald-800/90 leading-relaxed">
+                        <p className="mt-1 text-emerald-800/90 leading-tight">
                           <b>Giải thích:</b> {state.question.explanation}
                         </p>
-                      )}
-                      {state.question.source && (
-                        <div className="mt-2 text-[11px] text-emerald-700 font-medium">
-                          Nguồn / Nghệ sĩ: {state.question.source}
-                        </div>
                       )}
                     </div>
                   )}
 
                   {/* HOST CONTROLS */}
                   {state.is_host && (
-                    <div className="mt-6 flex gap-3">
+                    <div className="mt-3 flex gap-2">
                       {state.status === "playing" && (
                         <button
                           disabled={busy}
                           onClick={() => hostAction("reveal_answer")}
-                          className="btn-secondary w-full text-sm font-black py-3.5"
+                          className="btn-secondary w-full text-xs font-black py-2.5"
                         >
                           Chốt Câu Hỏi & Mở Đáp Án
                         </button>
@@ -847,12 +896,12 @@ export default function Home() {
                         <button
                           disabled={busy}
                           onClick={() => hostAction("next_question")}
-                          className="btn-primary w-full text-sm font-black py-3.5 flex items-center justify-center gap-2"
+                          className="btn-primary w-full text-xs font-black py-2.5 flex items-center justify-center gap-1.5"
                         >
                           {state.current_index + 1 >= state.total_questions ? (
-                            <>Xem Kết Quả Chung Cuộc <Trophy size={18} /></>
+                            <>Xem Kết Quả Chung Cuộc <Trophy size={16} /></>
                           ) : (
-                            <>Câu Tiếp Theo <ArrowRight size={18} /></>
+                            <>Câu Tiếp Theo (Ngay Lập Tức) <ArrowRight size={16} /></>
                           )}
                         </button>
                       )}
@@ -937,6 +986,57 @@ export default function Home() {
           {error && (
             <div className="mt-4 rounded-2xl bg-red-50 p-3.5 text-xs font-bold text-red-700 flex items-center gap-2">
               <XCircle size={16} /> {error}
+            </div>
+          )}
+
+          {/* EXIT DIALOG: TRỞ VỀ LOBBY HOẶC MENU CHÍNH */}
+          {isExitDialogOpen && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
+              <div className="relative w-full max-w-sm rounded-2xl bg-white p-5 shadow-2xl">
+                <h3 className="text-base font-black text-slate-900">
+                  Tùy chọn rời phòng
+                </h3>
+                <p className="mt-1 text-xs text-gray-500">
+                  Bạn muốn quay về phòng chờ (Lobby) hay trở về trang chủ menu chính?
+                </p>
+
+                <div className="mt-4 space-y-2">
+                  <button
+                    onClick={() => {
+                      setIsExitDialogOpen(false);
+                      if (state.is_host) {
+                        hostAction("restart_game");
+                      } else {
+                        // Người chơi quay về trạng thái lobby
+                        setState((prev) => (prev ? { ...prev, status: "lobby" } : null));
+                      }
+                      setSelected(null);
+                    }}
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-violet-600 py-2.5 text-xs font-extrabold text-white shadow hover:bg-violet-700"
+                  >
+                    <span>🏠 Trở về phòng chờ (Lobby)</span>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setIsExitDialogOpen(false);
+                      setScreen("home");
+                      setState(null);
+                      setSelected(null);
+                    }}
+                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 bg-gray-50 py-2.5 text-xs font-bold text-gray-700 hover:bg-gray-100"
+                  >
+                    <span>🚪 Trở về menu chính (Thoát game)</span>
+                  </button>
+
+                  <button
+                    onClick={() => setIsExitDialogOpen(false)}
+                    className="w-full text-center text-xs font-semibold text-gray-400 hover:text-gray-600 py-1"
+                  >
+                    Hủy bỏ
+                  </button>
+                </div>
+              </div>
             </div>
           )}
 
