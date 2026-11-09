@@ -54,7 +54,6 @@ export default function Home() {
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [seconds, setSeconds] = useState(20);
-  const [autoNextCountdown, setAutoNextCountdown] = useState<number | null>(null);
   const [isMuted, setIsMuted] = useState(false);
   const [isExitDialogOpen, setIsExitDialogOpen] = useState(false);
 
@@ -194,7 +193,7 @@ export default function Home() {
     }
   }, [state?.status]);
 
-  // Play sound on answer reveal & Auto-transition countdown in 5 seconds
+  // Play sound on answer reveal & Auto-transition in 4.5 seconds
   useEffect(() => {
     if (state?.status === "reveal") {
       if (state.question && selected !== null) {
@@ -205,19 +204,7 @@ export default function Home() {
         }
       }
 
-      // Đếm ngược 5 giây tự động chuyển câu tiếp theo
-      setAutoNextCountdown(5);
-      const countdownTimer = window.setInterval(() => {
-        setAutoNextCountdown((prev) => {
-          if (prev === null || prev <= 1) {
-            window.clearInterval(countdownTimer);
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-
-      // Khi đếm về 0 (sau 5s): Nếu là Host thì tự động gọi next_question
+      // Tự động chuyển câu tiếp theo sau 4.5 giây (khớp với thời gian chạy của đường line)
       const autoNextTimeout = window.setTimeout(() => {
         soundFX.playTransition();
         if (state.is_host && roomCode) {
@@ -232,14 +219,11 @@ export default function Home() {
             })
             .catch(() => {});
         }
-      }, 5000);
+      }, 4500);
 
       return () => {
-        window.clearInterval(countdownTimer);
         window.clearTimeout(autoNextTimeout);
       };
-    } else {
-      setAutoNextCountdown(null);
     }
   }, [state?.status, state?.current_index]);
 
@@ -857,54 +841,39 @@ export default function Home() {
                     </div>
                   )}
 
-                  {/* REVEAL EXPLANATION & AUTO-TRANSITION BANNER */}
+                  {/* REVEAL EXPLANATION & AUTO-TRANSITION LINE (NO NUMERICAL COUNTDOWN) */}
                   {state.status === "reveal" && (
                     <div className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 p-2.5 md:p-3 text-xs text-emerald-950">
-                      <div className="flex flex-wrap items-center justify-between gap-1.5 font-black text-emerald-900">
-                        <span className="flex items-center gap-1.5">
-                          <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
-                          Đáp án đúng: {state.question.options[state.question.correct_index ?? 0]}
-                        </span>
-                        {autoNextCountdown !== null && (
-                          <span className="rounded-full bg-emerald-200 px-2 py-0.5 text-[11px] font-black text-emerald-900 animate-pulse">
-                            Tự chuyển câu sau {autoNextCountdown}s ⏳
-                          </span>
-                        )}
+                      <div className="flex items-center gap-1.5 font-black text-emerald-900">
+                        <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+                        <span>Đáp án đúng: {state.question.options[state.question.correct_index ?? 0]}</span>
                       </div>
                       {state.question.explanation && (
                         <p className="mt-1 text-emerald-800/90 leading-tight">
                           <b>Giải thích:</b> {state.question.explanation}
                         </p>
                       )}
+
+                      {/* ĐƯỜNG THẲNG TỰ ĐỘNG CHẠY HẾT ĐỂ QUA CÂU MỚI (LINE CHẠY HẾT TỰ ĐỘNG QUA CÂU TIẾP THEO) */}
+                      <div className="mt-2.5">
+                        <div className="h-1.5 md:h-2 w-full overflow-hidden rounded-full bg-emerald-200/80 shadow-inner">
+                          <div className="h-full rounded-full bg-gradient-to-r from-violet-600 via-indigo-600 to-emerald-500 animate-reveal-line" />
+                        </div>
+                      </div>
                     </div>
                   )}
 
-                  {/* HOST CONTROLS */}
-                  {state.is_host && (
-                    <div className="mt-3 flex gap-2">
-                      {state.status === "playing" && (
-                        <button
-                          disabled={busy}
-                          onClick={() => hostAction("reveal_answer")}
-                          className="btn-secondary w-full text-xs font-black py-2.5"
-                        >
-                          Chốt Câu Hỏi & Mở Đáp Án
-                        </button>
-                      )}
-
-                      {state.status === "reveal" && (
-                        <button
-                          disabled={busy}
-                          onClick={() => hostAction("next_question")}
-                          className="btn-primary w-full text-xs font-black py-2.5 flex items-center justify-center gap-1.5"
-                        >
-                          {state.current_index + 1 >= state.total_questions ? (
-                            <>Xem Kết Quả Chung Cuộc <Trophy size={16} /></>
-                          ) : (
-                            <>Câu Tiếp Theo (Ngay Lập Tức) <ArrowRight size={16} /></>
-                          )}
-                        </button>
-                      )}
+                  {/* HOST CONTROLS - BỎ NÚT CHỐT CÂU HỎI THEO YÊU CẦU */}
+                  {state.is_host && state.status === "reveal" && (
+                    <div className="mt-2 text-right">
+                      <button
+                        disabled={busy}
+                        onClick={() => hostAction("next_question")}
+                        className="text-[11px] font-bold text-violet-600 hover:text-violet-800 underline transition inline-flex items-center gap-1"
+                        title="Bỏ qua chờ và chuyển câu tiếp theo ngay lập tức"
+                      >
+                        Bỏ qua chờ & chuyển câu ngay <ArrowRight size={12} />
+                      </button>
                     </div>
                   )}
                 </div>

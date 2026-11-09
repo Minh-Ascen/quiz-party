@@ -112,6 +112,21 @@ function buildClientState(room: StoredRoom, playerToken: string): RoomState {
     }
   }
 
+  // Fail-safe: Tự động chuyển sang câu tiếp theo nếu ở 'reveal' quá 5.5s
+  if (room.status === "reveal" && room.updatedAt > 0) {
+    const revealElapsed = (Date.now() - room.updatedAt) / 1000;
+    if (revealElapsed >= 5.5) {
+      if (room.currentIndex + 1 >= room.totalQuestions) {
+        room.status = "finished";
+      } else {
+        room.currentIndex++;
+        room.status = "playing";
+        room.questionStartedAt = Date.now();
+      }
+      room.updatedAt = Date.now();
+    }
+  }
+
   const me = room.players.find((p) => p.token === playerToken);
   const currentQ = room.questions[room.currentIndex] || null;
   const currentAnswers = room.answersByQuestion[room.currentIndex] || {};

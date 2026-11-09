@@ -93,3 +93,16 @@ button:disabled {
   border-color: #8878ef;
   box-shadow: 0 0 0 3px rgba(105, 85, 232, 0.12);
 }
+
+@keyframes revealLine {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.animate-reveal-line {
+  animation: revealLine 4.5s linear forwards;
+}

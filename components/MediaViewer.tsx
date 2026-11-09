@@ -45,10 +45,19 @@ export function MediaViewer({
     setActiveSrc(resolvedUrl);
   }, [resolvedUrl, prompt, imageUrl, youtubeVideoId]);
 
+  const cleanYtId = (() => {
+    if (!youtubeVideoId) return null;
+    const match = youtubeVideoId.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+    if (match) return match[1];
+    const trimmed = youtubeVideoId.trim();
+    if (/^[\w-]{11}$/.test(trimmed)) return trimmed;
+    return null;
+  })();
+
   const isSongGuess =
     type === "AUDIO_GUESS" ||
     type === "VIDEO_GUESS" ||
-    Boolean(youtubeVideoId) ||
+    Boolean(cleanYtId) ||
     Boolean(audioUrl);
 
   const toggleAudio = (url: string) => {
@@ -88,34 +97,44 @@ export function MediaViewer({
   };
 
   return (
-    <div className="mx-auto my-2 w-full max-w-xl overflow-hidden rounded-xl border border-violet-100 bg-gradient-to-b from-violet-50/60 to-slate-50/80 p-1.5 shadow-inner">
+    <div className="mx-auto my-2 w-full max-w-2xl overflow-hidden rounded-2xl border border-violet-100 bg-gradient-to-b from-violet-50/70 to-slate-50/90 p-2 shadow-inner">
       {/* 1. GUESS THE SONG: YOUTUBE EMBED HOẶC AUDIO */}
-      {isSongGuess && youtubeVideoId && !ytBlocked && (
-        <div className="relative aspect-video w-full max-h-[190px] overflow-hidden rounded-lg bg-black shadow-md mx-auto">
+      {isSongGuess && cleanYtId && !ytBlocked && (
+        <div className="relative aspect-video w-full h-[210px] sm:h-[240px] md:h-[270px] max-h-[300px] overflow-hidden rounded-xl bg-black shadow-lg mx-auto">
           <iframe
-            src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&rel=0&modestbranding=1`}
-            title="Đoán tên bài hát"
+            src={`https://www.youtube-nocookie.com/embed/${cleanYtId}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1&playsinline=1`}
+            title="Đoán tên bài hát qua MV"
             className="h-full w-full border-0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
             onError={() => setYtBlocked(true)}
           />
-          <div className="absolute bottom-1.5 right-1.5 rounded bg-black/80 px-2 py-0.5 text-[10px] font-semibold text-white">
-            <Youtube className="mr-1 inline text-red-500" size={12} />
-            Đoán tên bài hát qua MV
+          <div className="absolute bottom-2 right-2 flex items-center gap-1.5 rounded-lg bg-black/85 backdrop-blur-sm px-2.5 py-1 text-[11px] font-bold text-white shadow-md">
+            <Youtube className="text-red-500" size={14} />
+            <span>Đoán tên bài hát qua MV</span>
+            <a
+              href={`https://www.youtube.com/watch?v=${cleanYtId}`}
+              target="_blank"
+              rel="noreferrer"
+              className="ml-1 text-[10px] text-amber-300 underline hover:text-white"
+              title="Mở nghe MV trên YouTube nếu trình duyệt chặn"
+            >
+              Mở YouTube ↗
+            </a>
           </div>
         </div>
       )}
 
       {/* 2. AUDIO PLAYER IF NO YOUTUBE OR IF YOUTUBE IS BLOCKED */}
-      {isSongGuess && (!youtubeVideoId || ytBlocked) && (
+      {isSongGuess && (!cleanYtId || ytBlocked) && (
         <div className="flex flex-col items-center justify-center p-3 text-center">
           {activeSrc && !imageError && (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={activeSrc}
               alt={prompt || "Hình ảnh bài hát"}
-              className="mb-2 max-h-[110px] w-auto max-w-full rounded-lg object-contain shadow-sm"
+              className="mb-2 max-h-[130px] w-auto max-w-full rounded-lg object-contain shadow-sm"
               loading="lazy"
               onError={handleImageError}
             />
@@ -126,6 +145,19 @@ export function MediaViewer({
           <p className="mt-1 text-[11px] font-semibold text-gray-600">
             Lắng nghe giai điệu và chọn tên bài hát chính xác!
           </p>
+
+          {cleanYtId && ytBlocked && (
+            <div className="mt-2">
+              <a
+                href={`https://www.youtube.com/watch?v=${cleanYtId}`}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-red-600 px-3.5 py-1.5 text-xs font-bold text-white shadow hover:bg-red-700"
+              >
+                <Youtube size={14} /> Mở nghe MV trên YouTube ↗
+              </a>
+            </div>
+          )}
 
           {audioUrl ? (
             <div className="mt-2 flex items-center gap-2">

@@ -360,7 +360,7 @@ categories.forEach((cat, catIdx) => {
       // Nếu vẫn chưa có video riêng, gán các video MV đại diện chuẩn theo chủ đề để người chơi luôn được nghe nhạc đoán bài hát
       if (!finalYoutubeId) {
         if (cat.name === "Âm nhạc Việt Nam") {
-          finalYoutubeId = "gJHSDZfJrRY"; // See Tình
+          finalYoutubeId = "A518yC5t2mU"; // See Tình (Hoàng Thùy Linh)
           finalSource = "Hoàng Thùy Linh - See Tình";
         } else if (cat.name === "K-Pop") {
           finalYoutubeId = "gdZLi9oWNZg"; // Dynamite
