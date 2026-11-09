@@ -12,6 +12,7 @@ interface MediaViewerProps {
   category?: string;
   prompt?: string;
   options?: string[];
+  className?: string;
 }
 
 export function MediaViewer({
@@ -21,7 +22,8 @@ export function MediaViewer({
   youtubeVideoId,
   category = "Quiz Party",
   prompt = "",
-  options = []
+  options = [],
+  className = ""
 }: MediaViewerProps) {
   const [imageError, setImageError] = useState(false);
   const [fallbackTried, setFallbackTried] = useState(false);
@@ -97,10 +99,10 @@ export function MediaViewer({
   };
 
   return (
-    <div className="mx-auto my-2 w-full max-w-2xl overflow-hidden rounded-2xl border border-violet-100 bg-gradient-to-b from-violet-50/70 to-slate-50/90 p-2 shadow-inner">
+    <div className={`w-full overflow-hidden ${className}`}>
       {/* 1. GUESS THE SONG: YOUTUBE EMBED HOẶC AUDIO */}
       {isSongGuess && cleanYtId && !ytBlocked && (
-        <div className="relative aspect-video w-full h-[210px] sm:h-[240px] md:h-[270px] max-h-[300px] overflow-hidden rounded-xl bg-black shadow-lg mx-auto">
+        <div className="relative aspect-video w-full h-[250px] sm:h-[300px] md:h-[360px] max-h-[420px] overflow-hidden rounded-3xl bg-black border-4 border-black/80 shadow-2xl mx-auto">
           <iframe
             src={`https://www.youtube-nocookie.com/embed/${cleanYtId}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1&playsinline=1`}
             title="Đoán tên bài hát qua MV"
@@ -110,7 +112,7 @@ export function MediaViewer({
             allowFullScreen
             onError={() => setYtBlocked(true)}
           />
-          <div className="absolute bottom-2 right-2 flex items-center gap-1.5 rounded-lg bg-black/85 backdrop-blur-sm px-2.5 py-1 text-[11px] font-bold text-white shadow-md">
+          <div className="absolute bottom-2.5 right-2.5 flex items-center gap-1.5 rounded-lg bg-black/85 backdrop-blur-sm px-2.5 py-1 text-[11px] font-bold text-white shadow-md">
             <Youtube className="text-red-500" size={14} />
             <span>Đoán tên bài hát qua MV</span>
             <a
@@ -128,43 +130,43 @@ export function MediaViewer({
 
       {/* 2. AUDIO PLAYER IF NO YOUTUBE OR IF YOUTUBE IS BLOCKED */}
       {isSongGuess && (!cleanYtId || ytBlocked) && (
-        <div className="flex flex-col items-center justify-center p-3 text-center">
+        <div className="relative aspect-video w-full h-[250px] sm:h-[300px] md:h-[360px] max-h-[420px] overflow-hidden rounded-3xl bg-black/60 border-4 border-black/80 shadow-2xl mx-auto flex flex-col items-center justify-center p-4 text-center">
           {activeSrc && !imageError && (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={activeSrc}
               alt={prompt || "Hình ảnh bài hát"}
-              className="mb-2 max-h-[130px] w-auto max-w-full rounded-lg object-contain shadow-sm"
+              className="mb-3 max-h-[160px] w-auto max-w-full rounded-2xl object-contain shadow-lg"
               loading="lazy"
               onError={handleImageError}
             />
           )}
-          <div className="flex items-center gap-1.5 rounded-full bg-violet-100 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-violet-700">
-            <Music size={12} /> GUESS THE SONG · ĐOÁN BÀI HÁT
+          <div className="flex items-center gap-1.5 rounded-full bg-violet-500/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-violet-200 border border-violet-400/30">
+            <Music size={14} /> GUESS THE SONG · ĐOÁN BÀI HÁT
           </div>
-          <p className="mt-1 text-[11px] font-semibold text-gray-600">
-            Lắng nghe giai điệu và chọn tên bài hát chính xác!
+          <p className="mt-2 text-xs font-semibold text-slate-200">
+            Lắng nghe giai điệu và nhập tên bài hát chính xác!
           </p>
 
           {cleanYtId && ytBlocked && (
-            <div className="mt-2">
+            <div className="mt-3">
               <a
                 href={`https://www.youtube.com/watch?v=${cleanYtId}`}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-lg bg-red-600 px-3.5 py-1.5 text-xs font-bold text-white shadow hover:bg-red-700"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-red-600 px-4 py-2 text-xs font-bold text-white shadow hover:bg-red-700"
               >
-                <Youtube size={14} /> Mở nghe MV trên YouTube ↗
+                <Youtube size={15} /> Mở nghe MV trên YouTube ↗
               </a>
             </div>
           )}
 
-          {audioUrl ? (
-            <div className="mt-2 flex items-center gap-2">
+          {audioUrl && (
+            <div className="mt-3 flex items-center gap-2">
               <button
                 type="button"
                 onClick={() => toggleAudio(audioUrl)}
-                className="flex items-center gap-1.5 rounded-lg bg-violet-600 px-3.5 py-1.5 text-xs font-bold text-white shadow transition hover:bg-violet-700 active:scale-95"
+                className="flex items-center gap-1.5 rounded-xl bg-violet-600 px-4 py-2 text-xs font-bold text-white shadow transition hover:bg-violet-700 active:scale-95"
               >
                 {isPlayingAudio ? <VolumeX size={15} /> : <Play size={15} />}
                 {isPlayingAudio ? "Tạm dừng" : "Phát đoạn nhạc"}
@@ -174,38 +176,34 @@ export function MediaViewer({
                   type="button"
                   onClick={restartAudio}
                   title="Nghe lại từ đầu"
-                  className="rounded-lg border border-gray-200 bg-white p-1.5 text-gray-700 hover:bg-gray-50"
+                  className="rounded-xl border border-white/20 bg-white/10 p-2 text-white hover:bg-white/20"
                 >
                   <RotateCcw size={15} />
                 </button>
               )}
             </div>
-          ) : (
-            <div className="mt-1.5 rounded-lg bg-amber-50 px-3 py-1 text-[11px] font-medium text-amber-800">
-              🎵 Hãy nhớ lại ca từ và giai điệu quen thuộc để chọn đáp án đúng!
-            </div>
           )}
         </div>
       )}
 
-      {/* 3. ILLUSTRATION IMAGE FOR EVERY QUESTION */}
+      {/* 3. ILLUSTRATION IMAGE FOR EVERY OTHER QUIZ QUESTION (CHỦ ĐỀ KHÁC) */}
       {!isSongGuess && (
-        <div className="relative flex min-h-[110px] max-h-[160px] w-full items-center justify-center overflow-hidden rounded-lg bg-white/80 p-1">
+        <div className="relative aspect-video w-full h-[250px] sm:h-[300px] md:h-[360px] max-h-[420px] overflow-hidden rounded-3xl bg-black/40 border-4 border-black/80 shadow-2xl mx-auto flex items-center justify-center p-3">
           {activeSrc && !imageError ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={activeSrc}
               alt={prompt || "Hình ảnh minh họa câu hỏi"}
-              className="max-h-[150px] w-auto max-w-full rounded-lg object-contain shadow-sm transition duration-200 hover:scale-[1.02]"
+              className="h-full w-full max-h-full max-w-full rounded-2xl object-contain shadow-md"
               loading="eager"
               onError={handleImageError}
             />
           ) : (
-            <div className="flex flex-col items-center justify-center p-3 text-center text-gray-500">
-              <div className="mb-1 grid h-9 w-9 place-items-center rounded-xl bg-violet-100 text-violet-600 shadow-inner">
-                <Sparkles size={18} />
+            <div className="flex flex-col items-center justify-center p-4 text-center text-slate-300">
+              <div className="mb-2 grid h-12 w-12 place-items-center rounded-2xl bg-white/10 text-white shadow-inner">
+                <Sparkles size={24} />
               </div>
-              <span className="text-[11px] font-extrabold uppercase tracking-wider text-violet-700">
+              <span className="text-xs font-black uppercase tracking-wider text-slate-200">
                 {category}
               </span>
             </div>

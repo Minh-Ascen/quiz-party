@@ -90,6 +90,18 @@ function saveRooms(rooms: Record<string, StoredRoom>) {
   }, 250);
 }
 
+function normalizeVietnamese(str: string): string {
+  if (!str) return "";
+  return str
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[đĐ]/g, "d")
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function generateRoomCode(rooms: Record<string, StoredRoom>): string {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   for (let attempt = 0; attempt < 50; attempt++) {
@@ -168,7 +180,12 @@ function buildClientState(room: StoredRoom, playerToken: string): RoomState {
     my_player_id: me?.id || "",
     current_question_started_at: new Date(room.questionStartedAt || Date.now()).toISOString(),
     players: publicPlayers,
-    question: clientQuestion
+    question: clientQuestion,
+    my_answer: me && currentAnswers[me.id] ? {
+      is_correct: currentAnswers[me.id].isCorrect,
+      points_awarded: currentAnswers[me.id].pointsAwarded,
+      answer_index: currentAnswers[me.id].answerIndex
+    } : undefined
   };
 }
 
@@ -379,11 +396,12 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // 5. GỬI CÂU TRẢ LỜI & TÍNH ĐIỂM THƯỞNG TỐC ĐỘ (SPEED BONUS)
+    // 5. GỬI CÂU TRẢ LỜI & TÍNH ĐIỂM THƯỞNG TỐC ĐỘ (LINE ĐIỂM TỪ 1000 TRỞ XUỐNG)
     if (action === "submit_answer") {
       const code = (body.p_code || "").trim().toUpperCase();
       const playerToken = body.p_player_token || "";
-      const answerIndex = Number(body.p_answer_index);
+      const answerIndex = body.p_answer_index !== undefined && body.p_answer_index !== null ? Number(body.p_answer_index) : -1;
+      const textAnswer = typeof body.p_text_answer === "string" ? body.p_text_answer.trim() : "";
       const clientElapsed = Number(body.p_client_elapsed);
 
       const room = rooms[code];
@@ -433,15 +451,48 @@ export async function POST(req: NextRequest) {
           ? Math.min(serverElapsed + 1, clientElapsed)
           : serverElapsed;
 
-      const isCorrect = answerIndex === currentQ.correct_index;
+      let isCorrect = false;
+      const basePoints = currentQ.points || 1000;
+      const limit = Math.max(5, room.timeLimit || 20);
+      // Điểm trả lời đúng đếm lùi từ 1000 trở xuống theo thời gian nếu chọn trễ (tối thiểu 100 điểm)
+      const fractionRemaining = Math.max(0.1, Math.min(1, 1 - (effectiveElapsed / limit)));
       let pointsAwarded = 0;
 
+      if (textAnswer) {
+        // 1. Chế độ đoán tên bài hát (nhập chữ tiếng Việt Unikey)
+        const userNorm = normalizeVietnamese(textAnswer);
+        const correctOpt = currentQ.options && currentQ.correct_index !== undefined ? currentQ.options[currentQ.correct_index] : "";
+        const correctOptNorm = normalizeVietnamese(correctOpt);
+        const sourceNorm = currentQ.source ? normalizeVietnamese(currentQ.source) : "";
+
+        let isMatch = false;
+        if (userNorm && correctOptNorm) {
+          if (userNorm === correctOptNorm) isMatch = true;
+          else if (userNorm.length >= 3 && correctOptNorm.includes(userNorm)) isMatch = true;
+          else if (correctOptNorm.length >= 3 && userNorm.includes(correctOptNorm)) isMatch = true;
+        }
+        if (!isMatch && userNorm && sourceNorm) {
+          if (sourceNorm.includes(userNorm) || userNorm.includes(sourceNorm)) isMatch = true;
+        }
+
+        if (isMatch) {
+          isCorrect = true;
+        } else {
+          // Thử sai trong chế độ đoán nhạc: cho phép gõ thử lại tiếp tục trước khi hết giờ!
+          return NextResponse.json({
+            data: buildClientState(room, playerToken),
+            error: null,
+            wrongTry: true,
+            message: "Chưa chính xác, thử lại nhé!"
+          });
+        }
+      } else {
+        // 2. Chế độ trắc nghiệm 4 đáp án (Multiple Choice cho các quiz chủ đề khác)
+        isCorrect = answerIndex === currentQ.correct_index;
+      }
+
       if (isCorrect) {
-        const basePoints = currentQ.points || 1000;
-        const limit = Math.max(5, room.timeLimit || 20);
-        const speedRatio = Math.max(0, Math.min(1, 1 - effectiveElapsed / limit));
-        // Điểm trả lời đúng dao động từ 50% đến 100% basePoints tùy tốc độ trả lời
-        pointsAwarded = Math.round(basePoints * (0.5 + 0.5 * speedRatio));
+        pointsAwarded = Math.round(basePoints * fractionRemaining);
         if (currentQ.is_double_points) {
           pointsAwarded *= 2;
         }
@@ -454,7 +505,7 @@ export async function POST(req: NextRequest) {
 
       room.answersByQuestion[qIdx][player.id] = {
         playerId: player.id,
-        answerIndex,
+        answerIndex: answerIndex >= 0 ? answerIndex : -1,
         isCorrect,
         pointsAwarded,
         elapsedSeconds: effectiveElapsed

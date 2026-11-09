@@ -37,6 +37,7 @@ import {
   Users,
   Volume2,
   VolumeX,
+  X,
   XCircle,
   Zap
 } from "lucide-react";
@@ -54,6 +55,11 @@ export default function Home() {
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [seconds, setSeconds] = useState(20);
+  const [liveScore, setLiveScore] = useState(1000);
+  const [musicInput, setMusicInput] = useState("");
+  const [musicFeedback, setMusicFeedback] = useState<{ type: "success" | "wrong"; message: string } | null>(null);
+  const [musicSubmitted, setMusicSubmitted] = useState(false);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [isExitDialogOpen, setIsExitDialogOpen] = useState(false);
 
@@ -181,15 +187,45 @@ export default function Home() {
     }
   }, [seconds, state?.status, roomCode, call, refresh]);
 
-  // Reset selected answer on new question
+  // Live score countdown từ 1000 trở xuống theo thời gian nếu người chơi trả lời trễ
+  useEffect(() => {
+    if (state?.status === "playing") {
+      const timeLimit = state.time_limit || 20;
+      const basePoints = state.question?.points || 1000;
+      const isDouble = Boolean(state.question?.is_double_points);
+      const maxPts = isDouble ? basePoints * 2 : basePoints;
+
+      setLiveScore(maxPts);
+      const startMs = Date.now();
+      const interval = window.setInterval(() => {
+        const elapsed = (Date.now() - startMs) / 1000;
+        const remaining = Math.max(0.1, 1 - elapsed / timeLimit);
+        const pts = Math.round(maxPts * remaining);
+        setLiveScore(pts);
+        if (elapsed >= timeLimit) {
+          window.clearInterval(interval);
+        }
+      }, 100);
+
+      return () => window.clearInterval(interval);
+    }
+  }, [state?.status, state?.current_index, state?.time_limit, state?.question?.points, state?.question?.is_double_points]);
+
+  // Reset selected answer & music input on new question
   useEffect(() => {
     setSelected(null);
+    setMusicInput("");
+    setMusicFeedback(null);
+    setMusicSubmitted(false);
   }, [state?.current_index]);
 
   // Reset selected answer when entering playing state
   useEffect(() => {
     if (state?.status === "playing") {
       setSelected(null);
+      setMusicInput("");
+      setMusicFeedback(null);
+      setMusicSubmitted(false);
     }
   }, [state?.status]);
 
@@ -382,6 +418,48 @@ export default function Home() {
     }
   };
 
+  // Player submits music text guess (Gõ chữ Unikey đoán tên bài hát)
+  const handleMusicSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!musicInput.trim() || musicSubmitted || busy || !roomCode || state?.status !== "playing") return;
+    setBusy(true);
+    setError("");
+
+    try {
+      const token = sessionStorage.getItem(`qp-token-${roomCode}`);
+      const elapsed = Math.max(0.1, (Date.now() - questionStartTime) / 1000);
+
+      const res = await fetch("/api/quiz", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "submit_answer",
+          p_code: roomCode,
+          p_player_token: token,
+          p_text_answer: musicInput.trim(),
+          p_client_elapsed: elapsed
+        })
+      });
+
+      const json = await res.json();
+      if (json.wrongTry) {
+        soundFX.playWrong();
+        setMusicFeedback({ type: "wrong", message: "Chưa chính xác, thử lại nhé!" });
+      } else if (json.data) {
+        soundFX.playCorrect();
+        setMusicSubmitted(true);
+        const pts = json.data.my_answer?.points_awarded || liveScore;
+        setMusicFeedback({ type: "success", message: `🎉 Chính xác! Bạn nhận được +${pts} điểm!` });
+        setState(json.data);
+        await broadcast();
+      }
+    } catch {
+      // Ignore network errors
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const copyRoomCode = () => {
     if (state?.room_code) {
       navigator.clipboard.writeText(state.room_code);
@@ -451,57 +529,142 @@ export default function Home() {
     }
   ];
 
+  const pastelStyles = [
+    {
+      bg: "bg-[#a7f3d0]",
+      hover: "hover:bg-[#86efac]",
+      border: "border-2 border-emerald-950 shadow-[0_4px_0_#065f46]",
+      text: "text-emerald-950",
+      letter: "A"
+    },
+    {
+      bg: "bg-[#d9f99d]",
+      hover: "hover:bg-[#bef264]",
+      border: "border-2 border-lime-950 shadow-[0_4px_0_#4d7c0f]",
+      text: "text-lime-950",
+      letter: "B"
+    },
+    {
+      bg: "bg-[#fed7aa]",
+      hover: "hover:bg-[#fdba74]",
+      border: "border-2 border-amber-950 shadow-[0_4px_0_#b45309]",
+      text: "text-amber-950",
+      letter: "C"
+    },
+    {
+      bg: "bg-[#fecdd3]",
+      hover: "hover:bg-[#fca5a5]",
+      border: "border-2 border-rose-950 shadow-[0_4px_0_#be123c]",
+      text: "text-rose-950",
+      letter: "D"
+    }
+  ];
+
+  const isMusicQuestion = Boolean(
+    state?.question && (
+      state.question.category === "Âm nhạc Việt Nam" ||
+      state.question.category === "K-Pop" ||
+      state.question.category === "US-UK" ||
+      state.question.question_type === "AUDIO_GUESS" ||
+      Boolean(state.question.youtube_video_id)
+    )
+  );
+
+  const isPlayingOrReveal = Boolean(
+    state &&
+    (state.status === "playing" || state.status === "reveal") &&
+    state.question
+  );
+
   /* =========================================================================
      IN-GAME / ROOM SCREEN
      ========================================================================= */
   if (screen === "room" && state) {
-    return (
-      <main className="min-h-screen bg-[#f3f2f8] px-2 py-2 md:px-4 md:py-3 flex flex-col justify-between">
-        <div className="mx-auto w-full max-w-7xl">
-          {/* TOP BAR */}
-          <header className="mb-2 flex flex-wrap items-center justify-between gap-2">
-            <button
-              onClick={() => setIsExitDialogOpen(true)}
-              className="flex items-center gap-2 font-black text-lg text-slate-900 hover:opacity-80 transition"
-            >
-              <span className="grid h-8 w-8 place-items-center rounded-xl bg-violet-600 text-white shadow-md shadow-violet-500/20">
-                <Gamepad2 size={18} />
-              </span>
-              <span className="hidden sm:inline">Quiz Party</span>
-            </button>
+    const bgContainerClass = isPlayingOrReveal
+      ? isMusicQuestion
+        ? "game-pattern-music text-white"
+        : "game-pattern-quiz text-white"
+      : "bg-[#f3f2f8] text-slate-900";
 
-            <div className="flex items-center gap-2">
-              {/* Nút thoát / chuyển màn hình */}
+    return (
+      <main className={`min-h-screen px-2 py-2 md:px-5 md:py-3 flex flex-col justify-between transition-colors duration-300 ${bgContainerClass}`}>
+        <div className="mx-auto w-full max-w-7xl flex-1 flex flex-col justify-between">
+          {/* TOP BAR */}
+          <header className={`mb-2 flex flex-wrap items-center justify-between gap-2 pb-2 ${isPlayingOrReveal ? "border-b border-white/10" : "border-b border-gray-200"}`}>
+            <div className="flex items-center gap-2.5">
               <button
                 onClick={() => setIsExitDialogOpen(true)}
-                className="flex items-center gap-1.5 rounded-xl border border-gray-200 bg-white px-3 py-1.5 text-xs font-bold text-gray-700 shadow-sm hover:bg-gray-50 transition"
+                className="flex items-center gap-2 font-black text-lg hover:opacity-85 transition"
               >
-                <span>Rời phòng</span>
+                <span className="grid h-8 w-8 place-items-center rounded-xl bg-gradient-to-tr from-amber-400 to-rose-500 text-slate-950 font-black shadow-md">
+                  Q
+                </span>
+                <span className={`font-black tracking-wider ${isPlayingOrReveal ? "bg-gradient-to-r from-amber-300 via-pink-300 to-cyan-300 bg-clip-text text-transparent" : "text-slate-900"}`}>
+                  QUIZ PARTY
+                </span>
               </button>
+
+              {/* PIN ROOM CODE */}
+              <div className={`flex items-center gap-1 rounded-full px-3 py-1 text-xs font-mono font-bold ${isPlayingOrReveal ? "bg-white/10 text-white border border-white/15" : "bg-white text-violet-700 border border-violet-100"}`}>
+                <span className={isPlayingOrReveal ? "text-white/60" : "text-gray-400"}>PIN</span>
+                <span className="font-extrabold tracking-wider">{state.room_code}</span>
+                <button onClick={copyRoomCode} title="Sao chép PIN" className="ml-0.5 hover:opacity-80">
+                  {copied ? <CheckCircle2 size={13} className="text-green-400" /> : <Copy size={13} />}
+                </button>
+              </div>
+
+              {/* CATEGORY TITLE (IN PLAYING/REVEAL) */}
+              {isPlayingOrReveal && state.question && (
+                <div className="hidden md:flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-white/90 border border-white/15">
+                  <span>{state.question.category}</span>
+                </div>
+              )}
+
+              {/* PLAYER ANSWERED COUNT */}
+              {isPlayingOrReveal && (
+                <div className="flex items-center gap-1 text-xs font-bold text-white/80">
+                  <Users size={14} className="text-cyan-300" />
+                  <span>{state.answered_count} ({state.players.length})</span>
+                </div>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2">
+              {/* SLIDE COUNTER (SLIDE 2/22) */}
+              {isPlayingOrReveal && (
+                <div className="font-mono text-xs md:text-sm font-black text-white/95 bg-white/10 px-3 py-1 rounded-xl border border-white/15">
+                  Slide {state.current_index + 1}/{state.total_questions}
+                </div>
+              )}
+
+              {/* BXH LEADERBOARD BUTTON */}
+              {isPlayingOrReveal && (
+                <button
+                  onClick={() => setShowLeaderboard(true)}
+                  title="Xem Bảng Xếp Hạng"
+                  className="flex items-center gap-1.5 rounded-xl border border-white/20 bg-white/10 px-2.5 py-1 text-xs font-bold text-white shadow-sm hover:bg-white/20 transition"
+                >
+                  <Trophy size={14} className="text-amber-400" />
+                  <span className="hidden sm:inline">BXH</span>
+                </button>
+              )}
 
               {/* Sound Toggle */}
               <button
                 onClick={toggleSound}
                 title={isMuted ? "Bật âm thanh" : "Tắt âm thanh"}
-                className="grid h-8 w-8 place-items-center rounded-xl border border-gray-200 bg-white text-gray-600 shadow-sm hover:bg-gray-50"
+                className={`grid h-8 w-8 place-items-center rounded-xl border shadow-sm ${isPlayingOrReveal ? "border-white/20 bg-white/10 text-white hover:bg-white/20" : "border-gray-200 bg-white text-gray-600 hover:bg-gray-50"}`}
               >
-                {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+                {isMuted ? <VolumeX size={15} /> : <Volume2 size={15} />}
               </button>
 
-              {/* Room Code Badge */}
-              <div className="flex items-center gap-1.5 rounded-xl border border-violet-100 bg-white px-3 py-1 text-xs font-bold shadow-sm">
-                <span className="text-gray-400">Mã:</span>
-                <span className="font-mono text-xs md:text-sm tracking-wider text-violet-700">
-                  {state.room_code}
-                </span>
-                <button
-                  onClick={copyRoomCode}
-                  className="ml-0.5 text-violet-600 hover:text-violet-800"
-                  title="Sao chép mã phòng"
-                >
-                  {copied ? <CheckCircle2 size={14} className="text-green-600" /> : <Copy size={14} />}
-                </button>
-              </div>
+              {/* Nút thoát / Rời phòng */}
+              <button
+                onClick={() => setIsExitDialogOpen(true)}
+                className={`flex items-center gap-1.5 rounded-xl border px-3 py-1 text-xs font-bold transition ${isPlayingOrReveal ? "border-white/20 bg-white/10 text-rose-200 hover:bg-rose-500/20" : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"}`}
+              >
+                <span>Rời phòng</span>
+              </button>
             </div>
           </header>
 
@@ -696,83 +859,139 @@ export default function Home() {
             </div>
           )}
 
-          {/* 2. IN-GAME QUESTION & REVEAL SCREEN */}
-          {(state.status === "playing" || state.status === "reveal") && state.question && (
-            <div className="grid gap-3 lg:grid-cols-[1fr_330px] items-stretch">
-              <section className="card flex flex-col justify-between overflow-hidden p-0 shadow-lg">
-                {/* QUESTION HEADER BAR */}
-                <div className="bg-gradient-to-r from-violet-700 via-indigo-700 to-purple-800 p-3 md:p-4 text-white">
-                  <div className="flex flex-wrap items-center justify-between gap-1.5 text-xs font-black">
-                    <div className="flex flex-wrap items-center gap-1.5">
-                      <span className="rounded-full bg-white/15 px-2.5 py-0.5 text-[11px] uppercase tracking-wider backdrop-blur-md">
-                        {state.question.category} · CÂU {state.current_index + 1}/{state.total_questions}
-                      </span>
-                      <span
-                        className={`rounded-full px-2 py-0.5 text-[10px] uppercase tracking-wider ${
-                          state.question.difficulty === "easy"
-                            ? "bg-emerald-400/25 text-emerald-200 border border-emerald-300/30"
-                            : state.question.difficulty === "hard"
-                            ? "bg-rose-400/25 text-rose-200 border border-rose-300/30"
-                            : "bg-amber-400/25 text-amber-200 border border-amber-300/30"
-                        }`}
-                      >
-                        {state.question.difficulty === "easy"
-                          ? "Dễ"
-                          : state.question.difficulty === "hard"
-                          ? "Khó"
-                          : "Vừa"}
-                      </span>
-                      {state.question.is_double_points && (
-                        <span className="rounded-full bg-amber-400 px-2 py-0.5 text-[10px] font-black text-slate-950 shadow-sm animate-pulse">
-                          ⚡ x2 ĐIỂM
-                        </span>
+          {/* 2. IN-GAME QUESTION & REVEAL SCREEN (GIAO DIỆN THEO HÌNH THIẾT KẾ QUIZ.COM) */}
+          {isPlayingOrReveal && state.question && (
+            <div className="flex-1 flex flex-col justify-between my-auto w-full max-w-6xl mx-auto py-2">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-center">
+                {/* CỘT TRÁI: KHU VỰC TƯƠNG TÁC (ĐOÁN TÊN BÀI HÁT HOẶC 4 NÚT PASTEL) */}
+                <div className="lg:col-span-6 flex flex-col justify-center space-y-4">
+                  {/* --- A. CHẾ ĐỘ ÂM NHẠC: NHẬP CHỮ UNIKEY TIẾNG VIỆT (HÌNH 1) --- */}
+                  {isMusicQuestion ? (
+                    <div className="space-y-4">
+                      <h1 className="text-2xl sm:text-3xl font-black text-white text-center lg:text-left drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] tracking-tight">
+                        Đây là bài hát nào?
+                      </h1>
+
+                      <form onSubmit={handleMusicSubmit} className="space-y-3">
+                        {/* Ô NHẬP TÊN BÀI HÁT (UNIKEY TIẾNG VIỆT) */}
+                        <div className="relative">
+                          <input
+                            type="text"
+                            lang="vi"
+                            autoComplete="off"
+                            autoCorrect="off"
+                            spellCheck={false}
+                            disabled={state.status !== "playing" || musicSubmitted || busy}
+                            value={musicInput}
+                            onChange={(e) => setMusicInput(e.target.value)}
+                            placeholder={musicSubmitted ? "Đã gửi câu trả lời! Đang chờ..." : "Nhập tên bài hát..."}
+                            className="w-full rounded-2xl sm:rounded-3xl bg-[#fffdf0] px-4 py-3.5 sm:py-4 text-center text-lg sm:text-xl font-black text-slate-900 border-2 border-slate-900 shadow-[0_4px_0_#1e1b2e] focus:outline-none focus:ring-4 focus:ring-emerald-400 disabled:opacity-85 transition placeholder:text-gray-400 placeholder:font-semibold"
+                          />
+                        </div>
+
+                        {/* NÚT TRY (XANH LÁ 3D) */}
+                        <button
+                          type="submit"
+                          disabled={!musicInput.trim() || state.status !== "playing" || musicSubmitted || busy}
+                          className="w-full rounded-full bg-[#1cb06f] hover:bg-[#16995f] px-6 py-3.5 text-lg font-black text-white border-2 border-emerald-950 shadow-[0_4px_0_#064e3b] active:translate-y-1 active:shadow-none transition disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          Try
+                        </button>
+                      </form>
+
+                      {/* THÔNG BÁO FEEDBACK (ĐÚNG HOẶC SAI) */}
+                      {musicFeedback && (
+                        <div
+                          className={`text-center font-bold text-xs sm:text-sm px-3 py-1.5 rounded-xl border ${
+                            musicFeedback.type === "success"
+                              ? "bg-emerald-500/20 text-emerald-200 border-emerald-400/40"
+                              : "bg-rose-500/20 text-rose-200 border-rose-400/40 animate-pulse"
+                          }`}
+                        >
+                          {musicFeedback.message}
+                        </div>
                       )}
+
+                      {/* CANDY RAINBOW SCORE LINE (TỪ 1000 TRỞ XUỐNG NẾU TRẢ LỜI TRỄ) */}
+                      <div className="pt-1">
+                        <div className="flex items-center gap-3 w-full">
+                          <div className="relative flex-1 h-3.5 sm:h-4 overflow-hidden rounded-full border-2 border-black/80 bg-black/60 p-0.5 shadow-inner">
+                            <div
+                              className="h-full rounded-full transition-all duration-100 ease-linear candy-stripes"
+                              style={{
+                                width: `${Math.max(5, (liveScore / (state.question.is_double_points ? 2000 : 1000)) * 100)}%`
+                              }}
+                            />
+                          </div>
+                          <span className="font-mono text-base sm:text-lg font-black tracking-wider text-white drop-shadow-[0_2px_3px_rgba(0,0,0,0.9)]">
+                            {liveScore}
+                          </span>
+                        </div>
+                      </div>
                     </div>
+                  ) : (
+                    /* --- B. CÁC QUIZ CHỦ ĐỀ KHÁC: 4 NÚT PASTEL PILL XẾP DỌC (HÌNH 2) --- */
+                    <div className="space-y-3.5">
+                      <h1 className="text-xl sm:text-2xl font-black text-white text-center lg:text-left drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] leading-snug">
+                        {state.question.prompt}
+                      </h1>
 
-                    {/* COUNTDOWN TIMER BADGE */}
-                    <div
-                      className={`flex items-center gap-1 rounded-full px-2.5 py-0.5 font-mono text-xs md:text-sm shadow-md transition ${
-                        seconds <= 5 && state.status === "playing"
-                          ? "bg-red-500 text-white animate-pulse"
-                          : "bg-white/20 text-white"
-                      }`}
-                    >
-                      <Clock3 size={14} />
-                      {state.status === "playing"
-                        ? `${seconds}s`
-                        : "Đã chốt"}
+                      {/* 4 NÚT PILL PASTEL XẾP DỌC BÊN TRÁI */}
+                      <div className="space-y-2.5">
+                        {state.question.options.map((option, i) => {
+                          const pastel = pastelStyles[i % pastelStyles.length];
+                          const isCorrect = state.status === "reveal" && state.question?.correct_index === i;
+                          const isChosen = selected === i;
+                          const isWrong = state.status === "reveal" && isChosen && state.question?.correct_index !== i;
+
+                          return (
+                            <button
+                              key={i}
+                              disabled={state.status !== "playing" || selected !== null || busy}
+                              onClick={() => handleAnswer(i)}
+                              className={`w-full rounded-full px-5 py-2.5 sm:py-3 text-center font-black text-sm sm:text-base transition-all active:translate-y-1 active:shadow-none flex items-center justify-between gap-2 ${
+                                isCorrect
+                                  ? "bg-[#4ade80] text-emerald-950 border-2 border-emerald-950 shadow-[0_4px_0_#166534] scale-[1.01]"
+                                  : isWrong
+                                  ? "bg-[#f87171] text-rose-950 border-2 border-rose-950 shadow-[0_4px_0_#991b1b]"
+                                  : isChosen
+                                  ? "bg-amber-300 text-amber-950 border-2 border-amber-950 shadow-[0_4px_0_#b45309] ring-2 ring-white"
+                                  : `${pastel.bg} ${pastel.hover} ${pastel.text} ${pastel.border}`
+                              } disabled:cursor-not-allowed`}
+                            >
+                              <span className="w-5" />
+                              <span className="flex-1 truncate">{option}</span>
+                              <span className="w-5 flex justify-end">
+                                {isCorrect && <CheckCircle2 size={18} className="text-emerald-950" />}
+                                {isWrong && <XCircle size={18} className="text-rose-950" />}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+
+                      {/* CANDY RAINBOW SCORE LINE (TỪ 1000 TRỞ XUỐNG NẾU CHỌN TRỄ) */}
+                      <div className="pt-1">
+                        <div className="flex items-center gap-3 w-full">
+                          <div className="relative flex-1 h-3.5 sm:h-4 overflow-hidden rounded-full border-2 border-black/80 bg-black/60 p-0.5 shadow-inner">
+                            <div
+                              className="h-full rounded-full transition-all duration-100 ease-linear candy-stripes"
+                              style={{
+                                width: `${Math.max(5, (liveScore / (state.question.is_double_points ? 2000 : 1000)) * 100)}%`
+                              }}
+                            />
+                          </div>
+                          <span className="font-mono text-base sm:text-lg font-black tracking-wider text-white drop-shadow-[0_2px_3px_rgba(0,0,0,0.9)]">
+                            {liveScore}
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-
-                  {/* SMOOTH TIME PROGRESS BAR */}
-                  <div className="mt-2.5 h-1.5 w-full overflow-hidden rounded-full bg-black/25">
-                    <div
-                      className={`h-full rounded-full transition-all duration-1000 ${
-                        seconds <= 5
-                          ? "bg-rose-400"
-                          : seconds <= 10
-                          ? "bg-amber-300"
-                          : "bg-emerald-400"
-                      }`}
-                      style={{ width: `${timeProgress}%` }}
-                    />
-                  </div>
-
-                  <div className="mt-1 flex items-center justify-between text-[10px] text-white/70">
-                    <span>Tiến trình: {Math.round(questionProgress)}% ván đấu</span>
-                    <span>
-                      Đã trả lời: {state.answered_count} / {state.players.length} người
-                    </span>
-                  </div>
+                  )}
                 </div>
 
-                {/* QUESTION CONTENT */}
-                <div className="p-3 md:p-5">
-                  <h1 className="mx-auto max-w-2xl text-center text-sm md:text-lg font-bold leading-snug tracking-tight text-slate-900">
-                    {state.question.prompt}
-                  </h1>
-
-                  {/* MEDIA VIEWER (IMAGE / AUDIO / YOUTUBE) */}
+                {/* CỘT PHẢI: MEDIA VIEWER (YOUTUBE MV HOẶC ẢNH MINH HỌA) */}
+                <div className="lg:col-span-6 flex items-center justify-center">
                   <MediaViewer
                     type={state.question.question_type}
                     imageUrl={state.question.image_url}
@@ -782,94 +1001,35 @@ export default function Home() {
                     prompt={state.question.prompt}
                     options={state.question.options}
                   />
+                </div>
+              </div>
 
-                  {/* 4 KAHOOT-STYLE ANSWER BUTTONS */}
-                  <div className="mt-3 grid grid-cols-2 gap-2 md:gap-3">
-                    {state.question.options.map((option, i) => {
-                      const style = answerStyles[i % answerStyles.length];
-                      const isCorrect =
-                        state.status === "reveal" &&
-                        state.question?.correct_index === i;
-                      const isChosen = selected === i;
-                      const isWrong =
-                        state.status === "reveal" &&
-                        isChosen &&
-                        state.question?.correct_index !== i;
+              {/* REVEAL NOTIFICATION & AUTO-TRANSITION LINE (ĐÁP ÁN ĐÚNG & LINE CHẠY HẾT ĐỂ QUA CÂU MỚI) */}
+              {state.status === "reveal" && (
+                <div className="mt-4 rounded-2xl bg-black/70 backdrop-blur-md border border-white/20 p-3 sm:p-4 text-white shadow-2xl max-w-3xl mx-auto w-full">
+                  <div className="flex items-center gap-2 font-black text-sm sm:text-base text-emerald-300">
+                    <CheckCircle2 size={18} className="text-emerald-400" />
+                    <span>Đáp án chính xác: {state.question.options[state.question.correct_index ?? 0]}</span>
+                  </div>
+                  {state.question.explanation && (
+                    <p className="mt-1 text-xs sm:text-sm text-slate-300 leading-snug">
+                      <b>Giải thích:</b> {state.question.explanation}
+                    </p>
+                  )}
 
-                      return (
-                        <button
-                          key={i}
-                          disabled={state.status !== "playing" || selected !== null || busy}
-                          onClick={() => handleAnswer(i)}
-                          className={`relative flex min-h-[52px] md:min-h-[64px] items-center gap-2.5 rounded-xl p-2.5 md:p-3.5 text-left font-bold shadow-sm transition-all active:scale-95 ${
-                            isCorrect
-                              ? "bg-emerald-600 text-white ring-4 ring-emerald-300 scale-[1.01]"
-                              : isWrong
-                              ? "bg-rose-600 text-white opacity-90 ring-4 ring-rose-300"
-                              : isChosen
-                              ? "bg-violet-700 text-white ring-4 ring-violet-300"
-                              : `${style.bg} ${style.hover} ${style.text}`
-                          } disabled:cursor-not-allowed`}
-                        >
-                          <span className="grid h-7 w-7 md:h-8 md:w-8 shrink-0 place-items-center rounded-lg bg-black/20 text-xs md:text-sm font-black">
-                            {style.shape}
-                          </span>
-                          <span className="flex-1 text-xs md:text-sm leading-snug line-clamp-2">
-                            {option}
-                          </span>
-                          {isCorrect && (
-                            <CheckCircle2 size={20} className="text-white shrink-0 animate-bounce" />
-                          )}
-                          {isWrong && (
-                            <XCircle size={20} className="text-white shrink-0" />
-                          )}
-                        </button>
-                      );
-                    })}
+                  {/* LINE TỰ ĐỘNG CHẠY QUA CÂU MỚI (LINE CHẠY HẾT TỰ ĐỘNG CHUYỂN CÂU) */}
+                  <div className="mt-3">
+                    <div className="h-2 w-full overflow-hidden rounded-full bg-white/20 shadow-inner">
+                      <div className="h-full rounded-full bg-gradient-to-r from-violet-500 via-pink-500 to-emerald-400 animate-reveal-line" />
+                    </div>
                   </div>
 
-                  {/* IN-GAME STATUS NOTICE */}
-                  {state.status === "playing" && (
-                    <div className="mt-2 text-center text-[11px] font-semibold text-gray-500">
-                      {selected !== null ? (
-                        <span className="text-violet-700 font-bold flex items-center justify-center gap-1">
-                          <CheckCircle2 size={14} /> Bạn đã chọn câu trả lời! Đang chờ đối thủ…
-                        </span>
-                      ) : (
-                        "Hãy nhanh tay chọn đáp án chính xác để nhận thưởng tốc độ!"
-                      )}
-                    </div>
-                  )}
-
-                  {/* REVEAL EXPLANATION & AUTO-TRANSITION LINE (NO NUMERICAL COUNTDOWN) */}
-                  {state.status === "reveal" && (
-                    <div className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 p-2.5 md:p-3 text-xs text-emerald-950">
-                      <div className="flex items-center gap-1.5 font-black text-emerald-900">
-                        <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
-                        <span>Đáp án đúng: {state.question.options[state.question.correct_index ?? 0]}</span>
-                      </div>
-                      {state.question.explanation && (
-                        <p className="mt-1 text-emerald-800/90 leading-tight">
-                          <b>Giải thích:</b> {state.question.explanation}
-                        </p>
-                      )}
-
-                      {/* ĐƯỜNG THẲNG TỰ ĐỘNG CHẠY HẾT ĐỂ QUA CÂU MỚI (LINE CHẠY HẾT TỰ ĐỘNG QUA CÂU TIẾP THEO) */}
-                      <div className="mt-2.5">
-                        <div className="h-1.5 md:h-2 w-full overflow-hidden rounded-full bg-emerald-200/80 shadow-inner">
-                          <div className="h-full rounded-full bg-gradient-to-r from-violet-600 via-indigo-600 to-emerald-500 animate-reveal-line" />
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* HOST CONTROLS - BỎ NÚT CHỐT CÂU HỎI THEO YÊU CẦU */}
-                  {state.is_host && state.status === "reveal" && (
+                  {state.is_host && (
                     <div className="mt-2 text-right">
                       <button
                         disabled={busy}
                         onClick={() => hostAction("next_question")}
-                        className="text-[11px] font-bold text-violet-600 hover:text-violet-800 underline transition inline-flex items-center gap-1"
+                        className="text-[11px] font-bold text-violet-300 hover:text-white underline transition inline-flex items-center gap-1"
                         title="Bỏ qua chờ và chuyển câu tiếp theo ngay lập tức"
                       >
                         Bỏ qua chờ & chuyển câu ngay <ArrowRight size={12} />
@@ -877,73 +1037,73 @@ export default function Home() {
                     </div>
                   )}
                 </div>
-              </section>
+              )}
+            </div>
+          )}
 
-              {/* LIVE LEADERBOARD SIDEBAR */}
-              <aside className="card p-3.5 md:p-4 flex flex-col justify-between shadow-lg">
-                <div>
-                  <div className="mb-2.5 flex items-center justify-between border-b border-gray-100 pb-2">
-                    <h2 className="flex items-center gap-1.5 text-xs md:text-sm font-black text-slate-900">
-                      <Trophy className="text-amber-500" size={16} /> Bảng Xếp Hạng
-                    </h2>
-                    <span className="rounded-full bg-violet-50 px-2 py-0.5 text-[10px] font-bold text-violet-700">
-                      {state.players.length} người chơi
-                    </span>
-                  </div>
-
-                  <div className="space-y-1.5 max-h-[460px] overflow-y-auto pr-1">
-                    {sortedPlayers.map((p, idx) => (
-                      <div
-                        key={p.id}
-                        className={`flex items-center gap-2 rounded-xl p-2 transition border ${
+          {/* FLOATING LEADERBOARD MODAL (BẢNG XẾP HẠNG THỜI GIAN THỰC) */}
+          {showLeaderboard && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+              <div className="card w-full max-w-md p-5 bg-white text-slate-900 rounded-3xl shadow-2xl relative border-2 border-violet-200">
+                <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-3">
+                  <h3 className="text-base font-black flex items-center gap-2 text-slate-900">
+                    <Trophy className="text-amber-500" size={18} /> Bảng Xếp Hạng ({state.players.length} người)
+                  </h3>
+                  <button
+                    onClick={() => setShowLeaderboard(false)}
+                    className="rounded-full p-1.5 hover:bg-gray-100 text-gray-500"
+                  >
+                    <X size={18} />
+                  </button>
+                </div>
+                <div className="space-y-1.5 max-h-[50vh] overflow-y-auto pr-1">
+                  {sortedPlayers.map((p, idx) => (
+                    <div
+                      key={p.id}
+                      className={`flex items-center gap-2.5 rounded-xl p-2.5 transition border ${
+                        idx === 0
+                          ? "border-amber-200 bg-amber-50/70"
+                          : "border-gray-100 bg-gray-50/60"
+                      }`}
+                    >
+                      <span
+                        className={`grid h-6 w-6 shrink-0 place-items-center rounded-lg text-xs font-black ${
                           idx === 0
-                            ? "border-amber-200 bg-amber-50/60"
-                            : "border-gray-50 bg-gray-50/50 hover:bg-gray-100/60"
+                            ? "bg-amber-400 text-amber-950"
+                            : idx === 1
+                            ? "bg-slate-300 text-slate-900"
+                            : idx === 2
+                            ? "bg-amber-700 text-white"
+                            : "bg-gray-200 text-gray-700"
                         }`}
                       >
-                        <span
-                          className={`grid h-6 w-6 shrink-0 place-items-center rounded-lg text-[11px] font-black ${
-                            idx === 0
-                              ? "bg-amber-400 text-amber-950 shadow-sm"
-                              : idx === 1
-                              ? "bg-slate-300 text-slate-900"
-                              : idx === 2
-                              ? "bg-amber-700 text-white"
-                              : "bg-gray-200 text-gray-600"
-                          }`}
-                        >
-                          {idx + 1}
-                        </span>
-                        <span className="text-lg shrink-0">{p.avatar || "🦊"}</span>
-                        <div className="min-w-0 flex-1">
-                          <div className="truncate text-xs font-bold text-slate-900 flex items-center gap-1">
-                            <span>{p.display_name}</span>
-                            {p.is_host && <span className="text-[9px] bg-amber-100 text-amber-800 px-1 rounded font-extrabold">HOST</span>}
-                          </div>
-                          <div className="text-[10px] text-gray-400">
-                            {p.has_answered ? (
-                              <span className="text-emerald-600 font-bold">✓ Đã trả lời</span>
-                            ) : (
-                              "Đang suy nghĩ…"
-                            )}
-                          </div>
+                        {idx + 1}
+                      </span>
+                      <span className="text-xl shrink-0">{p.avatar || "🦊"}</span>
+                      <div className="min-w-0 flex-1">
+                        <div className="truncate text-xs font-bold text-slate-900 flex items-center gap-1">
+                          <span>{p.display_name}</span>
+                          {p.is_host && <span className="text-[9px] bg-amber-100 text-amber-800 px-1 rounded font-extrabold">HOST</span>}
                         </div>
-                        <div className="text-right">
-                          <div className="font-black text-violet-700 text-xs md:text-sm">
-                            {p.score}
-                          </div>
+                        <div className="text-[10px] text-gray-400">
+                          {p.has_answered ? <span className="text-emerald-600 font-bold">✓ Đã trả lời</span> : "Đang suy nghĩ…"}
                         </div>
                       </div>
-                    ))}
-                  </div>
+                      <div className="text-right font-black text-violet-700 text-sm">
+                        {p.score}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-
-                {/* Thông tin phòng nhỏ gọn ở đáy sidebar */}
-                <div className="mt-3 pt-2 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-400 font-semibold">
-                  <span>Phòng: <b className="text-violet-700 font-mono">{state.room_code}</b></span>
-                  <span>{state.total_questions} câu</span>
+                <div className="mt-4 pt-3 border-t text-center">
+                  <button
+                    onClick={() => setShowLeaderboard(false)}
+                    className="btn-secondary w-full py-2 text-xs font-bold rounded-xl"
+                  >
+                    Đóng bảng xếp hạng
+                  </button>
                 </div>
-              </aside>
+              </div>
             </div>
           )}
 

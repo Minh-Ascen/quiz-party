@@ -55,6 +55,12 @@ export interface RoomState {
   is_host: boolean;
   my_player_id: string;
   answered_count: number;
+  my_answer?: {
+    is_correct: boolean;
+    points_awarded: number;
+    answer_index?: number;
+    text_answer?: string;
+  };
 }
 
 export interface RoomCreationOptions {
