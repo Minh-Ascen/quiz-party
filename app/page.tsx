@@ -472,10 +472,10 @@ export default function Home() {
      ========================================================================= */
   if (screen === "room" && state) {
     return (
-      <main className="min-h-screen bg-[#f3f2f8] px-2 py-2 md:px-6 md:py-4 flex flex-col justify-between">
-        <div className="mx-auto w-full max-w-5xl">
+      <main className="min-h-screen bg-[#f3f2f8] px-2 py-2 md:px-4 md:py-3 flex flex-col justify-between">
+        <div className="mx-auto w-full max-w-7xl">
           {/* TOP BAR */}
-          <header className="mb-3 flex flex-wrap items-center justify-between gap-2">
+          <header className="mb-2 flex flex-wrap items-center justify-between gap-2">
             <button
               onClick={() => setIsExitDialogOpen(true)}
               className="flex items-center gap-2 font-black text-lg text-slate-900 hover:opacity-80 transition"
@@ -714,8 +714,8 @@ export default function Home() {
 
           {/* 2. IN-GAME QUESTION & REVEAL SCREEN */}
           {(state.status === "playing" || state.status === "reveal") && state.question && (
-            <div className="grid gap-5 lg:grid-cols-[1fr_290px]">
-              <section className="card overflow-hidden">
+            <div className="grid gap-3 lg:grid-cols-[1fr_330px] items-stretch">
+              <section className="card flex flex-col justify-between overflow-hidden p-0 shadow-lg">
                 {/* QUESTION HEADER BAR */}
                 <div className="bg-gradient-to-r from-violet-700 via-indigo-700 to-purple-800 p-3 md:p-4 text-white">
                   <div className="flex flex-wrap items-center justify-between gap-1.5 text-xs font-black">
@@ -911,55 +911,68 @@ export default function Home() {
               </section>
 
               {/* LIVE LEADERBOARD SIDEBAR */}
-              <aside className="card h-fit p-5">
-                <div className="mb-4 flex items-center justify-between border-b border-gray-100 pb-3">
-                  <h2 className="flex items-center gap-2 text-sm font-black text-slate-900">
-                    <Trophy className="text-amber-500" size={18} /> Điểm Số
-                  </h2>
-                  <span className="text-[11px] font-bold text-gray-400">
-                    {state.players.length} người
-                  </span>
-                </div>
+              <aside className="card p-3.5 md:p-4 flex flex-col justify-between shadow-lg">
+                <div>
+                  <div className="mb-2.5 flex items-center justify-between border-b border-gray-100 pb-2">
+                    <h2 className="flex items-center gap-1.5 text-xs md:text-sm font-black text-slate-900">
+                      <Trophy className="text-amber-500" size={16} /> Bảng Xếp Hạng
+                    </h2>
+                    <span className="rounded-full bg-violet-50 px-2 py-0.5 text-[10px] font-bold text-violet-700">
+                      {state.players.length} người chơi
+                    </span>
+                  </div>
 
-                <div className="space-y-2.5">
-                  {sortedPlayers.map((p, idx) => (
-                    <div
-                      key={p.id}
-                      className="flex items-center gap-2.5 rounded-xl p-2 transition hover:bg-gray-50"
-                    >
-                      <span
-                        className={`grid h-7 w-7 shrink-0 place-items-center rounded-lg text-xs font-black ${
+                  <div className="space-y-1.5 max-h-[460px] overflow-y-auto pr-1">
+                    {sortedPlayers.map((p, idx) => (
+                      <div
+                        key={p.id}
+                        className={`flex items-center gap-2 rounded-xl p-2 transition border ${
                           idx === 0
-                            ? "bg-amber-400 text-amber-950 shadow-sm"
-                            : idx === 1
-                            ? "bg-slate-300 text-slate-900"
-                            : idx === 2
-                            ? "bg-amber-700 text-white"
-                            : "bg-gray-100 text-gray-500"
+                            ? "border-amber-200 bg-amber-50/60"
+                            : "border-gray-50 bg-gray-50/50 hover:bg-gray-100/60"
                         }`}
                       >
-                        {idx + 1}
-                      </span>
-                      <span className="text-xl shrink-0">{p.avatar || "🦊"}</span>
-                      <div className="min-w-0 flex-1">
-                        <div className="truncate text-xs font-bold text-slate-900">
-                          {p.display_name}
+                        <span
+                          className={`grid h-6 w-6 shrink-0 place-items-center rounded-lg text-[11px] font-black ${
+                            idx === 0
+                              ? "bg-amber-400 text-amber-950 shadow-sm"
+                              : idx === 1
+                              ? "bg-slate-300 text-slate-900"
+                              : idx === 2
+                              ? "bg-amber-700 text-white"
+                              : "bg-gray-200 text-gray-600"
+                          }`}
+                        >
+                          {idx + 1}
+                        </span>
+                        <span className="text-lg shrink-0">{p.avatar || "🦊"}</span>
+                        <div className="min-w-0 flex-1">
+                          <div className="truncate text-xs font-bold text-slate-900 flex items-center gap-1">
+                            <span>{p.display_name}</span>
+                            {p.is_host && <span className="text-[9px] bg-amber-100 text-amber-800 px-1 rounded font-extrabold">HOST</span>}
+                          </div>
+                          <div className="text-[10px] text-gray-400">
+                            {p.has_answered ? (
+                              <span className="text-emerald-600 font-bold">✓ Đã trả lời</span>
+                            ) : (
+                              "Đang suy nghĩ…"
+                            )}
+                          </div>
                         </div>
-                        <div className="text-[10px] text-gray-400">
-                          {p.has_answered ? (
-                            <span className="text-emerald-600 font-semibold">✓ Đã trả lời</span>
-                          ) : (
-                            "Đang suy nghĩ…"
-                          )}
+                        <div className="text-right">
+                          <div className="font-black text-violet-700 text-xs md:text-sm">
+                            {p.score}
+                          </div>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className="font-black text-violet-700 text-xs">
-                          {p.score}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+                </div>
+
+                {/* Thông tin phòng nhỏ gọn ở đáy sidebar */}
+                <div className="mt-3 pt-2 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-400 font-semibold">
+                  <span>Phòng: <b className="text-violet-700 font-mono">{state.room_code}</b></span>
+                  <span>{state.total_questions} câu</span>
                 </div>
               </aside>
             </div>
@@ -1004,13 +1017,24 @@ export default function Home() {
                   <button
                     onClick={() => {
                       setIsExitDialogOpen(false);
-                      if (state.is_host) {
-                        hostAction("restart_game");
-                      } else {
-                        // Người chơi quay về trạng thái lobby
-                        setState((prev) => (prev ? { ...prev, status: "lobby" } : null));
-                      }
                       setSelected(null);
+                      if (state.is_host) {
+                        hostAction("reset_to_lobby");
+                      } else {
+                        // Người chơi quay về trạng thái lobby đồng bộ
+                        const token = sessionStorage.getItem(`qp-token-${roomCode}`);
+                        call<RoomState>("reset_to_lobby", {
+                          p_code: roomCode,
+                          p_player_token: token
+                        })
+                          .then((nextState) => {
+                            if (nextState) setState(nextState);
+                            broadcast();
+                          })
+                          .catch(() => {
+                            setState((prev) => (prev ? { ...prev, status: "lobby" } : null));
+                          });
+                      }
                     }}
                     className="flex w-full items-center justify-center gap-2 rounded-xl bg-violet-600 py-2.5 text-xs font-extrabold text-white shadow hover:bg-violet-700"
                   >

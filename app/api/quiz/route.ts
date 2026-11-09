@@ -519,6 +519,38 @@ export async function POST(req: NextRequest) {
       });
     }
 
+    // 8. ĐƯA PHÒNG VỀ LẠI LOBBY CHỜ NGƯỜI VÀO PHÒNG (RESET TO LOBBY)
+    if (action === "reset_to_lobby") {
+      const code = (body.p_code || "").trim().toUpperCase();
+      const playerToken = body.p_player_token || "";
+      const room = rooms[code];
+
+      if (!room) {
+        return NextResponse.json(
+          { data: null, error: { message: "Không tìm thấy phòng chơi." } },
+          { status: 404 }
+        );
+      }
+
+      // Đặt lại phòng về trạng thái phòng chờ (lobby)
+      room.status = "lobby";
+      room.currentIndex = 0;
+      room.answersByQuestion = {};
+      room.players.forEach((p) => {
+        p.score = 0;
+        p.streak = 0;
+        p.correct_count = 0;
+        p.has_answered = false;
+      });
+      room.updatedAt = Date.now();
+      saveRooms(rooms);
+
+      return NextResponse.json({
+        data: buildClientState(room, playerToken),
+        error: null
+      });
+    }
+
     return NextResponse.json(
       { data: null, error: { message: `Hành động không hợp lệ: ${action}` } },
       { status: 400 }
