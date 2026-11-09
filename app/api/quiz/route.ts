@@ -115,10 +115,13 @@ function generateRoomCode(rooms: Record<string, StoredRoom>): string {
 }
 
 function buildClientState(room: StoredRoom, playerToken: string): RoomState {
+  const currentQ = room.questions[room.currentIndex] || null;
+
   // Tự động chuyển sang trạng thái 'reveal' nếu đã hết thời gian trả lời của câu hiện tại
   if (room.status === "playing" && room.questionStartedAt > 0) {
     const elapsedSec = (Date.now() - room.questionStartedAt) / 1000;
-    if (elapsedSec >= room.timeLimit + 1) {
+    const qLimit = currentQ?.time_limit || room.timeLimit || 20;
+    if (elapsedSec >= qLimit + 2) {
       room.status = "reveal";
       room.updatedAt = Date.now();
     }
@@ -140,7 +143,6 @@ function buildClientState(room: StoredRoom, playerToken: string): RoomState {
   }
 
   const me = room.players.find((p) => p.token === playerToken);
-  const currentQ = room.questions[room.currentIndex] || null;
   const currentAnswers = room.answersByQuestion[room.currentIndex] || {};
   const answeredCount = Object.keys(currentAnswers).length;
 

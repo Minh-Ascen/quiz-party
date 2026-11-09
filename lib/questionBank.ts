@@ -108,7 +108,10 @@ export function selectQuestionsForRoom(
       round_no: Math.floor(idx / 10) + 1,
       question_no: idx + 1,
       difficulty: difficulty === "all" ? q.difficulty || "medium" : difficulty,
-      time_limit: timeLimit,
+      time_limit:
+        q.question_type === "AUDIO_GUESS" || q.category === "Âm nhạc Việt Nam"
+          ? Math.max(30, timeLimit)
+          : timeLimit,
       image_url: resolveQuestionImage(withShuffledOpts)
     };
   });

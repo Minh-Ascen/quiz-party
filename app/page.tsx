@@ -149,23 +149,30 @@ export default function Home() {
     };
   }, [screen, roomCode, refresh]);
 
-  // Timer countdown per question (synchronized with room time_limit: 15s / 20s / 30s)
+  // Timer countdown per question (synchronized with question time_limit: 15s / 20s / 30s)
   useEffect(() => {
     if (!state || state.status !== "playing") return;
     const limit = state.question?.time_limit || state.time_limit || 20;
     const startedMs = state.current_question_started_at
       ? new Date(state.current_question_started_at).getTime()
       : Date.now();
-    const initialRemaining = Math.max(
-      0,
-      Math.min(limit, Math.ceil(limit - (Date.now() - startedMs) / 1000))
-    );
-    setSeconds(initialRemaining > 0 ? initialRemaining : limit);
+    const elapsed = Math.max(0, (Date.now() - startedMs) / 1000);
+    const initialRemaining = Math.max(1, Math.ceil(limit - elapsed));
+
+    setSeconds(initialRemaining);
     setQuestionStartTime(Date.now());
 
     const timer = window.setInterval(() => {
       setSeconds((s) => {
         if (s <= 1) {
+          window.clearInterval(timer);
+          // Tự động mở đáp án khi đếm ngược chạm mốc 0 giây
+          if (roomCode) {
+            const token = sessionStorage.getItem(`qp-token-${roomCode}`);
+            call("reveal_answer", { p_code: roomCode, p_player_token: token })
+              .then(() => refresh(roomCode, token || undefined))
+              .catch(() => {});
+          }
           return 0;
         }
         if (s <= 5) {
@@ -176,17 +183,7 @@ export default function Home() {
     }, 1000);
 
     return () => window.clearInterval(timer);
-  }, [state?.current_index, state?.status, state?.question?.id, state?.time_limit]);
-
-  // Auto-reveal when countdown reaches 0s
-  useEffect(() => {
-    if (state?.status === "playing" && seconds === 0 && roomCode) {
-      const token = sessionStorage.getItem(`qp-token-${roomCode}`);
-      call("reveal_answer", { p_code: roomCode, p_player_token: token })
-        .then(() => refresh(roomCode, token || undefined))
-        .catch(() => {});
-    }
-  }, [seconds, state?.status, roomCode, call, refresh]);
+  }, [state?.current_index, state?.status, state?.question?.id, state?.question?.time_limit, state?.time_limit, roomCode, call, refresh]);
 
   // Live score countdown từ 1000 trở xuống theo thời gian nếu người chơi trả lời trễ
   useEffect(() => {
