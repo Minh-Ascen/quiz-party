@@ -9,6 +9,7 @@ interface MediaViewerProps {
   imageUrl?: string | null;
   audioUrl?: string | null;
   youtubeVideoId?: string | null;
+  startTime?: number | null;
   category?: string;
   prompt?: string;
   options?: string[];
@@ -21,6 +22,7 @@ export function MediaViewer({
   imageUrl,
   audioUrl,
   youtubeVideoId,
+  startTime,
   category = "Quiz Party",
   prompt = "",
   options = [],
@@ -116,7 +118,8 @@ export function MediaViewer({
           )}
 
           <iframe
-            src={`https://www.youtube.com/embed/${cleanYtId}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1&playsinline=1`}
+            key={`${cleanYtId}-${startTime || 18}`}
+            src={`https://www.youtube.com/embed/${cleanYtId}?autoplay=1&start=${startTime && startTime > 0 ? startTime : 18}&enablejsapi=1&rel=0&modestbranding=1&playsinline=1`}
             title="Đoán tên bài hát qua MV"
             className={`h-full w-full border-0 transition-all duration-300 ${
               !isReveal ? "scale-[1.18] -translate-y-8" : "scale-100 translate-y-0"

@@ -1094,6 +1094,7 @@ export default function Home() {
                         imageUrl={state.question.image_url}
                         audioUrl={state.question.audio_url}
                         youtubeVideoId={state.question.youtube_video_id}
+                        startTime={state.question.start_time}
                         category={state.question.category}
                         prompt={state.question.prompt}
                         options={state.question.options}

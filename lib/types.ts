@@ -25,6 +25,7 @@ export interface Question {
   points?: number;
   time_limit?: number;
   source?: string | null;
+  start_time?: number | null;
   is_double_points?: boolean;
 }
 

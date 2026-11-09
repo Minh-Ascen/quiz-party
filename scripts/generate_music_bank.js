@@ -382,3 +382,4 @@ const updatedBank = [...newMusicQuestions, ...nonMusicQuestions];
 fs.writeFileSync(bankPath, JSON.stringify(updatedBank, null, 2), 'utf8');
 console.log(`Đã cập nhật thành công ${newMusicQuestions.length} câu hỏi Âm nhạc Việt Nam chuẩn xác 100%!`);
 console.log(`Tổng số câu hỏi trong ngân hàng hiện tại: ${updatedBank.length}`);
+
