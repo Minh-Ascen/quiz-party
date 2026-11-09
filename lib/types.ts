@@ -39,6 +39,8 @@ export interface Player {
   streak?: number;
   correct_count?: number;
   average_time?: number;
+  last_points?: number;
+  previous_score?: number;
 }
 
 export interface RoomState {
@@ -57,8 +59,8 @@ export interface RoomState {
   my_player_id: string;
   answered_count: number;
   my_answer?: {
-    is_correct: boolean;
-    points_awarded: number;
+    is_correct?: boolean;
+    points_awarded?: number;
     answer_index?: number;
     text_answer?: string;
   };

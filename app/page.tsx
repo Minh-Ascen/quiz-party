@@ -56,11 +56,13 @@ export default function Home() {
   const [notice, setNotice] = useState("");
   const [seconds, setSeconds] = useState(20);
   const [liveScore, setLiveScore] = useState(1000);
+  const [frozenScore, setFrozenScore] = useState<number | null>(null);
   const [musicInput, setMusicInput] = useState("");
   const [musicFeedback, setMusicFeedback] = useState<{ type: "success" | "wrong"; message: string } | null>(null);
   const [musicSubmitted, setMusicSubmitted] = useState(false);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [revealStep, setRevealStep] = useState<"answer" | "scoreboard">("answer");
+  const [scoreboardStage, setScoreboardStage] = useState<"initial" | "points" | "ranked">("initial");
   const [isMuted, setIsMuted] = useState(false);
   const [isExitDialogOpen, setIsExitDialogOpen] = useState(false);
 
@@ -212,6 +214,7 @@ export default function Home() {
   // Reset selected answer & music input on new question
   useEffect(() => {
     setSelected(null);
+    setFrozenScore(null);
     setMusicInput("");
     setMusicFeedback(null);
     setMusicSubmitted(false);
@@ -221,16 +224,18 @@ export default function Home() {
   useEffect(() => {
     if (state?.status === "playing") {
       setSelected(null);
+      setFrozenScore(null);
       setMusicInput("");
       setMusicFeedback(null);
       setMusicSubmitted(false);
     }
   }, [state?.status]);
 
-  // Play sound on answer reveal -> Hiển thị Xếp hạng (Scoreboard) -> Tự động chuyển câu tiếp theo
+  // Play sound on answer reveal -> Hiển thị Xếp hạng (Scoreboard) với hiệu ứng +Điểm & Thăng hạng -> Tự động chuyển câu
   useEffect(() => {
     if (state?.status === "reveal") {
       setRevealStep("answer");
+      setScoreboardStage("initial");
       if (state.question && selected !== null) {
         if (selected === state.question.correct_index) {
           soundFX.playCorrect();
@@ -239,13 +244,24 @@ export default function Home() {
         }
       }
 
-      // 1. Sau 2.2 giây: Chuyển sang màn hình Bảng Xếp Hạng (như Hình 3)
+      // 1. Sau 2.0 giây: Chuyển sang màn hình Bảng Xếp Hạng (giai đoạn initial: giữ nguyên hạng cũ)
       const toScoreboardTimeout = window.setTimeout(() => {
         setRevealStep("scoreboard");
+        setScoreboardStage("initial");
         soundFX.playTransition();
-      }, 2200);
+      }, 2000);
 
-      // 2. Sau 6.5 giây (hoàn tất hiển thị bảng xếp hạng): Tự động chuyển qua câu tiếp theo
+      // 2. Sau 2.8 giây (trong scoreboard): Nổ hiệu ứng +Điểm (+1000)
+      const pointsAnimTimeout = window.setTimeout(() => {
+        setScoreboardStage("points");
+      }, 2800);
+
+      // 3. Sau 4.2 giây (trong scoreboard): Hiệu ứng thăng hạng nhảy vị trí (🚀 +X Hạng)
+      const rankUpTimeout = window.setTimeout(() => {
+        setScoreboardStage("ranked");
+      }, 4200);
+
+      // 4. Sau 7.5 giây (hoàn tất hiển thị bảng xếp hạng): Tự động chuyển qua câu tiếp theo
       const autoNextTimeout = window.setTimeout(() => {
         if (state.is_host && roomCode) {
           const token = sessionStorage.getItem(`qp-token-${roomCode}`);
@@ -259,14 +275,17 @@ export default function Home() {
             })
             .catch(() => {});
         }
-      }, 6500);
+      }, 7500);
 
       return () => {
         window.clearTimeout(toScoreboardTimeout);
+        window.clearTimeout(pointsAnimTimeout);
+        window.clearTimeout(rankUpTimeout);
         window.clearTimeout(autoNextTimeout);
       };
     } else {
       setRevealStep("answer");
+      setScoreboardStage("initial");
     }
   }, [state?.status, state?.current_index]);
 
@@ -395,11 +414,12 @@ export default function Home() {
     }
   };
 
-  // Player submits answer with speed measurement
+  // Player submits answer with speed measurement (Khóa điểm tức thì khi chọn)
   const handleAnswer = async (index: number) => {
     if (!state?.question || selected !== null || state.status !== "playing") return;
     soundFX.playSelect();
     setSelected(index);
+    setFrozenScore(liveScore);
     setBusy(true);
     setError("");
 
@@ -419,13 +439,14 @@ export default function Home() {
       await broadcast();
     } catch (e) {
       setSelected(null);
+      setFrozenScore(null);
       setError(e instanceof Error ? e.message : "Gửi câu trả lời thất bại.");
     } finally {
       setBusy(false);
     }
   };
 
-  // Player submits music text guess (Gõ chữ Unikey đoán tên bài hát)
+  // Player submits music text guess (Gõ chữ Unikey đoán tên bài hát - Khóa điểm khi gõ đúng)
   const handleMusicSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (!musicInput.trim() || musicSubmitted || busy || !roomCode || state?.status !== "playing") return;
@@ -456,6 +477,7 @@ export default function Home() {
         soundFX.playCorrect();
         setMusicSubmitted(true);
         const pts = json.data.my_answer?.points_awarded || liveScore;
+        setFrozenScore(pts);
         setMusicFeedback({ type: "success", message: `🎉 Chính xác! Bạn nhận được +${pts} điểm!` });
         setState(json.data);
         await broadcast();
@@ -488,6 +510,41 @@ export default function Home() {
     () => [...(state?.players || [])].sort((a, b) => b.score - a.score),
     [state?.players]
   );
+
+  // Dữ liệu bảng xếp hạng giữa các câu với animation +Điểm và Thăng hạng
+  const scoreboardData = useMemo(() => {
+    const players = state?.players || [];
+    const before = [...players].sort(
+      (a, b) => (b.previous_score ?? b.score) - (a.previous_score ?? a.score)
+    );
+    const after = [...players].sort((a, b) => b.score - a.score);
+
+    const prevRankMap = new Map<string, number>();
+    before.forEach((p, idx) => prevRankMap.set(p.id, idx));
+
+    const afterRankMap = new Map<string, number>();
+    after.forEach((p, idx) => afterRankMap.set(p.id, idx));
+
+    const list = scoreboardStage === "ranked" ? after : before;
+
+    return list.map((p) => {
+      const prevRank = prevRankMap.get(p.id) ?? 0;
+      const currRank = afterRankMap.get(p.id) ?? 0;
+      const rankGain = prevRank - currRank;
+      const displayScore =
+        scoreboardStage === "initial"
+          ? (p.previous_score ?? p.score)
+          : p.score;
+      const ptsEarned = p.last_points || 0;
+
+      return {
+        ...p,
+        displayScore,
+        ptsEarned,
+        rankGain
+      };
+    });
+  }, [state?.players, scoreboardStage]);
 
   const totalTimeLimit = state?.question?.time_limit || state?.time_limit || 20;
   const timeProgress = Math.max(0, Math.min(100, (seconds / totalTimeLimit) * 100));
@@ -902,10 +959,10 @@ export default function Home() {
 
                   {/* DANH SÁCH BẢNG XẾP HẠNG DẠNG VIÊN THUỐC (PILL) THEO CHUẨN HÌNH 3 */}
                   <div className="space-y-3 w-full my-auto">
-                    {sortedPlayers.map((p, idx) => (
+                    {scoreboardData.map((p, idx) => (
                       <div
                         key={p.id}
-                        className={`w-full flex items-center justify-between px-5 py-3 rounded-full border-2 border-black/80 shadow-[0_4px_0_rgba(0,0,0,0.35)] transition-all ${
+                        className={`w-full flex items-center justify-between px-5 py-3 rounded-full border-2 border-black/80 shadow-[0_4px_0_rgba(0,0,0,0.35)] transition-all duration-700 ease-out ${
                           idx === 0
                             ? "bg-[#d9f99d] text-lime-950"
                             : idx === 1
@@ -926,10 +983,26 @@ export default function Home() {
                               HOST
                             </span>
                           )}
+
+                          {/* HIỆU ỨNG THĂNG HẠNG: Khi 1 người chơi thăng hạng sẽ nhảy lên vị trí cao hơn và hiện badge động */}
+                          {scoreboardStage === "ranked" && p.rankGain > 0 && (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-400 text-amber-950 font-black text-xs shadow-md border border-amber-600 animate-bounce">
+                              🚀 +{p.rankGain} Hạng
+                            </span>
+                          )}
                         </div>
-                        <span className="font-mono text-lg sm:text-xl font-black">
-                          {p.score}
-                        </span>
+
+                        <div className="flex items-center gap-3">
+                          {/* HIỆU ỨNG + ĐIỂM SAU MỖI CÂU: Kiểu '+1000' có hiệu ứng nổ động nhảy tưng tưng */}
+                          {scoreboardStage !== "initial" && p.ptsEarned > 0 && (
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-emerald-500 text-white font-black text-xs sm:text-sm shadow-lg border border-white animate-bounce">
+                              +{p.ptsEarned}
+                            </span>
+                          )}
+                          <span className="font-mono text-lg sm:text-xl font-black">
+                            {p.displayScore}
+                          </span>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -939,7 +1012,7 @@ export default function Home() {
                     <div className="h-2 w-full overflow-hidden rounded-full bg-black/50 border border-white/20 shadow-inner">
                       <div
                         className="h-full rounded-full bg-gradient-to-r from-violet-500 via-pink-500 to-emerald-400"
-                        style={{ animation: "revealLine 4.2s linear forwards" }}
+                        style={{ animation: "revealLine 5.5s linear forwards" }}
                       />
                     </div>
                     {state.is_host && (
@@ -1001,27 +1074,33 @@ export default function Home() {
                             <div
                               className={`text-center font-bold text-xs sm:text-sm px-3 py-1.5 rounded-xl border ${
                                 musicFeedback.type === "success"
-                                  ? "bg-emerald-500/20 text-emerald-200 border-emerald-400/40"
-                                  : "bg-rose-500/20 text-rose-200 border-rose-400/40 animate-pulse"
+                                    ? "bg-emerald-500/20 text-emerald-200 border-emerald-400/40"
+                                    : "bg-rose-500/20 text-rose-200 border-rose-400/40 animate-pulse"
                               }`}
                             >
                               {musicFeedback.message}
                             </div>
                           )}
 
-                          {/* CANDY RAINBOW SCORE LINE (TỪ 1000 TRỞ XUỐNG NẾU TRẢ LỜI TRỄ) */}
+                          {/* CANDY RAINBOW SCORE LINE (TỪ 1000 TRỞ XUỐNG, DỪNG LẠI KHI ĐOÁN ĐÚNG) */}
                           <div className="pt-1">
                             <div className="flex items-center gap-3 w-full">
                               <div className="relative flex-1 h-3.5 sm:h-4 overflow-hidden rounded-full border-2 border-black/80 bg-black/60 p-0.5 shadow-inner">
                                 <div
                                   className="h-full rounded-full transition-all duration-100 ease-linear candy-stripes"
                                   style={{
-                                    width: `${Math.max(5, (liveScore / (state.question.is_double_points ? 2000 : 1000)) * 100)}%`
+                                    width: `${Math.max(
+                                      5,
+                                      (((frozenScore !== null ? frozenScore : liveScore) /
+                                        (state.question.is_double_points ? 2000 : 1000)) *
+                                        100)
+                                    )}%`
                                   }}
                                 />
                               </div>
-                              <span className="font-mono text-base sm:text-lg font-black tracking-wider text-white drop-shadow-[0_2px_3px_rgba(0,0,0,0.9)]">
-                                {liveScore}
+                              <span className="font-mono text-base sm:text-lg font-black tracking-wider text-white drop-shadow-[0_2px_3px_rgba(0,0,0,0.9)] flex items-center gap-1">
+                                {frozenScore !== null ? frozenScore : liveScore}
+                                {frozenScore !== null && <span className="text-xs text-emerald-300">🔒</span>}
                               </span>
                             </div>
                           </div>
@@ -1033,13 +1112,14 @@ export default function Home() {
                             {state.question.prompt}
                           </h1>
 
-                          {/* 4 NÚT PILL PASTEL XẾP DỌC BÊN TRÁI */}
+                          {/* 4 NÚT PILL PASTEL XẾP DỌC BÊN TRÁI: KHÓA ĐIỂM ĐỨNG IM KHI ĐÃ CHỌN */}
                           <div className="space-y-2.5">
                             {state.question.options.map((option, i) => {
                               const pastel = pastelStyles[i % pastelStyles.length];
-                              const isCorrect = state.status === "reveal" && state.question?.correct_index === i;
+                              const isReveal = state.status === "reveal";
+                              const isCorrect = isReveal && state.question?.correct_index === i;
                               const isChosen = selected === i;
-                              const isWrong = state.status === "reveal" && isChosen && state.question?.correct_index !== i;
+                              const isWrong = isReveal && isChosen && state.question?.correct_index !== i;
 
                               return (
                                 <button
@@ -1053,33 +1133,58 @@ export default function Home() {
                                       ? "bg-[#f87171] text-rose-950 border-2 border-rose-950 shadow-[0_4px_0_#991b1b]"
                                       : isChosen
                                       ? "bg-amber-300 text-amber-950 border-2 border-amber-950 shadow-[0_4px_0_#b45309] ring-2 ring-white"
-                                      : `${pastel.bg} ${pastel.hover} ${pastel.text} ${pastel.border}`
+                                      : `${pastel.bg} ${pastel.hover} ${pastel.text} ${pastel.border} ${
+                                          selected !== null ? "opacity-60" : ""
+                                        }`
                                   } disabled:cursor-not-allowed`}
                                 >
                                   <span className="w-5" />
                                   <span className="flex-1 truncate">{option}</span>
-                                  <span className="w-5 flex justify-end">
-                                    {isCorrect && <CheckCircle2 size={18} className="text-emerald-950" />}
-                                    {isWrong && <XCircle size={18} className="text-rose-950" />}
+                                  <span className="min-w-6 flex items-center justify-end font-bold text-xs">
+                                    {/* Trong lúc đang chơi: Đã chọn đáp án thì số điểm đứng im và hiện ổ khóa */}
+                                    {!isReveal && isChosen && (
+                                      <span className="text-amber-950 bg-amber-400 px-2 py-0.5 rounded-full text-[11px] font-black shadow-sm">
+                                        🔒 {frozenScore !== null ? `+${frozenScore}đ` : "Đã chọn"}
+                                      </span>
+                                    )}
+                                    {/* Khi hết giờ hoặc chốt câu hỏi: Mới biết đúng hay sai và hiện số điểm */}
+                                    {isCorrect && (
+                                      <span className="inline-flex items-center gap-1 text-emerald-950 font-black">
+                                        <CheckCircle2 size={18} />
+                                        {isChosen && frozenScore !== null && <span>+{frozenScore}đ</span>}
+                                      </span>
+                                    )}
+                                    {isWrong && (
+                                      <span className="inline-flex items-center gap-1 text-rose-950 font-black">
+                                        <XCircle size={18} />
+                                        <span>+0đ</span>
+                                      </span>
+                                    )}
                                   </span>
                                 </button>
                               );
                             })}
                           </div>
 
-                          {/* CANDY RAINBOW SCORE LINE (TỪ 1000 TRỞ XUỐNG NẾU CHỌN TRỄ) */}
+                          {/* CANDY RAINBOW SCORE LINE (TỪ 1000 TRỞ XUỐNG, ĐỨNG IM KHI ĐÃ CHỌN ĐÁP ÁN) */}
                           <div className="pt-1">
                             <div className="flex items-center gap-3 w-full">
                               <div className="relative flex-1 h-3.5 sm:h-4 overflow-hidden rounded-full border-2 border-black/80 bg-black/60 p-0.5 shadow-inner">
                                 <div
                                   className="h-full rounded-full transition-all duration-100 ease-linear candy-stripes"
                                   style={{
-                                    width: `${Math.max(5, (liveScore / (state.question.is_double_points ? 2000 : 1000)) * 100)}%`
+                                    width: `${Math.max(
+                                      5,
+                                      (((frozenScore !== null ? frozenScore : liveScore) /
+                                        (state.question.is_double_points ? 2000 : 1000)) *
+                                        100)
+                                    )}%`
                                   }}
                                 />
                               </div>
-                              <span className="font-mono text-base sm:text-lg font-black tracking-wider text-white drop-shadow-[0_2px_3px_rgba(0,0,0,0.9)]">
-                                {liveScore}
+                              <span className="font-mono text-base sm:text-lg font-black tracking-wider text-white drop-shadow-[0_2px_3px_rgba(0,0,0,0.9)] flex items-center gap-1">
+                                {frozenScore !== null ? frozenScore : liveScore}
+                                {frozenScore !== null && <span className="text-xs text-amber-300">🔒</span>}
                               </span>
                             </div>
                           </div>
@@ -1099,6 +1204,7 @@ export default function Home() {
                         prompt={state.question.prompt}
                         options={state.question.options}
                         isReveal={state.status === "reveal"}
+                        timeLimit={state.question.time_limit || state.time_limit || 20}
                       />
                     </div>
                   </div>

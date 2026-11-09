@@ -15,6 +15,7 @@ interface MediaViewerProps {
   options?: string[];
   className?: string;
   isReveal?: boolean;
+  timeLimit?: number;
 }
 
 export function MediaViewer({
@@ -27,7 +28,8 @@ export function MediaViewer({
   prompt = "",
   options = [],
   className = "",
-  isReveal = false
+  isReveal = false,
+  timeLimit = 20
 }: MediaViewerProps) {
   const [imageError, setImageError] = useState(false);
   const [fallbackTried, setFallbackTried] = useState(false);
@@ -35,6 +37,39 @@ export function MediaViewer({
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
   const [ytBlocked, setYtBlocked] = useState(false);
+
+  // Hiệu ứng 20 mảnh ghép che hình ảnh (5 cột x 4 hàng) mở dần theo thời gian
+  const TOTAL_TILES = 20;
+  const [revealedTiles, setRevealedTiles] = useState<number[]>([]);
+
+  useEffect(() => {
+    if (isReveal) {
+      setRevealedTiles(Array.from({ length: TOTAL_TILES }, (_, i) => i));
+      return;
+    }
+
+    const tileIndices = Array.from({ length: TOTAL_TILES }, (_, i) => i);
+    for (let i = tileIndices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [tileIndices[i], tileIndices[j]] = [tileIndices[j], tileIndices[i]];
+    }
+
+    setRevealedTiles([tileIndices[0]]);
+    let currentIdx = 1;
+
+    const intervalTime = Math.max(400, Math.floor(((timeLimit || 20) * 1000 * 0.85) / TOTAL_TILES));
+    const tileTimer = window.setInterval(() => {
+      if (currentIdx < TOTAL_TILES) {
+        const nextTile = tileIndices[currentIdx];
+        setRevealedTiles((prev) => (prev.includes(nextTile) ? prev : [...prev, nextTile]));
+        currentIdx++;
+      } else {
+        window.clearInterval(tileTimer);
+      }
+    }, intervalTime);
+
+    return () => window.clearInterval(tileTimer);
+  }, [prompt, activeSrc, isReveal, timeLimit]);
 
   const resolvedUrl = resolveQuestionImage({
     prompt,
@@ -206,18 +241,54 @@ export function MediaViewer({
         </div>
       )}
 
-      {/* 3. ILLUSTRATION IMAGE FOR EVERY OTHER QUIZ QUESTION (CHỦ ĐỀ KHÁC) */}
+      {/* 3. ILLUSTRATION IMAGE CHO CÂU TRẮC NGHIỆM: HIỆU ỨNG TỪNG MẢNH GHÉP (MOSAIC TILE REVEAL) */}
       {!isSongGuess && (
-        <div className="relative aspect-video w-full h-[250px] sm:h-[300px] md:h-[360px] max-h-[420px] overflow-hidden rounded-3xl bg-black/40 border-4 border-black/80 shadow-2xl mx-auto flex items-center justify-center p-3">
+        <div className="relative aspect-video w-full h-[250px] sm:h-[300px] md:h-[360px] max-h-[420px] overflow-hidden rounded-3xl bg-[#120f22] border-4 border-[#3a3556] shadow-2xl mx-auto flex items-center justify-center p-2 select-none">
           {activeSrc && !imageError ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={activeSrc}
-              alt={prompt || "Hình ảnh minh họa câu hỏi"}
-              className="h-full w-full max-h-full max-w-full rounded-2xl object-contain shadow-md"
-              loading="eager"
-              onError={handleImageError}
-            />
+            <div className="relative w-full h-full rounded-2xl overflow-hidden flex items-center justify-center bg-black/60">
+              {/* Ảnh gốc bên dưới */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={activeSrc}
+                alt={prompt || "Hình ảnh minh họa câu hỏi"}
+                className="h-full w-full max-h-full max-w-full rounded-xl object-contain shadow-md"
+                loading="eager"
+                onError={handleImageError}
+              />
+
+              {/* Lưới 20 mảnh ghép phủ lên trên ảnh */}
+              {Array.from({ length: TOTAL_TILES }).map((_, idx) => {
+                const row = Math.floor(idx / 5);
+                const col = idx % 5;
+                const isRevealed = isReveal || revealedTiles.includes(idx);
+
+                return (
+                  <div
+                    key={idx}
+                    className={`absolute border border-black/40 bg-[#1e1a33] shadow-inner transition-all duration-700 ease-out flex items-center justify-center ${
+                      isRevealed
+                        ? "opacity-0 scale-75 pointer-events-none"
+                        : "opacity-100 scale-100"
+                    }`}
+                    style={{
+                      top: `${row * 25}%`,
+                      left: `${col * 20}%`,
+                      width: "20%",
+                      height: "25%"
+                    }}
+                  >
+                    <span className="text-[11px] font-mono text-white/20 select-none font-bold">
+                      {idx + 1}
+                    </span>
+                  </div>
+                );
+              })}
+
+              {/* Badge góc dưới: Hiển thị trạng thái mở mảnh ghép */}
+              <div className="absolute bottom-2 left-2 z-10 px-2.5 py-1 rounded-full bg-black/75 backdrop-blur-md border border-white/10 text-[10px] sm:text-xs font-bold text-white/90 shadow-lg">
+                {isReveal ? "✨ Toàn bộ hình ảnh" : `🧩 Đang mở mảnh ghép (${revealedTiles.length}/${TOTAL_TILES})`}
+              </div>
+            </div>
           ) : (
             <div className="flex flex-col items-center justify-center p-4 text-center text-slate-300">
               <div className="mb-2 grid h-12 w-12 place-items-center rounded-2xl bg-white/10 text-white shadow-inner">

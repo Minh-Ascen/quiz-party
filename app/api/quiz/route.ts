@@ -127,10 +127,10 @@ function buildClientState(room: StoredRoom, playerToken: string): RoomState {
     }
   }
 
-  // Fail-safe: Tự động chuyển sang câu tiếp theo nếu ở 'reveal' quá 8.0s (đủ thời gian hiện đáp án + bảng xếp hạng)
+  // Fail-safe: Tự động chuyển sang câu tiếp theo nếu ở 'reveal' quá 9.5s (đủ thời gian hiện đáp án + bảng xếp hạng)
   if (room.status === "reveal" && room.updatedAt > 0) {
     const revealElapsed = (Date.now() - room.updatedAt) / 1000;
-    if (revealElapsed >= 8.0) {
+    if (revealElapsed >= 9.5) {
       if (room.currentIndex + 1 >= room.totalQuestions) {
         room.status = "finished";
       } else {
@@ -146,16 +146,24 @@ function buildClientState(room: StoredRoom, playerToken: string): RoomState {
   const currentAnswers = room.answersByQuestion[room.currentIndex] || {};
   const answeredCount = Object.keys(currentAnswers).length;
 
-  const publicPlayers: Player[] = room.players.map((p) => ({
-    id: p.id,
-    display_name: p.display_name,
-    score: p.score,
-    is_host: p.is_host,
-    avatar: p.avatar,
-    has_answered: Boolean(currentAnswers[p.id]),
-    streak: p.streak || 0,
-    correct_count: p.correct_count || 0
-  }));
+  const isReveal = room.status === "reveal";
+
+  const publicPlayers: Player[] = room.players.map((p) => {
+    const ans = currentAnswers[p.id];
+    const pts = isReveal && ans && ans.isCorrect ? ans.pointsAwarded : 0;
+    return {
+      id: p.id,
+      display_name: p.display_name,
+      score: p.score,
+      is_host: p.is_host,
+      avatar: p.avatar,
+      has_answered: Boolean(ans),
+      streak: p.streak || 0,
+      correct_count: p.correct_count || 0,
+      last_points: pts,
+      previous_score: isReveal ? Math.max(0, p.score - pts) : p.score
+    };
+  });
 
   let clientQuestion: Question | null = null;
   if (currentQ && (room.status === "playing" || room.status === "reveal")) {
@@ -184,8 +192,8 @@ function buildClientState(room: StoredRoom, playerToken: string): RoomState {
     players: publicPlayers,
     question: clientQuestion,
     my_answer: me && currentAnswers[me.id] ? {
-      is_correct: currentAnswers[me.id].isCorrect,
-      points_awarded: currentAnswers[me.id].pointsAwarded,
+      is_correct: isReveal ? currentAnswers[me.id].isCorrect : undefined,
+      points_awarded: isReveal ? currentAnswers[me.id].pointsAwarded : undefined,
       answer_index: currentAnswers[me.id].answerIndex
     } : undefined
   };
