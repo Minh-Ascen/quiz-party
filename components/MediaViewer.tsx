@@ -308,7 +308,7 @@ export function MediaViewer({
             ref={iframeRef}
             id="yt-player-frame"
             key={`${cleanYtId}-${startTime || 24}`}
-            src={`https://www.youtube.com/embed/${cleanYtId}?autoplay=1&mute=1&start=${startTime && startTime > 0 ? startTime : 24}&enablejsapi=1&rel=0&modestbranding=1&playsinline=1&controls=1&origin=${encodeURIComponent(typeof window !== "undefined" ? window.location.origin : "")}`}
+            src={`https://www.youtube.com/embed/${cleanYtId}?autoplay=1&mute=0&start=${startTime && startTime > 0 ? startTime : 24}&enablejsapi=1&rel=0&modestbranding=1&playsinline=1&controls=1&origin=${encodeURIComponent(typeof window !== "undefined" ? window.location.origin : "")}`}
             title="Đoán tên bài hát qua MV"
             onLoad={() => {
               triggerPlay();
@@ -321,7 +321,7 @@ export function MediaViewer({
                 ? "h-[122%] -mt-10 sm:-mt-14 scale-[1.18]"
                 : "h-full mt-0 scale-100"
             }`}
-            allow="autoplay *; encrypted-media *; fullscreen *; accelerometer; gyroscope; picture-in-picture; web-share"
+            allow="autoplay; encrypted-media; fullscreen; picture-in-picture; accelerometer; gyroscope; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
             onError={() => setYtBlocked(true)}
