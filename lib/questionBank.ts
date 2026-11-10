@@ -21,12 +21,22 @@ export function shuffleArray<T>(array: T[]): T[] {
 }
 
 /**
+ * Loại bỏ toàn bộ dấu ngoặc chú thích (...) trong các đáp án lựa chọn
+ * nhằm tránh gợi ý lộ đáp án và chống tràn chữ quá khung nút bấm.
+ */
+export function cleanOptionText(opt: string): string {
+  if (!opt) return "";
+  const cleaned = opt.replace(/\s*\([^)]*\)/g, "").replace(/\s+/g, " ").trim();
+  return cleaned.length > 0 ? cleaned : opt.trim();
+}
+
+/**
  * Xáo trộn ngẫu nhiên vị trí 4 đáp án A, B, C, D của một câu hỏi
  * và cập nhật lại correct_index chính xác.
  */
 export function shuffleQuestionOptions(q: Question): Question {
   const indexedOptions = (q.options || []).map((opt, idx) => ({
-    text: opt,
+    text: cleanOptionText(opt),
     isCorrect: idx === (q.correct_index ?? 0)
   }));
   const shuffled = shuffleArray(indexedOptions);

@@ -1133,12 +1133,17 @@ export default function Home() {
                               const isChosen = selected === i;
                               const isWrong = isReveal && isChosen && state.question?.correct_index !== i;
 
+                              // Tự động loại bỏ dấu ngoặc chú thích (...) và co giãn chữ chống tràn
+                              const cleanOpt = option.replace(/\s*\([^)]*\)/g, "").replace(/\s+/g, " ").trim() || option;
+                              const isVeryLong = cleanOpt.length > 55;
+                              const isLong = cleanOpt.length > 30;
+
                               return (
                                 <button
                                   key={i}
                                   disabled={state.status !== "playing" || selected !== null || busy}
                                   onClick={() => handleAnswer(i)}
-                                  className={`w-full rounded-full px-5 py-2.5 sm:py-3 text-center font-black text-sm sm:text-base transition-all active:translate-y-1 active:shadow-none flex items-center justify-between gap-2 ${
+                                  className={`w-full rounded-2xl sm:rounded-full px-4 sm:px-5 py-2.5 sm:py-3 text-center font-black transition-all active:translate-y-1 active:shadow-none flex items-center justify-between gap-2 min-h-[50px] sm:min-h-[54px] ${
                                     isCorrect
                                       ? "bg-[#4ade80] text-emerald-950 border-2 border-emerald-950 shadow-[0_4px_0_#166534] scale-[1.01]"
                                       : isWrong
@@ -1150,24 +1155,34 @@ export default function Home() {
                                         }`
                                   } disabled:cursor-not-allowed`}
                                 >
-                                  <span className="w-5" />
-                                  <span className="flex-1 truncate">{option}</span>
-                                  <span className="min-w-6 flex items-center justify-end font-bold text-xs">
+                                  <span className="w-4 shrink-0 sm:w-5" />
+                                  <span
+                                    className={`flex-1 text-center break-words whitespace-normal font-black px-1 ${
+                                      isVeryLong
+                                        ? "text-xs sm:text-sm leading-tight sm:leading-snug py-0.5"
+                                        : isLong
+                                        ? "text-xs sm:text-base leading-snug"
+                                        : "text-sm sm:text-base leading-normal"
+                                    }`}
+                                  >
+                                    {cleanOpt}
+                                  </span>
+                                  <span className="min-w-6 shrink-0 flex items-center justify-end font-bold text-xs">
                                     {/* Trong lúc đang chơi: Đã chọn đáp án thì số điểm đứng im và hiện ổ khóa */}
                                     {!isReveal && isChosen && (
-                                      <span className="text-amber-950 bg-amber-400 px-2 py-0.5 rounded-full text-[11px] font-black shadow-sm">
+                                      <span className="text-amber-950 bg-amber-400 px-2 py-0.5 rounded-full text-[11px] font-black shadow-sm shrink-0">
                                         🔒 {frozenScore !== null ? `+${frozenScore}đ` : "Đã chọn"}
                                       </span>
                                     )}
                                     {/* Khi hết giờ hoặc chốt câu hỏi: Mới biết đúng hay sai và hiện số điểm */}
                                     {isCorrect && (
-                                      <span className="inline-flex items-center gap-1 text-emerald-950 font-black">
+                                      <span className="inline-flex items-center gap-1 text-emerald-950 font-black shrink-0">
                                         <CheckCircle2 size={18} />
                                         {isChosen && <span>+{state.my_answer?.points_awarded ?? frozenScore ?? 1000}đ</span>}
                                       </span>
                                     )}
                                     {isWrong && (
-                                      <span className="inline-flex items-center gap-1 text-rose-950 font-black">
+                                      <span className="inline-flex items-center gap-1 text-rose-950 font-black shrink-0">
                                         <XCircle size={18} />
                                         <span>+0đ</span>
                                       </span>
@@ -1228,7 +1243,12 @@ export default function Home() {
                     <div className="mt-4 rounded-2xl bg-black/75 backdrop-blur-md border border-white/20 p-3 sm:p-4 text-white shadow-2xl max-w-3xl mx-auto w-full">
                       <div className="flex items-center gap-2 font-black text-sm sm:text-base text-emerald-300">
                         <CheckCircle2 size={18} className="text-emerald-400" />
-                        <span>Đáp án chính xác: {state.question.options[state.question.correct_index ?? 0]}</span>
+                        <span>
+                          Đáp án chính xác:{" "}
+                          {state.question.options[state.question.correct_index ?? 0]
+                            ?.replace(/\s*\([^)]*\)/g, "")
+                            .trim()}
+                        </span>
                       </div>
                       {state.question.explanation && (
                         <p className="mt-1 text-xs sm:text-sm text-slate-300 leading-snug">

@@ -3994,7 +3994,7 @@
     "category": "Doraemon",
     "prompt": "Món ăn mà cô bé mèo máy Dorami yêu thích nhất là gì?",
     "options": [
-      "Bánh mì dưa lưới (Melonpan)",
+      "Bánh mì dưa lưới",
       "Bánh rán",
       "Kem dâu",
       "Socola"
@@ -4072,8 +4072,8 @@
     "category": "Doraemon",
     "prompt": "Ai là người gửi Doraemon từ thế kỷ 22 về quá khứ để giúp đỡ Nobita?",
     "options": [
-      "Nobisuke (bố Nobita)",
-      "Sewashi (chắt của Nobita)",
+      "Nobisuke",
+      "Sewashi",
       "Shizuka",
       "Dekisugi"
     ],
@@ -4439,7 +4439,7 @@
       "Hộp thư gửi thời gian",
       "Điện thoại liên lạc xuyên không",
       "Bộ đàm tương lai",
-      "Tủ điện thoại yêu cầu (Nếu như)"
+      "Tủ điện thoại yêu cầu"
     ],
     "correct_index": 3,
     "explanation": "Tủ điện thoại nếu như (Moshi-wake Box) cho phép người bước vào nói 'Nếu như thế giới...' để tạo hiện thực song song.",
@@ -4514,7 +4514,7 @@
     "category": "Doraemon",
     "prompt": "Ai là bạn gái mèo mà Doraemon hay hẹn hò trên mái nhà?",
     "options": [
-      "Mii-chan (Mimi)",
+      "Mii-chan",
       "Tamako",
       "Jaiko",
       "Dorami"
@@ -4568,7 +4568,7 @@
     "options": [
       "Shizuka Minamoto",
       "Miyoko Nobi",
-      "Tamako Nobi (họ thời con gái: Kataoka)",
+      "Tamako Nobi",
       "Yukiko"
     ],
     "correct_index": 2,
@@ -4722,7 +4722,7 @@
     "category": "Doraemon",
     "prompt": "Con mèo máy Doraemon có số đo ba vòng hình thể và cân nặng đặc biệt như thế nào?",
     "options": [
-      "Đều xoay quanh con số 129.3 (cao 129.3cm, nặng 129.3kg, vòng ngực 129.3cm)",
+      "Đều xoay quanh con số 129.3",
       "Đều là con số 100",
       "Đều là con số 99.9",
       "Đều là con số 150"
@@ -4932,7 +4932,7 @@
     "options": [
       "Muku",
       "Kuro",
-      "Bư (Bell)",
+      "Bư",
       "Chibi"
     ],
     "correct_index": 0,
@@ -4984,7 +4984,7 @@
     "options": [
       "Khách sạn Không Người",
       "Khách sạn Hoàng Gia",
-      "Khách sạn Brikin (Thiếc)",
+      "Khách sạn Brikin",
       "Khách sạn Tương Lai"
     ],
     "correct_index": 2,
@@ -5270,7 +5270,7 @@
     "options": [
       "Hội học sinh cấp 1",
       "Biệt đội Teitan",
-      "Đội thám tử nhí Lớp 1B (Detective Boys)",
+      "Đội thám tử nhí Lớp 1B",
       "Nhóm phá án Tokyo"
     ],
     "correct_index": 2,
@@ -5399,7 +5399,7 @@
     "prompt": "Thành viên bí ẩn của Tổ chức Áo Đen mang mật danh Vermouth có nghề nghiệp công khai là gì?",
     "options": [
       "Người mẫu thời trang Paris",
-      "Đại minh tinh Hollywood (Chris Vineyard)",
+      "Đại minh tinh Hollywood",
       "Nữ phóng viên truyền hình",
       "Bác sĩ pháp y"
     ],
@@ -5478,7 +5478,7 @@
     "options": [
       "Thám tử độc lập",
       "Đặc vụ CIA Mỹ",
-      "Sĩ quan Cục An ninh Cảnh sát Quốc gia Nhật Bản (Rei Furuya)",
+      "Sĩ quan Cục An ninh Cảnh sát Quốc gia Nhật Bản",
       "Kẻ cướp ngân hàng"
     ],
     "correct_index": 2,
@@ -5528,7 +5528,7 @@
     "category": "Conan – Thám tử lừng danh",
     "prompt": "Vụ án bi kịch kinh điển nào diễn ra trên đảo Tsukikage có liên quan đến bản sonata piano nổi tiếng?",
     "options": [
-      "Bản giao hưởng Ánh Trăng (Moonlight Sonata)",
+      "Bản giao hưởng Ánh Trăng",
       "Bản giao hưởng Định Mệnh",
       "Khúc ca Khải Hoàn",
       "Hành khúc Thổ Nhĩ Kỳ"
@@ -5557,7 +5557,7 @@
       "Kazuha Toyama",
       "Yukiko Kudo",
       "Yoko Okino",
-      "Eri Kisaki (mẹ của Ran)"
+      "Eri Kisaki"
     ],
     "correct_index": 3,
     "explanation": "Eri Kisaki là mẹ Ran, nữ luật sư tài ba với tỷ lệ thắng kiện 100% và sở hữu ngón đòn Judo quật ngã mọi đối thủ.",
@@ -5686,7 +5686,7 @@
     "options": [
       "Shiho Miyano",
       "Jodie Starling",
-      "Hidemi Hondo (Rena Mizunashi)",
+      "Hidemi Hondo",
       "Sharon Vineyard"
     ],
     "correct_index": 2,
@@ -5711,7 +5711,7 @@
     "prompt": "Kaito Kid thường gửi thứ gì đến cho nạn nhân trước khi thực hiện vụ trộm bảo vật?",
     "options": [
       "Một cành hoa hồng đỏ",
-      "Một lá thư thông báo thời gian và mật mã (Thư báo trước)",
+      "Một lá thư thông báo thời gian và mật mã",
       "Một quân bài Joker rách",
       "Một cuộc gọi đe dọa"
     ],
@@ -5736,7 +5736,7 @@
     "category": "Conan – Thám tử lừng danh",
     "prompt": "Giai điệu phím số khi bấm vào số điện thoại của 'Ông Trùm' Tổ chức Áo Đen tương ứng với bài hát thiếu nhi nào?",
     "options": [
-      "Bảy chú quạ con (Nanatsu no Ko)",
+      "Bảy chú quạ con",
       "Chú ếch con",
       "Kira Kira Hikaru",
       "Bướm vàng mùa xuân"
@@ -5869,7 +5869,7 @@
       "Thịt bò Kobe nướng",
       "Bánh pizza xúc xích",
       "Mì Ramen tôm hùm",
-      "Cơm lươn nướng (Unajyu)"
+      "Cơm lươn nướng"
     ],
     "correct_index": 3,
     "explanation": "Genta luôn quy đổi giá trị mọi đồ vật và tiền bạc ra thành bao nhiêu bát cơm lươn nướng.",
@@ -5971,9 +5971,9 @@
     "prompt": "Chất kịch độc có mùi hạnh nhân đắng thường xuyên xuất hiện làm hung khí đầu độc trong các vụ án Conan là gì?",
     "options": [
       "Botulinum",
-      "Asen (Thạch tín)",
+      "Asen",
       "Strychnine",
-      "Xyanua (Cyanide / Kali Xyanua)"
+      "Xyanua"
     ],
     "correct_index": 3,
     "explanation": "Chất độc Kali Xyanua (Potassium Cyanide) làm ngạt tế bào tức thì và để lại mùi hạnh nhân thoang thoảng ở miệng nạn nhân.",
@@ -6048,7 +6048,7 @@
     "category": "Conan – Thám tử lừng danh",
     "prompt": "Mối tình đầu thuở thiếu thời dưới cây rẻ quạt của Tiến sĩ Agasa tên là gì?",
     "options": [
-      "Fusae Campbell (nhà thiết kế thương hiệu lá bạch quả)",
+      "Fusae Campbell",
       "Yukiko Kudo",
       "Eri Kisaki",
       "Chiyo"
@@ -6127,7 +6127,7 @@
     "prompt": "Tên loại rượu thuốc Trung Quốc mà Conan uống thử lần đầu và bất ngờ biến lại thành Shinichi trong chốc lát là gì?",
     "options": [
       "Rượu Mao Đài",
-      "Rượu Bạch Càn (Paikar)",
+      "Rượu Bạch Càn",
       "Rượu Nữ Nhi Hồng",
       "Rượu Thiệu Hưng"
     ],
@@ -6152,7 +6152,7 @@
     "category": "Conan – Thám tử lừng danh",
     "prompt": "Mối quan hệ thân thích thực sự giữa Kaito Kuroba (Kaito Kid) và Shinichi Kudo theo tiết lộ của tác giả là gì?",
     "options": [
-      "Anh em họ (Bố của hai người là anh em ruột)",
+      "Anh em họ",
       "Không có quan hệ gì",
       "Anh em cùng cha khác mẹ",
       "Cậu cháu ruột thịt"
@@ -6181,7 +6181,7 @@
       "Bí mật nằm sau những vết máu",
       "Kẻ thủ ác nhất định sẽ đền tội",
       "Ánh sáng công lý sẽ soi rọi bóng đêm",
-      "Sự thật luôn chỉ có một! (Shinjitsu wa itsumo hitotsu)"
+      "Sự thật luôn chỉ có một!"
     ],
     "correct_index": 3,
     "explanation": "Khẩu hiệu kinh điển vang bóng hàng chục năm qua của Conan: 'Shinjitsu wa itsumo hitotsu!' (Sự thật chỉ có một).",
@@ -6389,7 +6389,7 @@
       "Rumi Wakasa",
       "Elena Miyano",
       "Jodie Starling",
-      "Mary Sera (Em gái ngoài lãnh địa)"
+      "Mary Sera"
     ],
     "correct_index": 3,
     "explanation": "Bà Mary Sera cũng bị ép uống thuốc độc APTX 4869 và bị teo nhỏ giống Shinichi và Haibara.",
@@ -6464,7 +6464,7 @@
     "category": "Conan – Thám tử lừng danh",
     "prompt": "Trong Conan Movie 26 'Tàu ngầm sắt màu đen', hệ thống nhận diện khuôn mặt toàn cầu có tên là gì?",
     "options": [
-      "Pacific Buoy (Phao Thái Bình Dương)",
+      "Pacific Buoy",
       "Noah's Ark",
       "Silver Bullet",
       "Pandora Box"
@@ -6542,8 +6542,8 @@
     "category": "Phim Hàn Quốc (K-Drama)",
     "prompt": "Trong bộ phim 'Hậu Duệ Mặt Trời' (Descendants of the Sun), nhân vật Yoo Si-jin do Song Joong-ki thủ vai mang biệt danh tác chiến là gì?",
     "options": [
-      "Big Boss (Đại ca)",
-      "Wolf (Sói hoang)",
+      "Big Boss",
+      "Wolf",
       "Piccolo",
       "Harry Potter"
     ],
@@ -6570,8 +6570,8 @@
     "options": [
       "Jun Ji-hyun",
       "Kim Ji-won",
-      "IU (Lee Ji-eun)",
-      "Song Hye-kyo (vai Kang Mo-yeon)"
+      "IU",
+      "Song Hye-kyo"
     ],
     "correct_index": 3,
     "explanation": "Song Hye-kyo thủ vai nữ bác sĩ ngoại khoa bản lĩnh Kang Mo-yeon.",
@@ -6596,7 +6596,7 @@
     "options": [
       "Kéo co trên cao",
       "Tách kẹo đường Dalgona",
-      "Hoa Mugunghwa đã nở (Đèn đỏ, đèn xanh)",
+      "Hoa Mugunghwa đã nở",
       "Bắn bi sinh tử"
     ],
     "correct_index": 2,
@@ -6646,7 +6646,7 @@
     "category": "Phim Hàn Quốc (K-Drama)",
     "prompt": "Trong 'Yêu Tinh' (Goblin), thanh kiếm vô hình cắm vào ngực Kim Shin chỉ có thể được rút ra bởi ai?",
     "options": [
-      "Cô dâu của Goblin (Ji Eun-tak)",
+      "Cô dâu của Goblin",
       "Thần Chết Wang Yeo",
       "Hậu duệ gia tộc họ Yoo",
       "Thần Sinh Mệnh Samshin"
@@ -6699,8 +6699,8 @@
     "prompt": "Trong 'Hồi Ức 1988' (Reply 1988), ai là người cuối cùng trở thành chồng của nữ chính Sung Duk-sun?",
     "options": [
       "Sung Sun-woo",
-      "Kim Jung-hwan (H Jung)",
-      "Choi Taek (kỳ thủ cờ vây)",
+      "Kim Jung-hwan",
+      "Choi Taek",
       "Ryu Dong-ryong"
     ],
     "correct_index": 2,
@@ -6750,7 +6750,7 @@
     "category": "Phim Hàn Quốc (K-Drama)",
     "prompt": "Trong phim 'Vườn Sao Băng' (Boys Over Flowers), nhóm bốn chàng trai công tử giàu có trường Shinhwa được gọi là gì?",
     "options": [
-      "F4 (Flower Four)",
+      "F4",
       "A4",
       "Super 4",
       "King 4"
@@ -6804,7 +6804,7 @@
     "options": [
       "Hơn 1000 năm",
       "Hơn 100 năm",
-      "Hơn 400 năm (từ thời Joseon)",
+      "Hơn 400 năm",
       "50 năm"
     ],
     "correct_index": 2,
@@ -6829,7 +6829,7 @@
     "prompt": "Nữ minh tinh chảnh chọe nhưng đáng yêu Chun Song-yi trong 'Vì Sao Đưa Anh Tới' do nữ diễn viên nào thể hiện?",
     "options": [
       "Song Hye-kyo",
-      "Jun Ji-hyun (Gianna Jun)",
+      "Jun Ji-hyun",
       "Son Ye-jin",
       "Han Ga-in"
     ],
@@ -6854,7 +6854,7 @@
     "category": "Phim Hàn Quốc (K-Drama)",
     "prompt": "Trong bom tấn trả thù 'The Glory' (Vinh Quang Trong Thù Hận), nữ chính Moon Dong-eun do Song Hye-kyo đóng sử dụng môn cờ nào để tiếp cận kẻ thù?",
     "options": [
-      "Cờ vây (Go / Baduk)",
+      "Cờ vây",
       "Cờ vua",
       "Cờ tướng",
       "Cờ cá ngựa"
@@ -6883,7 +6883,7 @@
       "Seoul Night",
       "Jangga",
       "Itaewon Pub",
-      "DanBam (Đêm ngọt ngào)"
+      "DanBam"
     ],
     "correct_index": 3,
     "explanation": "Quán DanBam (Đêm ngọt ngào) do Park Sae-royi và những người bạn cùng chung chí hướng xây dựng nên tại khu phố Tây Itaewon.",
@@ -7062,8 +7062,8 @@
     "category": "Phim Hàn Quốc (K-Drama)",
     "prompt": "Bộ phim y khoa nhẹ nhàng, ấm áp về ban nhạc 5 người bạn bác sĩ có tên là gì?",
     "options": [
-      "Hospital Playlist (Chuyện Đời Bác Sĩ)",
-      "Dr. Romantic (Người Thầy Y Đức)",
+      "Hospital Playlist",
+      "Dr. Romantic",
       "Doctor Stranger",
       "Good Doctor"
     ],
@@ -7166,7 +7166,7 @@
     "category": "Phim Hàn Quốc (K-Drama)",
     "prompt": "Phim cổ trang kinh dị nào của Netflix kể về hoàng thái tử Lee Chang chiến đấu chống dịch bệnh zombie thời Joseon?",
     "options": [
-      "Kingdom (Vương Triều Xác Sống)",
+      "Kingdom",
       "Rampant",
       "Dạ Quỷ",
       "Zombie Detective"
@@ -7195,7 +7195,7 @@
       "Taeyeon",
       "Bae Suzy",
       "Yoona",
-      "IU (Lee Ji-eun)"
+      "IU"
     ],
     "correct_index": 3,
     "explanation": "IU đã thể hiện xuất sắc vai diễn bà chủ khách sạn Jang Man-wol kiêu kỳ, mê tiền và sành điệu.",
@@ -7270,7 +7270,7 @@
     "category": "Phim Hàn Quốc (K-Drama)",
     "prompt": "Chim tổ tiên (Archeopteryx) là biệt danh hài hước mà nữ chính Ha-ri đặt cho sếp tổng Kang Tae-moo trong phim nào?",
     "options": [
-      "Hẹn Hò Chốn Công Sở (Business Proposal)",
+      "Hẹn Hò Chốn Công Sở",
       "Thư Ký Kim Sao Thế",
       "Vua Khách Sạn",
       "Cô Nàng Xinh Đẹp"
@@ -7299,7 +7299,7 @@
       "Lee Sung-yeon",
       "Kim Mi-so",
       "Park Yoo-shik",
-      "Lee Young-joon (Park Seo-joon đóng)"
+      "Lee Young-joon"
     ],
     "correct_index": 3,
     "explanation": "Phó chủ tịch Lee Young-joon luôn tin rằng bản thân quá đỗi hoàn hảo đến mức không người phụ nữ nào xứng đáng ngoài thư ký Kim.",
@@ -7403,7 +7403,7 @@
       "Stranger",
       "Tunnel",
       "Voice",
-      "Signal (Dấu Vết)"
+      "Signal"
     ],
     "correct_index": 3,
     "explanation": "Signal (tvN) là tượng đài phim hình sự phá án khi trung úy Park Hae-young liên lạc với cảnh sát Lee Jae-han ở thập niên 1980.",
@@ -7478,7 +7478,7 @@
     "category": "Phim Hàn Quốc (K-Drama)",
     "prompt": "Bộ phim y khoa cổ điển nào kể về bác sĩ lãng mạn Thầy Kim (Teacher Kim) tại bệnh viện Doldam hẻo lánh?",
     "options": [
-      "Dr. Romantic (Người Thầy Y Đức)",
+      "Dr. Romantic",
       "Doctors",
       "Hospital Ship",
       "Medical Top Team"
@@ -7532,7 +7532,7 @@
     "options": [
       "Cửa hàng tiện lợi 24h",
       "Quán cà phê thú cưng",
-      "Nhà trọ du lịch (Guesthouse)",
+      "Nhà trọ du lịch",
       "Công ty sản xuất phim độc lập"
     ],
     "correct_index": 2,
@@ -7582,7 +7582,7 @@
     "category": "Phim Hàn Quốc (K-Drama)",
     "prompt": "Trong bộ phim 'Bệnh viện đa khoa (Hospital Playlist)', nhóm bạn 5 bác sĩ sinh năm bao nhiêu?",
     "options": [
-      "Hội 99s (nhập học năm 1999)",
+      "Hội 99s",
       "Hội 88s",
       "Hội 94s",
       "Hội 97s"
@@ -7661,7 +7661,7 @@
     "prompt": "Bộ phim cổ trang xác sống (zombie) đầu tiên của Hàn Quốc do Netflix sản xuất có tên là gì?",
     "options": [
       "All of Us Are Dead",
-      "Kingdom (Vương triều xác sống)",
+      "Kingdom",
       "Sweet Home",
       "Happiness"
     ],
@@ -8104,7 +8104,7 @@
     "options": [
       "2NE1",
       "Wonder Girls",
-      "Girls' Generation (SNSD)",
+      "Girls' Generation",
       "Kara"
     ],
     "correct_index": 2,
@@ -8129,7 +8129,7 @@
     "prompt": "Thủ lĩnh tài năng của nhóm nhạc BIGBANG, người được coi là ông hoàng thời trang K-Pop là ai?",
     "options": [
       "Taeyang",
-      "G-Dragon (Kwon Ji-yong)",
+      "G-Dragon",
       "T.O.P",
       "Daesung"
     ],
@@ -8339,7 +8339,7 @@
       "NewJeans",
       "IVE",
       "LE SSERAFIM",
-      "(G)I-DLE"
+      "I-DLE"
     ],
     "correct_index": 1,
     "explanation": "IVE thắng lớn Daesang Song of the Year tại MAMA 2022 với bản hit 'Love Dive'.",
@@ -8520,7 +8520,7 @@
     "options": [
       "Top 3 K-Pop",
       "The Holy Trinity",
-      "BIG 3 (SM, JYP, YG)",
+      "BIG 3",
       "Hallyu Big 3"
     ],
     "correct_index": 2,
@@ -8599,7 +8599,7 @@
       "Yuqi",
       "Miyeon",
       "Minnie",
-      "Soyeon (Jeon So-yeon)"
+      "Soyeon"
     ],
     "correct_index": 3,
     "explanation": "Trưởng nhóm Soyeon là thiên tài sáng tác và rapper cực chất đứng sau linh hồn của (G)I-DLE.",
@@ -8650,7 +8650,7 @@
     "options": [
       "Jimin",
       "Jungkook",
-      "V (Taehyung)",
+      "V",
       "Suga"
     ],
     "correct_index": 1,
@@ -8778,7 +8778,7 @@
     "category": "K-Pop",
     "prompt": "Lightstick hình chiếc búa hơi đồ chơi phát ra tiếng kêu 'chíp chíp' màu đen hồng là của nhóm nhạc nào?",
     "options": [
-      "BLACKPINK (Bi-ping-bong)",
+      "BLACKPINK",
       "BTS",
       "TWICE",
       "Red Velvet"
@@ -8807,7 +8807,7 @@
       "2PM",
       "Super Junior",
       "SS501",
-      "TVXQ (DBSK)"
+      "TVXQ"
     ],
     "correct_index": 3,
     "explanation": "Những vị thần phương Đông TVXQ với đội hình 5 người đã tạo nên kiệt tác 'Mirotic' bất hủ.",
@@ -8856,8 +8856,8 @@
     "category": "K-Pop",
     "prompt": "Nam ca sĩ Taeyang (BIGBANG) đã kết hợp cùng ai trong bản hit ballad lãng mạn 'VIBE' năm 2023?",
     "options": [
-      "Jungkook (BTS)",
-      "Jimin (BTS)",
+      "Jungkook",
+      "Jimin",
       "G-Dragon",
       "Jay Park"
     ],
@@ -8911,7 +8911,7 @@
       "YG Entertainment",
       "SM Entertainment",
       "JYP Entertainment",
-      "HYBE (tiền thân là Big Hit Entertainment)"
+      "HYBE"
     ],
     "correct_index": 3,
     "explanation": "Chủ tịch Bang Si-hyuk đã dẫn dắt Big Hit Entertainment vươn mình thành tập đoàn giải trí khổng lồ HYBE Labels.",
@@ -8960,7 +8960,7 @@
     "category": "K-Pop",
     "prompt": "Trong nhóm nhạc Stray Kids (JYP Entertainment), bộ ba tự sáng tác và sản xuất âm nhạc của nhóm có tên là gì?",
     "options": [
-      "BSS (BooSeokSoon)",
+      "BSS",
       "3RACHA",
       "NCT DoJaeJung",
       "GD&TOP"
@@ -9559,7 +9559,7 @@
     "prompt": "Rapper da trắng nào được công nhận là một trong những rapper vĩ đại nhất lịch sử với biệt danh 'Rap God'?",
     "options": [
       "Machine Gun Kelly",
-      "Eminem (Slim Shady)",
+      "Eminem",
       "Post Malone",
       "Macklemore"
     ],
@@ -9613,7 +9613,7 @@
       "Apple Music Top 100",
       "UK Singles Chart",
       "Spotify Global 50",
-      "Billboard Hot 100 (90 tuần)"
+      "Billboard Hot 100"
     ],
     "correct_index": 3,
     "explanation": "Bản synth-pop 'Blinding Lights' đã được tạp chí Billboard vinh danh là ca khúc số 1 mọi thời đại trên Billboard Hot 100.",
@@ -9871,7 +9871,7 @@
     "prompt": "Ca khúc Latin pop 'Despacito' (2017) của Luis Fonsi và Daddy Yankee từng giữ kỷ lục video nhiều lượt xem nhất YouTube đại diện cho dòng nhạc của vùng nào?",
     "options": [
       "Mexico",
-      "Puerto Rico (Nhạc Latin)",
+      "Puerto Rico",
       "Tây Ban Nha",
       "Colombia"
     ],
@@ -10260,9 +10260,9 @@
     "category": "US-UK",
     "prompt": "Lễ trao giải âm nhạc danh giá và lâu đời nhất thế giới được tổ chức thường niên bởi Viện hàn lâm Thu âm Hoa Kỳ là giải gì?",
     "options": [
-      "American Music Awards (AMA)",
+      "American Music Awards",
       "Billboard Music Awards",
-      "Giải Grammy (Grammy Awards)",
+      "Giải Grammy",
       "BRIT Awards"
     ],
     "correct_index": 2,
@@ -10650,9 +10650,9 @@
     "category": "Địa lý cơ bản",
     "prompt": "Con sông dài nhất thế giới chảy qua khu vực Đông Bắc châu Phi đổ ra Địa Trung Hải là dòng sông nào?",
     "options": [
-      "Sông Trường Giang (Dương Tử)",
+      "Sông Trường Giang",
       "Sông Amazon",
-      "Sông Nile (Nin)",
+      "Sông Nile",
       "Sông Mississippi"
     ],
     "correct_index": 2,
@@ -10756,7 +10756,7 @@
     "options": [
       "Trung Quốc",
       "Canada",
-      "Nga (Liên bang Nga)",
+      "Nga",
       "Hoa Kỳ"
     ],
     "correct_index": 2,
@@ -10781,7 +10781,7 @@
     "prompt": "Quốc gia nào nhỏ nhất thế giới cả về diện tích và dân số, nằm trọn trong lòng thủ đô Rome của nước Ý?",
     "options": [
       "Monaco",
-      "Vatican (Thành Vatican)",
+      "Vatican",
       "San Marino",
       "Liechtenstein"
     ],
@@ -10806,7 +10806,7 @@
     "category": "Địa lý cơ bản",
     "prompt": "Nhìn vào ảnh và cho biết đây là ngọn núi lửa thiêng liêng hình chóp nón tuyết phủ biểu tượng của nước nào?",
     "options": [
-      "Núi Phú Sĩ (Fuji) - Nhật Bản",
+      "Núi Phú Sĩ - Nhật Bản",
       "Núi Rainier - Mỹ",
       "Núi Kilimanjaro - Tanzania",
       "Núi Etna - Ý"
@@ -10885,7 +10885,7 @@
     "prompt": "Vịnh biển nào của Việt Nam hai lần được UNESCO công nhận là Di sản Thiên nhiên Thế giới nhờ hàng nghìn đảo đá vôi kỳ vĩ?",
     "options": [
       "Vịnh Nha Trang",
-      "Vịnh Hạ Long (Quảng Ninh)",
+      "Vịnh Hạ Long",
       "Vịnh Lăng Cô",
       "Vịnh Cam Ranh"
     ],
@@ -11043,7 +11043,7 @@
       "Sông Đà",
       "Sông Hồng",
       "Sông Đồng Nai",
-      "Sông Mê Kông (Mekong)"
+      "Sông Mê Kông"
     ],
     "correct_index": 3,
     "explanation": "Sông Mekong bắt nguồn từ cao nguyên Tây Tạng chảy qua 6 quốc gia trước khi đổ ra biển Đông qua 9 cửa sông Cửu Long.",
@@ -11146,8 +11146,8 @@
     "options": [
       "Sa mạc Sinai",
       "Sa mạc Sahara",
-      "Thung lũng Chết (Mỹ)",
-      "Sa mạc Atacama (Chile)"
+      "Thung lũng Chết",
+      "Sa mạc Atacama"
     ],
     "correct_index": 3,
     "explanation": "Sa mạc Atacama ở Chile nằm giữa hai dãy núi cao chặn đứng mọi hơi ẩm, có khí hậu tương đồng với bề mặt Sao Hỏa.",
@@ -11171,7 +11171,7 @@
     "prompt": "Hồ nước ngọt sâu nhất và cổ xưa nhất trên Trái Đất nằm ở vùng Siberia của nước Nga là hồ nào?",
     "options": [
       "Hồ Victoria",
-      "Hồ Superior (Hồ Thượng)",
+      "Hồ Superior",
       "Hồ Baikal",
       "Hồ Tanganyika"
     ],
@@ -11276,7 +11276,7 @@
     "options": [
       "Thác Victoria",
       "Thác Iguazu",
-      "Thác Angel (Salto Ángel)",
+      "Thác Angel",
       "Thác Bản Giốc"
     ],
     "correct_index": 2,
@@ -11326,7 +11326,7 @@
     "category": "Địa lý cơ bản",
     "prompt": "Thủ đô của đất nước Thái Lan có tên gọi quốc tế quen thuộc là Bangkok, nhưng tên chính thức bằng tiếng Thái rất dài thường gọi tắt là gì?",
     "options": [
-      "Krung Thep Maha Nakhon (Krung Thep)",
+      "Krung Thep Maha Nakhon",
       "Chiang Mai",
       "Pattaya",
       "Ayutthaya"
@@ -11355,7 +11355,7 @@
       "Bồ Đào Nha",
       "Tây Ban Nha",
       "Hy Lạp",
-      "Nước Ý (Italy)"
+      "Nước Ý"
     ],
     "correct_index": 3,
     "explanation": "Bán đảo Italia với đảo Sicily ở mũi ủng tạo nên hình thù chiếc bốt cao bồi trứ danh trên bản đồ thế giới.",
@@ -11405,7 +11405,7 @@
     "prompt": "Tòa tháp nghiêng bằng đá cẩm thạch trắng nổi tiếng thế giới nằm ở thành phố Pisa thuộc quốc gia nào?",
     "options": [
       "Nước Pháp",
-      "Nước Ý (Italy)",
+      "Nước Ý",
       "Tây Ban Nha",
       "Hy Lạp"
     ],
@@ -11456,10 +11456,10 @@
     "category": "Địa lý cơ bản",
     "prompt": "Thành phố nào được mệnh danh là 'Thành phố Ánh sáng' (La Ville Lumière) và có tháp Eiffel biểu tượng?",
     "options": [
-      "Berlin (Đức)",
-      "London (Anh)",
-      "Rome (Ý)",
-      "Paris (Pháp)"
+      "Berlin",
+      "London",
+      "Rome",
+      "Paris"
     ],
     "correct_index": 3,
     "explanation": "Paris được gọi là Thành phố Ánh sáng vì là một trong những đô thị đầu tiên của châu Âu lắp đặt hệ thống đèn chiếu sáng đường phố thời kỳ Khai sáng.",
@@ -11484,7 +11484,7 @@
     "options": [
       "Biển Đỏ",
       "Hồ Caspi",
-      "Biển Chết (Dead Sea)",
+      "Biển Chết",
       "Hồ Titicaca"
     ],
     "correct_index": 2,
@@ -11563,7 +11563,7 @@
       "Greenland",
       "New Zealand",
       "Madagascar",
-      "Nước Úc (Australia)"
+      "Nước Úc"
     ],
     "correct_index": 3,
     "explanation": "Lục địa Úc là lục địa nhỏ nhất và là quốc gia độc lập duy nhất chiếm trọn cả một đại lục.",
@@ -11588,7 +11588,7 @@
     "options": [
       "Borneo",
       "New Guinea",
-      "Greenland (Đảo Xanh)",
+      "Greenland",
       "Madagascar"
     ],
     "correct_index": 2,
@@ -11612,8 +11612,8 @@
     "category": "Địa lý cơ bản",
     "prompt": "Cực Đông trên đất liền của Việt Nam - nơi đón ánh bình minh đầu tiên nằm ở mũi nào thuộc tỉnh Khánh Hòa?",
     "options": [
-      "Mũi Đại Lãnh (Phú Yên)",
-      "Mũi Đôi (bán đảo Hòn Gốm)",
+      "Mũi Đại Lãnh",
+      "Mũi Đôi",
       "Mũi Điện",
       "Mũi Sa Vĩ"
     ],
@@ -11953,7 +11953,7 @@
       "Nhà khảo cổ học vĩ đại",
       "Đô đốc Hải quân",
       "Thợ rèn kiếm đệ nhất",
-      "Vua Hải Tặc (Pirate King)"
+      "Vua Hải Tặc"
     ],
     "correct_index": 3,
     "explanation": "Luffy luôn dõng dạc tuyên bố: 'Tôi là Monkey D. Luffy, người sẽ trở thành Vua Hải Tặc!'.",
@@ -11978,7 +11978,7 @@
     "options": [
       "Ope Ope no Mi",
       "Mera Mera no Mi",
-      "Gomu Gomu no Mi (Hito Hito no Mi: Model Nika)",
+      "Gomu Gomu no Mi",
       "Gura Gura no Mi"
     ],
     "correct_index": 2,
@@ -12028,7 +12028,7 @@
     "category": "Hoạt hình tuổi thơ Nhật Bản",
     "prompt": "Đầu bếp hào hoa mê gái của băng Mũ Rơm, chỉ dùng chân để chiến đấu nhằm bảo vệ đôi tay nấu nướng là ai?",
     "options": [
-      "Vinsmoke Sanji (Chân Đen)",
+      "Vinsmoke Sanji",
       "Brook",
       "Franky",
       "Jinbe"
@@ -12057,7 +12057,7 @@
       "Thập Vĩ",
       "Nhất Vĩ Shukaku",
       "Bát Vĩ Gyuki",
-      "Cửu Vĩ Hồ Ly (Kurama - Cáo 9 đuôi)"
+      "Cửu Vĩ Hồ Ly"
     ],
     "correct_index": 3,
     "explanation": "Cửu Vĩ Kurama được Hokage Đệ Tứ Minato phong ấn vào cơ thể Naruto ngay từ khi cậu vừa lọt lòng.",
@@ -12081,8 +12081,8 @@
     "prompt": "Tuyệt kỹ nhẫn thuật đầu tiên gắn liền với thương hiệu của Naruto là gì?",
     "options": [
       "Amaterasu",
-      "Chidori (Lôi Thiết)",
-      "Kage Bunshin no Jutsu (Đa Trọng Ảnh Phân Thân)",
+      "Chidori",
+      "Kage Bunshin no Jutsu",
       "Shinra Tensei"
     ],
     "correct_index": 2,
@@ -12185,7 +12185,7 @@
     "prompt": "Chiêu thức bắn chưởng năng lượng màu xanh lam kinh điển mà Goku học được từ Quy Lão Tiên Sinh là gì?",
     "options": [
       "Galick Gun",
-      "Genki Dama (Quả cầu khinh khi)",
+      "Genki Dama",
       "Kamehameha",
       "Makankosappo"
     ],
@@ -12236,7 +12236,7 @@
     "category": "Hoạt hình tuổi thơ Nhật Bản",
     "prompt": "Hoàng tử kiêu hãnh của tộc người Saiyan, kỳ phùng địch thủ luôn muốn vượt qua Goku là ai?",
     "options": [
-      "Vegeta (Ca-đíc)",
+      "Vegeta",
       "Broly",
       "Trunks",
       "Nappa"
@@ -12265,7 +12265,7 @@
       "Maruko",
       "Nobita",
       "Conan",
-      "Shinnosuke Nohara (Shin - Cậu bé bút chì)"
+      "Shinnosuke Nohara"
     ],
     "correct_index": 3,
     "explanation": "Shin (Crayon Shin-chan) sống cùng bố Hiroshi, mẹ Misae, em gái Himawari và chú cún Bạch Tuyết (Shiro).",
@@ -12290,7 +12290,7 @@
     "options": [
       "Pochi",
       "Kuro",
-      "Bạch Tuyết (Shiro)",
+      "Bạch Tuyết",
       "Maru"
     ],
     "correct_index": 2,
@@ -12315,7 +12315,7 @@
     "prompt": "Câu thần chú biến hình kinh điển: 'Nhân danh Mặt Trăng, ta sẽ trừng trị ngươi!' là của nữ chiến binh nào?",
     "options": [
       "Thủy thủ Sao Hỏa",
-      "Thủy thủ Mặt Trăng (Sailor Moon - Usagi Tsukino)",
+      "Thủy thủ Mặt Trăng",
       "Thủy thủ Sao Thủy",
       "Thủy thủ Sao Kim"
     ],
@@ -12369,7 +12369,7 @@
       "Jadeite",
       "Seiya Kou",
       "Motoki",
-      "Tuxedo Mặt Nạ (Mamoru Chiba)"
+      "Tuxedo Mặt Nạ"
     ],
     "correct_index": 3,
     "explanation": "Tuxedo Mặt Nạ (Hoàng tử Endymion) luôn xuất hiện lịch lãm với áo choàng đen, mũ chóp cao và mặt nạ trắng.",
@@ -12394,7 +12394,7 @@
     "options": [
       "Lâu Đài Bay Của Pháp Sư Howl",
       "Vùng Đất Linh Hồn",
-      "Hàng Xóm Của Tôi Là Totoro (My Neighbor Totoro)",
+      "Hàng Xóm Của Tôi Là Totoro",
       "Công Chúa Mononoke"
     ],
     "correct_index": 2,
@@ -12419,8 +12419,8 @@
     "prompt": "Bộ phim hoạt hình Nhật Bản duy nhất trong lịch sử từng đoạt giải Oscar cho 'Phim hoạt hình xuất sắc nhất' năm 2003 là tác phẩm nào?",
     "options": [
       "Mộ Đom Đóm",
-      "Vùng Đất Linh Hồn (Spirited Away)",
-      "Your Name (Tên Cậu Là Gì?)",
+      "Vùng Đất Linh Hồn",
+      "Your Name",
       "Cô Bé Người Cá Ponyo"
     ],
     "correct_index": 1,
@@ -12523,7 +12523,7 @@
     "prompt": "Lá bài quái thú biểu tượng mạnh mẽ nhất của chàng thiếu gia kiêu ngạo Seto Kaiba là gì?",
     "options": [
       "Phù Thủy Áo Đen",
-      "Rồng Trắng Mắt Xanh (Blue-Eyes White Dragon)",
+      "Rồng Trắng Mắt Xanh",
       "Rồng Đen Mắt Đỏ",
       "Quái Thú Ba Đầu"
     ],
@@ -12577,7 +12577,7 @@
       "Ngọc Linh Hồn",
       "Ngọc Bảy Màu",
       "Ngọc Rồng Thần",
-      "Ngọc Tứ Hồn (Shikon no Tama)"
+      "Ngọc Tứ Hồn"
     ],
     "correct_index": 3,
     "explanation": "Kagome vô tình bắn vỡ viên Ngọc Tứ Hồn thành muôn ngàn mảnh vụn rơi khắp thời Chiến Quốc, mở ra hành trình cùng bán yêu Inuyasha.",
@@ -12600,9 +12600,9 @@
     "category": "Hoạt hình tuổi thơ Nhật Bản",
     "prompt": "Thanh kiếm được rèn từ răng nanh của cha mà Inuyasha sử dụng để thi triển Phong Thương có tên là gì?",
     "options": [
-      "Bạo Toái Nha (Bakusaiga)",
-      "Thiên Sinh Nha (Tenseiga)",
-      "Thiết Toái Nha (Tessaiga)",
+      "Bạo Toái Nha",
+      "Thiên Sinh Nha",
+      "Thiết Toái Nha",
       "Đấu Quỷ Thần"
     ],
     "correct_index": 2,
@@ -12627,7 +12627,7 @@
     "prompt": "Trong Bleach (Sứ Giả Thần Chết), vũ khí chính dạng thanh kiếm linh hồn của các Tử Thần được gọi là gì?",
     "options": [
       "Kunai",
-      "Zanpakuto (Trảm Hồn Đao)",
+      "Zanpakuto",
       "Katana",
       "Shuriken"
     ],
@@ -12652,7 +12652,7 @@
     "category": "Hoạt hình tuổi thơ Nhật Bản",
     "prompt": "Trong Attack on Titan (Đại Chiến Titan), Eren Jaeger sở hữu Titan đầu tiên có tên là gì?",
     "options": [
-      "Titan Tiến Công (Attack Titan)",
+      "Titan Tiến Công",
       "Titan Thiết Giáp",
       "Titan Khổng Lồ",
       "Titan Hình Nữ"
@@ -12731,7 +12731,7 @@
     "prompt": "Hơi thở kiếm thuật ban đầu mà Tanjiro Kamado được cựu Thủy Trụ Urokodaki truyền dạy là gì?",
     "options": [
       "Hơi thở của Lửa",
-      "Hơi thở của Nước (Water Breathing)",
+      "Hơi thở của Nước",
       "Hơi thở của Sấm Sét",
       "Hơi thở của Gió"
     ],
@@ -12756,7 +12756,7 @@
     "category": "Hoạt hình tuổi thơ Nhật Bản",
     "prompt": "Trong Hunter x Hunter, hệ thống năng lượng sức mạnh điều khiển khí sinh mệnh trong cơ thể được gọi là gì?",
     "options": [
-      "Nen (Niệm)",
+      "Nen",
       "Chakra",
       "Haki",
       "Reiatsu"
@@ -12889,7 +12889,7 @@
       "Watari",
       "Near",
       "Mello",
-      "L (L Lawliet)"
+      "L"
     ],
     "correct_index": 3,
     "explanation": "L là bộ óc phá án số một thế giới đối đầu trực diện với Kira (Light Yagami).",
@@ -12939,7 +12939,7 @@
     "prompt": "Bảo bối chiếc xe đạp nước có thể chạy trên mặt hồ của cậu bé đầu nấm trong phim hoạt hình nào?",
     "options": [
       "Ninja Hattori",
-      "Cậu bé Kiteretsu (Kiteretsu Daihyakka)",
+      "Cậu bé Kiteretsu",
       "Doraemon",
       "Siêu nhân Mami"
     ],
@@ -13250,7 +13250,7 @@
     "category": "Phim & hoạt hình tuổi thơ Trung Quốc",
     "prompt": "Trong bộ phim truyền hình kinh điển 'Tây Du Ký 1986', nghệ sĩ gạo cội nào đã đóng vai Tôn Ngộ Không xuất thần nhất lịch sử?",
     "options": [
-      "Lục Tiểu Linh Đồng (Chương Kim Lai)",
+      "Lục Tiểu Linh Đồng",
       "Mã Đức Hoa",
       "Uông Việt",
       "Trì Trọng Thụy"
@@ -13279,7 +13279,7 @@
       "Bảo Kiếm Thất Tinh",
       "Cửu Xỉ Đinh Ba",
       "Hàng Yêu Bảo Trượng",
-      "Như Ý Kim Cô Bổng (Gậy Như Ý)"
+      "Như Ý Kim Cô Bổng"
     ],
     "correct_index": 3,
     "explanation": "Định Hải Thần Châm nặng một vạn ba ngàn năm trăm cân (13.500 cân) có thể thu nhỏ như cây kim cất trong lỗ tai.",
@@ -13383,7 +13383,7 @@
       "Vạn Thọ Sơn",
       "Hoa Quả Sơn",
       "Hỏa Diệm Sơn",
-      "Ngũ Hành Sơn (Ngũ Chỉ Sơn)"
+      "Ngũ Hành Sơn"
     ],
     "correct_index": 3,
     "explanation": "Bàn tay 5 ngón của Phật Như Lai biến thành dãy núi Ngũ Hành Sơn phong ấn Đại Thánh cùng lá bùa lục tự chân ngôn.",
@@ -13433,7 +13433,7 @@
     "prompt": "Trong 'Hoàn Châu Cách Cách', nhân vật Tiểu Yến Tử với tính cách hoạt bát, nghịch ngợm do nữ diễn viên nào thủ vai?",
     "options": [
       "Lâm Tâm Như",
-      "Triệu Vy (Vicky Zhao)",
+      "Triệu Vy",
       "Phạm Băng Băng",
       "Vương Diễm"
     ],
@@ -13511,7 +13511,7 @@
     "prompt": "Vị thái y kiêm thiếu gia văn võ song toàn, người yêu sâu sắc của Hạ Tử Vy trong Hoàn Châu Cách Cách là ai?",
     "options": [
       "Tiêu Kiếm",
-      "Vĩnh Kỳ (Ngũ A Ca)",
+      "Vĩnh Kỳ",
       "Phúc Nhĩ Khang",
       "Mông Đan"
     ],
@@ -13562,7 +13562,7 @@
     "category": "Phim & hoạt hình tuổi thơ Trung Quốc",
     "prompt": "Trong tiểu thuyết kiếm hiệp Kim Dung, ai là đệ nhất bang chủ Cái Bang sở hữu tuyệt kỹ Hàng Long Thập Bát Chưởng trong 'Thiên Long Bát Bộ'?",
     "options": [
-      "Tiêu Phong (Kiều Phong)",
+      "Tiêu Phong",
       "Đoàn Dự",
       "Hư Trúc",
       "Mộ Dung Phục"
@@ -13616,7 +13616,7 @@
     "options": [
       "Doãn Chí Bình",
       "Quách Tĩnh",
-      "Dương Quá (Thần Điêu Đại Hiệp)",
+      "Dương Quá",
       "Trương Vô Kỵ"
     ],
     "correct_index": 2,
@@ -13746,7 +13746,7 @@
     "options": [
       "Dương Tiêu",
       "Trương Vô Kỵ",
-      "Tạ Tốn (Kim Mao Sư Vương)",
+      "Tạ Tốn",
       "Ân Thiên Chính"
     ],
     "correct_index": 1,
@@ -13770,10 +13770,10 @@
     "category": "Phim & hoạt hình tuổi thơ Trung Quốc",
     "prompt": "Quận chúa Mông Cổ sắc sảo, thông minh, sẵn sàng từ bỏ gia tộc để đi theo tình yêu với Trương Vô Kỵ là ai?",
     "options": [
-      "Triệu Mẫn (Min Min Temür)",
+      "Triệu Mẫn",
       "Chu Chỉ Nhược",
       "Tiểu Chiêu",
-      "Ân Ly (Thù Nhi)"
+      "Ân Ly"
     ],
     "correct_index": 0,
     "explanation": "Triệu Mẫn xinh đẹp, cơ mưu khiến Trương Vô Kỵ phải hứa thực hiện 3 điều kiện, cuối cùng sống hạnh phúc bên chàng vẽ lông mày.",
@@ -13978,7 +13978,7 @@
     "category": "Phim & hoạt hình tuổi thơ Trung Quốc",
     "prompt": "Bộ phim hoạt hình 3D phá kỷ lục doanh thu lịch sử điện ảnh Trung Quốc năm 2019 với câu thoại 'Mệnh ta do ta định, không do trời định' kể về ai?",
     "options": [
-      "Na Tra: Ma Đồng Giáng Thế (Ne Zha)",
+      "Na Tra: Ma Đồng Giáng Thế",
       "Khương Tử Nha",
       "Đại Thánh Trở Lại",
       "Bạch Xà: Duyên Khởi"
@@ -14007,7 +14007,7 @@
       "Thành Tương Dương",
       "Bến Xích Bích",
       "Đỉnh Hoa Sơn",
-      "Vườn đào (Kết nghĩa vườn đào)"
+      "Vườn đào"
     ],
     "correct_index": 3,
     "explanation": "Lời thề kết nghĩa vườn đào: 'Tuy không sinh cùng ngày cùng tháng cùng năm, nhưng nguyện chết cùng năm cùng tháng cùng ngày'.",
@@ -14032,7 +14032,7 @@
     "options": [
       "Triệu Vân",
       "Quan Vũ",
-      "Lữ Bố (Lã Bố)",
+      "Lữ Bố",
       "Trương Phi"
     ],
     "correct_index": 2,
@@ -14057,7 +14057,7 @@
     "prompt": "Vị quân sư đại tài ngọa long của Thục Hán mượn gió đông trong trận đại chiến Xích Bích là ai?",
     "options": [
       "Bàng Thống",
-      "Gia Cát Lượng (Khổng Minh)",
+      "Gia Cát Lượng",
       "Chu Du",
       "Tư Mã Ý"
     ],
@@ -14108,10 +14108,10 @@
     "category": "Phim & hoạt hình tuổi thơ Trung Quốc",
     "prompt": "Vị anh hùng Lương Sơn Bạc sau khi uống 18 bát rượu đã tay không đánh chết hổ dữ tại đồi Cảnh Dương là ai?",
     "options": [
-      "Lý Quỳ (Hắc Toàn Phong)",
+      "Lý Quỳ",
       "Lỗ Trí Thâm",
       "Lâm Xung",
-      "Võ Tòng (Võ Nhị Lang)"
+      "Võ Tòng"
     ],
     "correct_index": 3,
     "explanation": "Điển tích 'Võ Tòng đả hổ' trên đồi Cảnh Dương là một trong những hồi truyện ly kỳ và nổi tiếng nhất của Thủy Hử.",
@@ -14161,7 +14161,7 @@
     "prompt": "Bộ phim hoạt hình cổ phong 'Hồng Hài Nhi' hay 'Bảo Liên Đăng' kể về cậu bé Trầm Hương xẻ núi cứu ai?",
     "options": [
       "Cứu phụ vương",
-      "Xẻ núi cứu mẹ (Tam Thánh Mẫu)",
+      "Xẻ núi cứu mẹ",
       "Cứu sư phụ",
       "Cứu Tôn Ngộ Không"
     ],
@@ -14186,7 +14186,7 @@
     "category": "Phim & hoạt hình tuổi thơ Trung Quốc",
     "prompt": "Nhân vật thần thoại ba mắt, dắt theo chó Hao Thiên Khuyển và sử dụng Tam Tiêm Lưỡng Nhẫn Đao là ai?",
     "options": [
-      "Nhị Lang Thần (Dương Tiễn)",
+      "Nhị Lang Thần",
       "Na Tra",
       "Lôi Chấn Tử",
       "Thái Ất Chân Nhân"
@@ -14344,7 +14344,7 @@
     "options": [
       "Sông Tử Mẫu Hà",
       "Sông Lưu Sa Hà",
-      "Sông Thông Thiên Hà (do Lão Rùa trắng chở)",
+      "Sông Thông Thiên Hà",
       "Hỏa Diệm Sơn"
     ],
     "correct_index": 2,
@@ -14473,7 +14473,7 @@
     "prompt": "Trong 'Thủy Hử', nhân vật Lâm Xung có biệt hiệu trên Lương Sơn Bạc là gì?",
     "options": [
       "Hành Giả",
-      "Báo Tử Đầu (Đầu Báo)",
+      "Báo Tử Đầu",
       "Hoa Hòa Thượng",
       "Cửu Văn Long"
     ],
@@ -14527,7 +14527,7 @@
       "Núi Thiếu Thất",
       "Núi Võ Đang",
       "Núi Nga Mi",
-      "Núi Hoa Sơn (Hoa Sơn Luận Kiếm)"
+      "Núi Hoa Sơn"
     ],
     "correct_index": 3,
     "explanation": "Hoa Sơn Luận Kiếm là cuộc tỷ thí huyền thoại giữa Đông Tà, Tây Độc, Nam Đế, Bắc Cái và Trung Thần Thông.",
@@ -14552,7 +14552,7 @@
     "options": [
       "Hồng Thất Công",
       "Âu Dương Phong",
-      "Hoàng Dược Sư (cha của Hoàng Dung)",
+      "Hoàng Dược Sư",
       "Vương Trùng Dương"
     ],
     "correct_index": 2,
@@ -14655,7 +14655,7 @@
     "prompt": "Nhân vật hoạt hình mang tính biểu tượng toàn cầu của hãng Walt Disney, ra mắt năm 1928 trong phim 'Tàu hơi nước Willie' là ai?",
     "options": [
       "Vịt Donald",
-      "Mickey Mouse (Chuột Mickey)",
+      "Mickey Mouse",
       "Chó Goofy",
       "Chó Pluto"
     ],
@@ -14680,8 +14680,8 @@
     "category": "Hoạt hình tuổi thơ Mỹ",
     "prompt": "Chú vịt mặc áo thủy thủ màu xanh, tính tình nóng nảy và giọng nói ngọng nghịu đặc trưng của Disney là ai?",
     "options": [
-      "Donald Duck (Vịt Donald)",
-      "Scrooge McDuck (Bác Đô-nan)",
+      "Donald Duck",
+      "Scrooge McDuck",
       "Daffy Duck",
       "Huey Duck"
     ],
@@ -14813,7 +14813,7 @@
       "XLR8",
       "Heatblast",
       "Diamondhead",
-      "Four Arms (Bốn Tay)"
+      "Four Arms"
     ],
     "correct_index": 3,
     "explanation": "Four Arms (chủng tộc Tetramand từ hành tinh Khoros) là hình dạng cơ bắp được Ben sử dụng nhiều nhất.",
@@ -14888,7 +14888,7 @@
     "category": "Hoạt hình tuổi thơ Mỹ",
     "prompt": "Thú cưng thú mỏ vịt ngô nghê của Phineas và Ferb có thân phận bí mật là điệp viên ngầm nào?",
     "options": [
-      "Thú mỏ vịt Perry (Đặc vụ P - Agent P)",
+      "Thú mỏ vịt Perry",
       "Đặc vụ X",
       "Đặc vụ Zero",
       "Thám tử lông vũ"
@@ -14967,7 +14967,7 @@
     "prompt": "Ba cô gái siêu nhân nhỏ 'The Powerpuff Girls' được Giáo sư Utonium tạo ra từ đường, gia vị, mọi thứ tốt đẹp và chất hóa học bí ẩn nào?",
     "options": [
       "Hóa chất Z",
-      "Hóa chất X (Chemical X)",
+      "Hóa chất X",
       "Huyết thanh siêu chiến binh",
       "Nước thánh"
     ],
@@ -14992,7 +14992,7 @@
     "category": "Hoạt hình tuổi thơ Mỹ",
     "prompt": "Ba cô bé Powerpuff Girls gồm những ai?",
     "options": [
-      "Blossom (Hồng), Bubbles (Xanh dương), Buttercup (Xanh lá)",
+      "Blossom, Bubbles, Buttercup",
       "Ruby, Sapphire, Emerald",
       "Flora, Stella, Bloom",
       "Clover, Sam, Alex"
@@ -15096,7 +15096,7 @@
     "category": "Hoạt hình tuổi thơ Mỹ",
     "prompt": "Chú chó màu hồng nhút nhát sống ở thị trấn Hư Không (Nowhere) luôn phải liều mình cứu đôi vợ chồng già Muriel và Eustace là ai?",
     "options": [
-      "Courage the Cowardly Dog (Chú chó nhút nhát Courage)",
+      "Courage the Cowardly Dog",
       "Odie",
       "Snoopy",
       "Droopy"
@@ -15125,7 +15125,7 @@
       "Timmy Turner",
       "Jimmy Neutron",
       "Phineas",
-      "Dexter (Dexter's Laboratory)"
+      "Dexter"
     ],
     "correct_index": 3,
     "explanation": "Dexter với áo choàng trắng, kính cận to và giọng nói lạ lùng luôn bực bội vì cô chị gái Dee Dee phá hỏng thí nghiệm.",
@@ -15279,7 +15279,7 @@
     "prompt": "Câu khẩu hiệu bay lượn nổi tiếng của Cảnh sát vũ trụ Buzz Lightyear là gì?",
     "options": [
       "To the galaxy!",
-      "To infinity and beyond! (Vô cực và xa hơn nữa!)",
+      "To infinity and beyond!",
       "I believe I can fly!",
       "Never give up!"
     ],
@@ -15383,7 +15383,7 @@
     "prompt": "Chú rồng đen huyền bí thuộc chủng tộc Night Fury (Tia Chớp Đêm) trong 'Bí Kíp Luyện Rồng' tên là gì?",
     "options": [
       "Stormfly",
-      "Toothless (Răng Sún)",
+      "Toothless",
       "Hookfang",
       "Meatlug"
     ],
@@ -15616,7 +15616,7 @@
     "category": "Hoạt hình tuổi thơ Mỹ",
     "prompt": "Bộ phim hoạt hình 'Nữ Hoàng Băng Giá' (Frozen) lấy cảm hứng từ câu chuyện cổ tích nào của nhà văn Hans Christian Andersen?",
     "options": [
-      "Bà Chúa Tuyết (The Snow Queen)",
+      "Bà Chúa Tuyết",
       "Nàng Tiên Cá",
       "Cô Bé Bán Diêm",
       "Chú Vịt Con Xấu Xí"
@@ -15749,7 +15749,7 @@
       "Monstrous Nightmare",
       "Light Fury",
       "Deadly Nadder",
-      "Night Fury (Quỷ Bóng Đêm)"
+      "Night Fury"
     ],
     "correct_index": 3,
     "explanation": "Toothless (Sất Nha) là cá thể rồng Night Fury cực kỳ thông minh và nhanh nhẹn, bạn đồng hành của Hiccup.",
@@ -15850,10 +15850,10 @@
     "category": "Hoạt hình tuổi thơ Mỹ",
     "prompt": "Trong bộ phim 'Inside Out (Những mảnh ghép cảm xúc)' của Pixar, 5 cảm xúc gốc trong tâm trí cô bé Riley gồm Vui Vẻ, Buồn Bã, Giận Dữ, Sợ Hãi và ai?",
     "options": [
-      "Ghen Tị (Envy)",
-      "Lo Âu (Anxiety)",
-      "Xấu Hổ (Embarrassment)",
-      "Chán Ghét (Disgust)"
+      "Ghen Tị",
+      "Lo Âu",
+      "Xấu Hổ",
+      "Chán Ghét"
     ],
     "correct_index": 3,
     "explanation": "Trong phần 1, 5 cảm xúc cơ bản là Joy (Vui), Sadness (Buồn), Anger (Giận), Fear (Sợ) và Disgust (Chán ghét).",
@@ -16006,7 +16006,7 @@
     "category": "Đoán tên ca sĩ nổi tiếng",
     "prompt": "Rapper mộc mạc quê Quảng Ninh với chiếc mũ lưỡi trai và những câu rap triết lý sống như 'Bài này chill phết', 'Hai triệu năm' là ai?",
     "options": [
-      "Đen Vâu (Nguyễn Đức Cường)",
+      "Đen Vâu",
       "Binz",
       "Karik",
       "Suboi"
@@ -16240,10 +16240,10 @@
     "category": "Đoán tên ca sĩ nổi tiếng",
     "prompt": "Trưởng nhóm kiêm rapper chính của BTS, người từng phát biểu trước Đại hội đồng Liên Hợp Quốc là ai?",
     "options": [
-      "Jin (Kim Seok-jin)",
-      "Suga (Min Yoon-gi)",
-      "J-Hope (Jung Ho-seok)",
-      "RM (Kim Nam-joon)"
+      "Jin",
+      "Suga",
+      "J-Hope",
+      "RM"
     ],
     "correct_index": 3,
     "explanation": "RM sở hữu chỉ số IQ 148 và tài năng lãnh đạo kiệt xuất đã dẫn dắt BTS trở thành ban nhạc toàn cầu.",
@@ -16293,7 +16293,7 @@
     "prompt": "Nữ ca sĩ nào được mệnh danh là 'Nữ hoàng K-Pop' (Queen of K-Pop), nghệ sĩ tiên phong của SM mở đường thành công rực rỡ tại thị trường Nhật Bản?",
     "options": [
       "Taeyeon",
-      "BoA (Kwon Bo-ah)",
+      "BoA",
       "Lee Hyori",
       "IU"
     ],
@@ -16318,7 +16318,7 @@
     "category": "Đoán tên ca sĩ nổi tiếng",
     "prompt": "Trưởng nhóm tài năng của Girls' Generation (SNSD) sở hữu chất giọng ballad ngọt ngào và các bản hit solo 'I', 'Four Seasons' là ai?",
     "options": [
-      "Taeyeon (Kim Tae-yeon)",
+      "Taeyeon",
       "Yoona",
       "Jessica Jung",
       "Tiffany Young"
@@ -16397,7 +16397,7 @@
     "prompt": "Nam ca sĩ người Canada sở hữu nghệ danh lấy cảm hứng từ ngày cuối tuần, chủ nhân bản hit 'Starboy' và 'Save Your Tears' là ai?",
     "options": [
       "Drake",
-      "The Weeknd (Abel Tesfaye)",
+      "The Weeknd",
       "Justin Bieber",
       "Post Malone"
     ],
@@ -16555,7 +16555,7 @@
       "Hồ Quỳnh Hương",
       "Mỹ Tâm",
       "Thu Minh",
-      "Hà Trần (Trần Thu Hà)"
+      "Hà Trần"
     ],
     "correct_index": 3,
     "explanation": "Bộ tứ Diva nhạc nhẹ Việt Nam gồm có Thanh Lam, Hồng Nhung, Mỹ Linh và Trần Thu Hà.",
@@ -16605,7 +16605,7 @@
     "prompt": "Nữ ca sĩ nào từng đại diện Việt Nam tham gia chương trình Đạp Gió (Tỷ Tỷ Đạp Gió Rẽ Sóng) tại Trung Quốc năm 2023 và tỏa sáng rực rỡ?",
     "options": [
       "Hoàng Thùy Linh",
-      "Chi Pu (Nguyễn Thùy Chi)",
+      "Chi Pu",
       "Suni Hạ Linh",
       "Min"
     ],
@@ -16630,7 +16630,7 @@
     "category": "Đoán tên ca sĩ nổi tiếng",
     "prompt": "Nam ca sĩ underground nào sở hữu giọng rap quyến rũ được mệnh danh là 'Bigcityboi' quê gốc Gia Lai?",
     "options": [
-      "Binz (Lê Nguyễn Trung Đan)",
+      "Binz",
       "Rhymastic",
       "Touliver",
       "JustaTee"
@@ -16659,7 +16659,7 @@
       "DEAN",
       "Jay Park",
       "Crush",
-      "Zico (Block B)"
+      "Zico"
     ],
     "correct_index": 3,
     "explanation": "Zico là người tiên phong đưa hình thức thử thách nhảy cùng nghệ sĩ trên TikTok thành chiến lược quảng bá âm nhạc chủ lực toàn cầu.",
@@ -16917,7 +16917,7 @@
     "prompt": "Nữ ca sĩ Gen Z được mệnh danh là 'Công chúa kẹo ngọt' của V-Pop với các bản hit 'Anh Nhà Ở Đâu Thế', 'Đen Đá Không Đường' là ai?",
     "options": [
       "Suni Hạ Linh",
-      "Amee (Trần Huyền My)",
+      "Amee",
       "LyLy",
       "Orange"
     ],
@@ -17100,7 +17100,7 @@
     "options": [
       "Keith Urban",
       "Blake Shelton",
-      "Billy Ray Cyrus (cha của Miley Cyrus)",
+      "Billy Ray Cyrus",
       "Luke Combs"
     ],
     "correct_index": 2,
@@ -17307,8 +17307,8 @@
     "prompt": "Bộ phim điện ảnh có doanh thu phòng vé cao nhất lịch sử điện ảnh thế giới (gần 3 tỷ USD) của đạo diễn James Cameron là gì?",
     "options": [
       "Avengers: Endgame",
-      "Avatar (2009)",
-      "Titanic (1997)",
+      "Avatar",
+      "Titanic",
       "Star Wars: The Force Awakens"
     ],
     "correct_index": 1,
@@ -17332,10 +17332,10 @@
     "category": "Phim Mỹ & Phim Việt Nam",
     "prompt": "Trong Vũ trụ Điện ảnh Marvel (MCU), siêu anh hùng tỷ phú thiên tài mặc bộ giáp đỏ vàng mở màn cho kỷ nguyên MCU năm 2008 là ai?",
     "options": [
-      "Iron Man (Tony Stark do Robert Downey Jr. đóng)",
-      "Captain America (Steve Rogers)",
+      "Iron Man",
+      "Captain America",
       "Thor Odinson",
-      "Hulk (Bruce Banner)"
+      "Hulk"
     ],
     "correct_index": 0,
     "explanation": "Câu nói kết màn lịch sử 'I am Iron Man' (Tôi là Người Sắt) đã khai sinh ra đế chế siêu anh hùng vĩ đại nhất lịch sử điện ảnh.",
@@ -17386,7 +17386,7 @@
     "options": [
       "Đá mặt trời",
       "Viên ngọc Poseidon",
-      "Trái Tim Đại Dương (The Heart of the Ocean)",
+      "Trái Tim Đại Dương",
       "Kim cương xanh Hy Vọng"
     ],
     "correct_index": 2,
@@ -17465,7 +17465,7 @@
       "Nguyễn Quang Dũng",
       "Victor Vũ",
       "Charlie Nguyễn",
-      "Lý Hải (Lý Hải Production)"
+      "Lý Hải"
     ],
     "correct_index": 3,
     "explanation": "Lý Hải cùng người vợ Minh Hà đã gây dựng thương hiệu 'Lật Mặt' từ phần 1 đến phần 7 thu về hàng nghìn tỷ đồng doanh thu.",
@@ -17515,7 +17515,7 @@
     "prompt": "Bộ phim hành động võ thuật nào của Ngô Thanh Vân (đóng vai Hai Phượng) từng được chiếu tại các rạp phim Mỹ và đạt doanh thu 200 tỷ đồng?",
     "options": [
       "Dòng Máu Anh Hùng",
-      "Hai Phượng (Furie)",
+      "Hai Phượng",
       "Bẫy Rồng",
       "Thanh Sói"
     ],
@@ -17594,7 +17594,7 @@
     "options": [
       "Du hành về thời khủng long",
       "Người ngoài hành tinh xâm lăng Trái Đất",
-      "Lỗ giun (Wormhole) và sự giãn nở thời gian do lực hấp dẫn",
+      "Lỗ giun và sự giãn nở thời gian do lực hấp dẫn",
       "Va chạm thiên thạch"
     ],
     "correct_index": 2,
@@ -17723,7 +17723,7 @@
     "prompt": "Trong phim điện ảnh kinh dị 'Lật Mặt 7: Một Điều Ước' của Lý Hải, câu chuyện cảm động xoay quanh người mẹ già tên gì sống tại vùng cao Lạc Dương?",
     "options": [
       "Bà Ba",
-      "Bà Hai (73 tuổi)",
+      "Bà Hai",
       "Bà Tư",
       "Bà Sáu"
     ],
@@ -17748,7 +17748,7 @@
     "category": "Phim Mỹ & Phim Việt Nam",
     "prompt": "Ai là siêu anh hùng người nhện thân thiện của khu phố New York có tên thật là Peter Parker trong truyện tranh Marvel?",
     "options": [
-      "Spider-Man (Người Nhện)",
+      "Spider-Man",
       "Ant-Man",
       "Iron Man",
       "Deadpool"
@@ -17802,7 +17802,7 @@
     "options": [
       "Dwayne Johnson",
       "Vin Diesel",
-      "Tom Cruise (vai Ethan Hunt)",
+      "Tom Cruise",
       "Jason Statham"
     ],
     "correct_index": 2,
@@ -17852,7 +17852,7 @@
     "category": "Phim Mỹ & Phim Việt Nam",
     "prompt": "Trong loạt phim phiêu lưu cướp biển 'Pirates of the Caribbean', vị thuyền trưởng lập dị mê rượu rum và chiếc la bàn chỉ điều mình mong muốn nhất là ai?",
     "options": [
-      "Captain Jack Sparrow (Johnny Depp đóng)",
+      "Captain Jack Sparrow",
       "Hector Barbossa",
       "Davy Jones",
       "Will Turner"
@@ -18035,7 +18035,7 @@
     "prompt": "Trong 'Chúa Tể Của Những Chiếc Nhẫn' (The Lord of the Rings), chàng người Hobbit Frodo Baggins có nhiệm vụ đem chiếc Nhẫn Chúa tới đâu để tiêu hủy?",
     "options": [
       "Rừng Rivendell",
-      "Ngọn núi Doom (Núi Diệt Vong tại Mordor)",
+      "Ngọn núi Doom",
       "Hầm mỏ Moria",
       "Thành phố Gondor"
     ],
@@ -18060,7 +18060,7 @@
     "category": "Phim Mỹ & Phim Việt Nam",
     "prompt": "Sinh vật kỳ dị luôn lẩm bẩm câu nói 'My precious' (Bảo bối của ta) vì bị chiếc Nhẫn Chúa làm tha hóa tâm can là ai?",
     "options": [
-      "Gollum (Sméagol)",
+      "Gollum",
       "Bilbo Baggins",
       "Saruman",
       "Gimli"
@@ -18114,7 +18114,7 @@
     "options": [
       "Moana",
       "Coco",
-      "Encanto (Vùng Đất Thần Kỳ)",
+      "Encanto",
       "Raya và Rồng Thần Cuối Cùng"
     ],
     "correct_index": 2,
@@ -18139,7 +18139,7 @@
     "prompt": "Bộ phim hoạt hình 'Coco' (2017) của Pixar lấy cảm hứng từ lễ hội truyền thống nào của đất nước Mexico?",
     "options": [
       "Lễ hội Bò tót",
-      "Lễ hội Người Chết (Día de los Muertos)",
+      "Lễ hội Người Chết",
       "Lễ hội Mặt trời",
       "Lễ hội Hóa trang Carnival"
     ],
@@ -18164,7 +18164,7 @@
     "category": "Phim Mỹ & Phim Việt Nam",
     "prompt": "Trong bom tấn 'Fast & Furious', nhân vật Dominic Toretto (Vin Diesel đóng) luôn coi điều quan trọng nhất trên đời là gì?",
     "options": [
-      "Gia đình (Family)",
+      "Gia đình",
       "Tiền tài danh vọng",
       "Tốc độ xe đua",
       "Chiến thắng đối thủ"
@@ -18268,7 +18268,7 @@
     "category": "Phim Mỹ & Phim Việt Nam",
     "prompt": "Bộ phim hài hước 'Ở Nhà Một Mình' (Home Alone 1990) kể về cậu bé 8 tuổi thông minh dũng cảm bảo vệ ngôi nhà trước hai tên trộm tên là gì?",
     "options": [
-      "Kevin McCallister (Macaulay Culkin đóng)",
+      "Kevin McCallister",
       "Harry",
       "Marv",
       "Buzz"
@@ -18322,7 +18322,7 @@
     "options": [
       "Jack Torrance",
       "Norman Bates",
-      "Bác sĩ Hannibal Lecter (Anthony Hopkins đóng)",
+      "Bác sĩ Hannibal Lecter",
       "Freddy Krueger"
     ],
     "correct_index": 2,
@@ -18347,7 +18347,7 @@
     "prompt": "Trong phim điện ảnh hoạt hình 'Bên Trong Vỏ Não' (Inside Out), 5 cảm xúc cốt lõi ban đầu trong đầu cô bé Riley là gì?",
     "options": [
       "Love, Hate, Hope, Peace, War",
-      "Joy (Vui Vẻ), Sadness (Buồn Bã), Anger (Giận Dữ), Fear (Sợ Hãi), Disgust (Chảnh Chọe)",
+      "Joy, Sadness, Anger, Fear, Disgust",
       "Happy, Cry, Sleepy, Grumpy, Dopey",
       "Sun, Rain, Cloud, Wind, Storm"
     ],
@@ -18372,7 +18372,7 @@
     "category": "Phim Mỹ & Phim Việt Nam",
     "prompt": "Bộ phim điện ảnh độc lập Việt Nam 'Bên Trong Vỏ Kén Vàng' (Inside the Yellow Cocoon Shell) của đạo diễn Phạm Thiên Ân đã thắng giải thưởng danh giá nào tại LHP Cannes 2023?",
     "options": [
-      "Giải Camera Vàng (Caméra d'Or) cho phim đầu tay xuất sắc nhất",
+      "Giải Camera Vàng cho phim đầu tay xuất sắc nhất",
       "Giải Cành cọ vàng",
       "Giải Ban giám khảo",
       "Giải Đạo diễn xuất sắc nhất"
@@ -18401,7 +18401,7 @@
       "Train to Busan",
       "Minari",
       "Oldboy",
-      "Parasite (Ký sinh trùng)"
+      "Parasite"
     ],
     "correct_index": 3,
     "explanation": "'Parasite' của đạo diễn Bong Joon-ho đã làm nên lịch sử với 4 tượng vàng Oscar danh giá.",
@@ -18426,7 +18426,7 @@
     "options": [
       "Củng Lợi",
       "Lưu Diệc Phi",
-      "Dương Tử Quỳnh (Michelle Yeoh)",
+      "Dương Tử Quỳnh",
       "Chương Tử Di"
     ],
     "correct_index": 2,
@@ -18606,10 +18606,10 @@
     "category": "Phim Mỹ & Phim Việt Nam",
     "prompt": "Trong loạt phim 'Fast & Furious (Quá nhanh quá nguy hiểm)', câu nói cửa miệng nổi tiếng nhất của nhân vật Dominic Toretto (Vin Diesel) là về điều gì?",
     "options": [
-      "Vận may (Luck)",
-      "Tiền bạc (Money)",
-      "Danh vọng (Fame)",
-      "Gia đình (Family)"
+      "Vận may",
+      "Tiền bạc",
+      "Danh vọng",
+      "Gia đình"
     ],
     "correct_index": 3,
     "explanation": "'Nothing is stronger than family' (Không gì quan trọng hơn gia đình) là biểu tượng của nhân vật Dom Toretto.",
@@ -19783,7 +19783,7 @@
       "Gương nhân đôi",
       "Máy in sao chép",
       "Đèn chiếu đa năng",
-      "Bánh bao nhân đôi (Thuốc nhân đôi)"
+      "Bánh bao nhân đôi"
     ],
     "correct_index": 3,
     "explanation": "Thuốc nhỏ nhân đôi (Baibain) nhỏ vào bánh hạt dẻ khiến số lượng bánh cứ 5 phút nhân đôi một lần, tạo ra thảm họa bánh hạt dẻ vũ trụ.",
@@ -20157,7 +20157,7 @@
     "options": [
       "Siêu nhân Gekkou",
       "Người Nhện Nobita",
-      "Nobita Mặt Nạ Bạc (Fukumen)",
+      "Nobita Mặt Nạ Bạc",
       "Đội trưởng Trái Đất"
     ],
     "correct_index": 2,
@@ -20258,7 +20258,7 @@
       "Aladdin và cây đèn thần",
       "Ali Baba và 40 tên cướp",
       "Thủy thủ Sinbad",
-      "Nghìn lẻ một đêm (Arabian Nights)"
+      "Nghìn lẻ một đêm"
     ],
     "correct_index": 3,
     "explanation": "Shizuka bị rơi lại trong thế giới cổ tích Ả Rập thế kỷ thứ 8 và được vua Sinbad cưu mang.",
@@ -20480,7 +20480,7 @@
     "category": "Doraemon",
     "prompt": "Bảo bối 'Bộ bài tây biến ước mơ thành sự thật' có lá bài nào nguy hiểm nhất?",
     "options": [
-      "Lá bài Joker (Thằng hề)",
+      "Lá bài Joker",
       "Lá bài Át bích",
       "Lá bài K cơ",
       "Lá bài Q bích"
@@ -20506,7 +20506,7 @@
     "prompt": "Trong tập 'Nobita và binh đoàn người máy', chỉ huy của robot khổng lồ Santa Claus tên thật là gì?",
     "options": [
       "Titan",
-      "Zanda Claus (Judo)",
+      "Zanda Claus",
       "Gundam",
       "Optimus"
     ],
@@ -20956,7 +20956,7 @@
     "prompt": "Shizuka sinh vào tháng mấy trong năm?",
     "options": [
       "Tháng 12",
-      "Tháng 5 (Ngày 8/5)",
+      "Tháng 5",
       "Tháng 8",
       "Tháng 1"
     ],
@@ -21130,7 +21130,7 @@
     "category": "Doraemon",
     "prompt": "Bộ phim hoạt hình dài Doraemon đầu tiên ra rạp vào năm nào?",
     "options": [
-      "Năm 1980 (Nobita và chú khủng long lạc loài)",
+      "Năm 1980",
       "Năm 2000",
       "Năm 1990",
       "Năm 1970"
@@ -21256,9 +21256,9 @@
     "prompt": "Vũ khí tự vệ lợi hại bậc nhất của cô bạn thanh mai trúc mã Ran Mori là gì?",
     "options": [
       "Taekwondo",
-      "Judo (Nhu đạo)",
-      "Aikido (Hiệp khí đạo)",
-      "Karate (Đai đen)"
+      "Judo",
+      "Aikido",
+      "Karate"
     ],
     "correct_index": 3,
     "explanation": "Ran Mori là đội trưởng câu lạc bộ Karate trường cấp ba Teitan và từng đoạt chức vô địch giải đấu toàn vùng Kanto.",
@@ -21331,7 +21331,7 @@
     "prompt": "Tên thật của cô bé Ai Haibara khi còn là nhà khoa học chế tạo thuốc cho Áo Đen là gì?",
     "options": [
       "Elena Miyano",
-      "Shiho Miyano (Sherry)",
+      "Shiho Miyano",
       "Vermouth",
       "Akemi Miyano"
     ],
@@ -21381,7 +21381,7 @@
     "prompt": "Chàng thám tử điển trai làm việc tại quán cà phê Poirot dưới chân văn phòng thám tử Mori là ai?",
     "options": [
       "Shuichi Akai",
-      "Toru Amuro (Bourbon / Rei Furuya)",
+      "Toru Amuro",
       "Subaru Okiya",
       "Wataru Takagi"
     ],
@@ -21505,7 +21505,7 @@
     "category": "Conan – Thám tử lừng danh",
     "prompt": "Siêu đạo chích ánh trăng chuyên đánh cắp các viên ngọc quý với trang phục trắng toát tên là gì?",
     "options": [
-      "Kaito Kid (Kaito Kuroba)",
+      "Kaito Kid",
       "Lupin III",
       "Toichi Kuroba",
       "Saguru Hakuba"
@@ -21733,7 +21733,7 @@
       "Bánh pizza",
       "Sushi cá hồi",
       "Ramen thịt heo",
-      "Cơm lươn nướng (Unajyu)"
+      "Cơm lươn nướng"
     ],
     "correct_index": 3,
     "explanation": "Genta Kojima luôn quy đổi mọi thứ ra giá trị bằng 'bao nhiêu bát cơm lươn'.",
@@ -21757,7 +21757,7 @@
     "options": [
       "James Black",
       "Gin",
-      "Renya Karasuma (Ô Hoàn Liên Gia)",
+      "Renya Karasuma",
       "Rum"
     ],
     "correct_index": 2,
@@ -21930,7 +21930,7 @@
     "category": "Conan – Thám tử lừng danh",
     "prompt": "Nữ điệp viên CIA cài cắm vào Tổ chức Áo Đen với mật danh Kir có tên thật là gì?",
     "options": [
-      "Hidemi Hondo (Rena Mizunashi)",
+      "Hidemi Hondo",
       "Shiho Miyano",
       "Jodie Starling",
       "Eriko Kisaki"
@@ -22255,7 +22255,7 @@
     "category": "Conan – Thám tử lừng danh",
     "prompt": "Trước khi có thuốc giải của Haibara, Shinichi từng vô tình trở lại hình dáng cũ nhờ uống thứ gì?",
     "options": [
-      "Rượu vang trắng Bạch Càn Nhi (Paikar) của Trung Quốc",
+      "Rượu vang trắng Bạch Càn Nhi của Trung Quốc",
       "Rượu Vodka",
       "Trà xanh đậm",
       "Thuốc cảm cúm của tiến sĩ"
@@ -22457,8 +22457,8 @@
     "options": [
       "Karate",
       "Judo",
-      "Aikido (Hiệp khí đạo)",
-      "Kendo (Kiếm đạo)"
+      "Aikido",
+      "Kendo"
     ],
     "correct_index": 2,
     "explanation": "Kazuha là cao thủ nhị đẳng Aikido, có thể quật ngã bất kỳ tên tội phạm to lớn nào.",
@@ -22533,7 +22533,7 @@
       "Sharon Vineyard",
       "Elena Miyano",
       "Jodie Starling",
-      "Mary Sera (Mary Akai)"
+      "Mary Sera"
     ],
     "correct_index": 3,
     "explanation": "Mary Sera là mẹ của Shuichi Akai, Shukichi Haneda và Masumi Sera; bà cũng bị teo nhỏ thành học sinh cấp 2.",
@@ -22581,7 +22581,7 @@
     "prompt": "Anh trai thứ hai trong gia đình Akai là kỳ thủ cờ Shogi danh tiếng nào?",
     "options": [
       "Hiromitsu Morofushi",
-      "Shukichi Haneda (Danh nhân 7 vương miện)",
+      "Shukichi Haneda",
       "Rei Furuya",
       "Kohji Haneda"
     ],
@@ -22758,7 +22758,7 @@
       "Yusaku Kudo",
       "Karasuma Renya",
       "Agasa Hiroshi",
-      "Toichi Kuroba (Kaito Kid đời đầu)"
+      "Toichi Kuroba"
     ],
     "correct_index": 3,
     "explanation": "Toichi Kuroba là đệ nhất ảo thuật gia thế giới đã truyền dạy kỹ năng hóa trang hoàn hảo.",
@@ -22906,7 +22906,7 @@
     "prompt": "Cậu học sinh chuyển trường vụng về Eisuke Hondo thực chất là em trai của ai?",
     "options": [
       "Jodie Starling",
-      "Nữ điệp viên CIA Rena Mizunashi (Hidemi Hondo)",
+      "Nữ điệp viên CIA Rena Mizunashi",
       "Vermouth",
       "Ai Haibara"
     ],
@@ -23106,7 +23106,7 @@
     "prompt": "Tên gọi mật của bộ phận tình báo bí mật Cục An ninh Cảnh sát Quốc gia Nhật Bản là gì?",
     "options": [
       "Shadow",
-      "Zero (Không)",
+      "Zero",
       "Black",
       "One"
     ],
@@ -23132,7 +23132,7 @@
     "options": [
       "Fiat 500",
       "Citroen 2CV",
-      "Volkswagen Beetle (Con Bọ)",
+      "Volkswagen Beetle",
       "Mini Cooper"
     ],
     "correct_index": 2,
@@ -23181,7 +23181,7 @@
     "prompt": "Viên đạn bạc thứ hai mà Tổ chức Áo Đen luôn kiêng dè ngoài Shuichi Akai là ai?",
     "options": [
       "Heiji Hattori",
-      "Conan Edogawa (Shinichi Kudo)",
+      "Conan Edogawa",
       "Toru Amuro",
       "Kaito Kid"
     ],
@@ -23258,7 +23258,7 @@
       "Kẻ có tội phải đền tội",
       "Mọi manh mối đều dẫn tới chân lý",
       "Không có tội ác nào hoàn hảo",
-      "Sự thật luôn luôn chỉ có một! (Shinjitsu wa itsumo hitotsu!)"
+      "Sự thật luôn luôn chỉ có một!"
     ],
     "correct_index": 3,
     "explanation": "Câu nói bất hủ của Shinichi mỗi khi chỉ tay vạch trần hung thủ.",
@@ -23330,7 +23330,7 @@
     "category": "Conan – Thám tử lừng danh",
     "prompt": "Trung sĩ cảnh sát Chiba béo tốt có niềm đam mê mãnh liệt với bộ môn gì?",
     "options": [
-      "Anime Tokusatsu (Phim siêu nhân Kamen Rider)",
+      "Anime Tokusatsu",
       "Đá bóng",
       "Mô hình tàu hỏa",
       "Chơi cờ vây"
@@ -23456,7 +23456,7 @@
     "prompt": "Biệt danh đặc biệt mà Vermouth luôn dùng để gọi Ran Mori trìu mến là gì?",
     "options": [
       "Princess",
-      "Angel (Thiên thần)",
+      "Angel",
       "Sweetheart",
       "Silver Bullet"
     ],
@@ -23682,8 +23682,8 @@
     "options": [
       "Sông Mississippi",
       "Sông Amazon",
-      "Sông Dương Tử (Trường Giang)",
-      "Sông Nin (Nile)"
+      "Sông Dương Tử",
+      "Sông Nin"
     ],
     "correct_index": 3,
     "explanation": "Sông Nin dài khoảng 6.650 km, là cái nôi nuôi dưỡng nền văn minh Ai Cập cổ đại.",
@@ -23781,7 +23781,7 @@
     "prompt": "Rãnh đại dương sâu nhất từng được con người phát hiện dưới đáy biển là rãnh nào?",
     "options": [
       "Rãnh Java",
-      "Rãnh Mariana (Vực thẳm Challenger)",
+      "Rãnh Mariana",
       "Rãnh Puerto Rico",
       "Rãnh Tonga"
     ],
@@ -23956,7 +23956,7 @@
     "prompt": "Hòn đảo lớn nhất thế giới về mặt diện tích tự nhiên là hòn đảo nào?",
     "options": [
       "New Guinea",
-      "Greenland (Đảo Băng)",
+      "Greenland",
       "Madagascar",
       "Borneo"
     ],
@@ -24031,7 +24031,7 @@
     "prompt": "Biển hồ nào có độ mặn cực cao khiến người bơi có thể nổi bồng bềnh mà không sợ chìm?",
     "options": [
       "Biển Caspi",
-      "Biển Chết (Dead Sea)",
+      "Biển Chết",
       "Biển Đỏ",
       "Biển Đen"
     ],
@@ -24058,7 +24058,7 @@
       "Biển Đen",
       "Hồ Baikal",
       "Biển Aral",
-      "Biển Caspi (Caspian Sea)"
+      "Biển Caspi"
     ],
     "correct_index": 3,
     "explanation": "Biển Caspi rộng khoảng 371.000 km², bao quanh bởi Nga, Kazakhstan, Turkmenistan, Iran và Azerbaijan.",
@@ -24081,7 +24081,7 @@
     "prompt": "Đỉnh núi cao nhất của Việt Nam và toàn bộ bán đảo Đông Dương là đỉnh núi nào?",
     "options": [
       "Pusilung",
-      "Fansipan (3.143m)",
+      "Fansipan",
       "Tây Côn Lĩnh",
       "Bạch Mộc Lương Tử"
     ],
@@ -24156,7 +24156,7 @@
     "prompt": "Điểm cực Bắc trên đất liền của lãnh thổ Việt Nam thuộc địa phận tỉnh nào?",
     "options": [
       "Cao Bằng",
-      "Hà Giang (Cột cờ Lũng Cú)",
+      "Hà Giang",
       "Điện Biên",
       "Lào Cai"
     ],
@@ -24183,7 +24183,7 @@
       "Bạc Liêu",
       "Kiên Giang",
       "Sóc Trăng",
-      "Cà Mau (Mũi Cà Mau)"
+      "Cà Mau"
     ],
     "correct_index": 3,
     "explanation": "Mũi Cà Mau thuộc huyện Ngọc Hiển, tỉnh Cà Mau là nơi 'đất biết nở, rừng biết đi'.",
@@ -24307,7 +24307,7 @@
     "options": [
       "Sông Mã",
       "Sông Đồng Nai",
-      "Sông Mê Kông (Sông Cửu Long)",
+      "Sông Mê Kông",
       "Sông Hồng"
     ],
     "correct_index": 2,
@@ -24332,7 +24332,7 @@
     "options": [
       "Núi Ontake",
       "Núi Aso",
-      "Núi Phú Sĩ (Fuji)",
+      "Núi Phú Sĩ",
       "Núi Hiei"
     ],
     "correct_index": 2,
@@ -24406,7 +24406,7 @@
     "prompt": "Châu lục nào lạnh nhất, khô nhất và có nhiều gió bão nhất trên toàn cầu?",
     "options": [
       "Châu Bắc Cực",
-      "Châu Nam Cực (Antarctica)",
+      "Châu Nam Cực",
       "Châu Mỹ",
       "Châu Âu"
     ],
@@ -24430,7 +24430,7 @@
     "category": "Địa lý cơ bản",
     "prompt": "Quốc gia duy nhất trên thế giới chiếm trọn vẹn cả một châu lục là quốc gia nào?",
     "options": [
-      "Nước Úc (Australia)",
+      "Nước Úc",
       "Canada",
       "New Zealand",
       "Nam Phi"
@@ -24482,7 +24482,7 @@
     "options": [
       "Cairo",
       "Tbilisi",
-      "Istanbul (Thổ Nhĩ Kỳ)",
+      "Istanbul",
       "Athens"
     ],
     "correct_index": 2,
@@ -24508,7 +24508,7 @@
       "Bắc Băng Dương",
       "Đại Tây Dương",
       "Ấn Độ Dương",
-      "Thái Bình Dương (Pacific Ocean)"
+      "Thái Bình Dương"
     ],
     "correct_index": 3,
     "explanation": "Thái Bình Dương chiếm hơn 30% diện tích bề mặt Trái Đất, lớn hơn toàn bộ diện tích các lục địa cộng lại.",
@@ -24607,7 +24607,7 @@
     "options": [
       "Nga",
       "Mỹ",
-      "Pháp (12 múi giờ)",
+      "Pháp",
       "Vương quốc Anh"
     ],
     "correct_index": 2,
@@ -24633,7 +24633,7 @@
       "Chí tuyến Bắc",
       "Chí tuyến Nam",
       "Kinh tuyến Greenwich",
-      "Đường Xích đạo (Equator)"
+      "Đường Xích đạo"
     ],
     "correct_index": 3,
     "explanation": "Xích đạo dài khoảng 40.075 km đi qua 13 quốc gia trên thế giới.",
@@ -24655,7 +24655,7 @@
     "category": "Địa lý cơ bản",
     "prompt": "Đài thiên văn Hoàng gia nơi kinh tuyến gốc số 0 độ chạy qua nằm ở thành phố nào?",
     "options": [
-      "London, Vương quốc Anh (Greenwich)",
+      "London, Vương quốc Anh",
       "Washington D.C., Mỹ",
       "Paris, Pháp",
       "Berlin, Đức"
@@ -24708,7 +24708,7 @@
       "Cao nguyên Mộc Châu",
       "Cao nguyên Lâm Viên",
       "Cao nguyên Pleiku",
-      "Cao nguyên đá Đồng Văn (Hà Giang)"
+      "Cao nguyên đá Đồng Văn"
     ],
     "correct_index": 3,
     "explanation": "Công viên địa chất Cao nguyên đá Đồng Văn có kiến tạo địa chất đá vôi tuổi đời trên 400 triệu năm.",
@@ -24758,7 +24758,7 @@
       "Sa Pa",
       "Pleiku",
       "Buôn Ma Thuột",
-      "Đà Lạt (Lâm Đồng)"
+      "Đà Lạt"
     ],
     "correct_index": 3,
     "explanation": "Đà Lạt nằm ở độ cao 1.500m so với mực nước biển, có khí hậu mát mẻ quanh năm và hàng trăm loài hoa khoe sắc.",
@@ -24780,7 +24780,7 @@
     "category": "Địa lý cơ bản",
     "prompt": "Ngọn thác nào lớn nhất Đông Nam Á nằm trên đường biên giới giữa Việt Nam và Trung Quốc?",
     "options": [
-      "Thác Bản Giốc (Cao Bằng)",
+      "Thác Bản Giốc",
       "Thác Pongour",
       "Thác Dambri",
       "Thác Dray Nur"
@@ -24806,7 +24806,7 @@
     "prompt": "Sông Hương thơ mộng gắn liền với chùa Thiên Mụ và di tích cố đô của thành phố nào?",
     "options": [
       "Quảng Bình",
-      "Huế (Thừa Thiên Huế)",
+      "Huế",
       "Hội An",
       "Đà Nẵng"
     ],
@@ -24880,7 +24880,7 @@
     "category": "Địa lý cơ bản",
     "prompt": "Đảo ngọc lớn nhất Việt Nam nổi tiếng với nước mắm truyền thống và ngọc trai là đảo nào?",
     "options": [
-      "Đảo Phú Quốc (Kiên Giang)",
+      "Đảo Phú Quốc",
       "Đảo Côn Đảo",
       "Đảo Lý Sơn",
       "Đảo Cát Bà"
@@ -25157,7 +25157,7 @@
     "options": [
       "Gia Lai",
       "Quảng Trị",
-      "Kon Tum (Ngã ba Đông Dương)",
+      "Kon Tum",
       "Đắk Nông"
     ],
     "correct_index": 2,
@@ -25483,7 +25483,7 @@
       "Pháp",
       "Đức",
       "Trung Quốc",
-      "Ý (Italy)"
+      "Ý"
     ],
     "correct_index": 3,
     "explanation": "Nước Ý dẫn đầu toàn cầu về số lượng di sản văn hóa và thiên nhiên nhân loại.",
@@ -25681,7 +25681,7 @@
     "prompt": "Dòng sông nào dài nhất chảy hoàn toàn trong lãnh thổ một quốc gia duy nhất (Trung Quốc)?",
     "options": [
       "Sông Hoàng Hà",
-      "Sông Dương Tử (Trường Giang)",
+      "Sông Dương Tử",
       "Sông Mê Kông",
       "Sông Hằng"
     ],
@@ -25707,8 +25707,8 @@
     "options": [
       "Sông Yamuna",
       "Sông Brahmaputra",
-      "Sông Hằng (Ganges)",
-      "Sông Ấn (Indus)"
+      "Sông Hằng",
+      "Sông Ấn"
     ],
     "correct_index": 2,
     "explanation": "Sông Hằng bắt nguồn từ dãy Himalaya đổ ra vịnh Bengal, được tôn kính như Mẹ Ganga.",
@@ -25755,7 +25755,7 @@
     "category": "Địa lý cơ bản",
     "prompt": "Ngọn núi lửa từng chôn vùi hai thành phố cổ Pompeii và Herculaneum năm 79 SCN là ngọn núi nào?",
     "options": [
-      "Núi Vesuvius (Ý)",
+      "Núi Vesuvius",
       "Núi Stromboli",
       "Núi St. Helens",
       "Núi Etna"
@@ -25857,7 +25857,7 @@
     "options": [
       "Na Uy và Nga",
       "Nhật Bản và Nga",
-      "Nga và Hoa Kỳ (Alaska)",
+      "Nga và Hoa Kỳ",
       "Canada và Greenland"
     ],
     "correct_index": 2,
@@ -25982,7 +25982,7 @@
     "options": [
       "Cảng Đà Nẵng",
       "Cảng Quy Nhơn",
-      "Vịnh Cam Ranh (Khánh Hòa)",
+      "Vịnh Cam Ranh",
       "Cảng Chân Mây"
     ],
     "correct_index": 2,
@@ -26032,7 +26032,7 @@
     "options": [
       "Lào Cai",
       "Yên Bái",
-      "Hà Giang (Đèo Mã Pí Lèng / Dốc chữ M Yên Minh)",
+      "Hà Giang",
       "Cao Bằng"
     ],
     "correct_index": 2,
