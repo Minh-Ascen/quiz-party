@@ -417,9 +417,10 @@ export default function Home() {
   // Player submits answer with speed measurement (Khóa điểm tức thì khi chọn)
   const handleAnswer = async (index: number) => {
     if (!state?.question || selected !== null || state.status !== "playing") return;
+    const chosenScore = liveScore;
     soundFX.playSelect();
     setSelected(index);
-    setFrozenScore(liveScore);
+    setFrozenScore(chosenScore);
     setBusy(true);
     setError("");
 
@@ -432,7 +433,8 @@ export default function Home() {
         p_player_token: token,
         p_question_id: state.question.id,
         p_answer_index: index,
-        p_client_elapsed: elapsed
+        p_client_elapsed: elapsed,
+        p_client_points: chosenScore
       });
       if (nextState) setState(nextState);
 
@@ -450,6 +452,7 @@ export default function Home() {
   const handleMusicSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (!musicInput.trim() || musicSubmitted || busy || !roomCode || state?.status !== "playing") return;
+    const chosenScore = liveScore;
     setBusy(true);
     setError("");
 
@@ -465,7 +468,8 @@ export default function Home() {
           p_code: roomCode,
           p_player_token: token,
           p_text_answer: musicInput.trim(),
-          p_client_elapsed: elapsed
+          p_client_elapsed: elapsed,
+          p_client_points: chosenScore
         })
       });
 
@@ -476,7 +480,7 @@ export default function Home() {
       } else if (json.data) {
         soundFX.playCorrect();
         setMusicSubmitted(true);
-        const pts = json.data.my_answer?.points_awarded || liveScore;
+        const pts = json.data.my_answer?.points_awarded ?? chosenScore;
         setFrozenScore(pts);
         setMusicFeedback({ type: "success", message: `🎉 Chính xác! Bạn nhận được +${pts} điểm!` });
         setState(json.data);
@@ -1151,7 +1155,7 @@ export default function Home() {
                                     {isCorrect && (
                                       <span className="inline-flex items-center gap-1 text-emerald-950 font-black">
                                         <CheckCircle2 size={18} />
-                                        {isChosen && frozenScore !== null && <span>+{frozenScore}đ</span>}
+                                        {isChosen && <span>+{state.my_answer?.points_awarded ?? frozenScore ?? 1000}đ</span>}
                                       </span>
                                     )}
                                     {isWrong && (

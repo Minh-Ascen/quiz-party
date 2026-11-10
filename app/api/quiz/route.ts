@@ -413,6 +413,7 @@ export async function POST(req: NextRequest) {
       const answerIndex = body.p_answer_index !== undefined && body.p_answer_index !== null ? Number(body.p_answer_index) : -1;
       const textAnswer = typeof body.p_text_answer === "string" ? body.p_text_answer.trim() : "";
       const clientElapsed = Number(body.p_client_elapsed);
+      const clientPoints = body.p_client_points !== undefined && body.p_client_points !== null ? Number(body.p_client_points) : null;
 
       const room = rooms[code];
       if (!room) {
@@ -502,10 +503,23 @@ export async function POST(req: NextRequest) {
       }
 
       if (isCorrect) {
-        pointsAwarded = Math.round(basePoints * fractionRemaining);
-        if (currentQ.is_double_points) {
-          pointsAwarded *= 2;
+        const isDouble = Boolean(currentQ.is_double_points);
+        const maxPts = isDouble ? basePoints * 2 : basePoints;
+        const minPts = Math.round(maxPts * 0.1);
+        let calcPts = Math.round(basePoints * fractionRemaining);
+        if (isDouble) calcPts *= 2;
+
+        // Khớp 100% số điểm giữa client và server (loại bỏ sai số làm tròn và độ trễ mạng)
+        if (clientPoints !== null && !isNaN(clientPoints) && clientPoints >= minPts && clientPoints <= maxPts) {
+          if (clientPoints <= calcPts + 150) {
+            pointsAwarded = clientPoints;
+          } else {
+            pointsAwarded = calcPts;
+          }
+        } else {
+          pointsAwarded = calcPts;
         }
+
         player.score += pointsAwarded;
         player.streak = (player.streak || 0) + 1;
         player.correct_count = (player.correct_count || 0) + 1;
