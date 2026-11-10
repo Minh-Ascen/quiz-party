@@ -1217,6 +1217,8 @@ export default function Home() {
                         options={state.question.options}
                         isReveal={state.status === "reveal"}
                         timeLimit={state.question.time_limit || state.time_limit || 20}
+                        streetViewUrl={state.question.street_view_url}
+                        satelliteUrl={state.question.satellite_url}
                       />
                     </div>
                   </div>

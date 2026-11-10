@@ -3,7 +3,8 @@ export type QuestionType =
   | "IMAGE_GUESS"
   | "AUDIO_GUESS"
   | "VIDEO_GUESS"
-  | "TRUE_FALSE";
+  | "TRUE_FALSE"
+  | "STREET_VIEW_GUESS";
 
 export type QuestionDifficulty = "easy" | "medium" | "hard";
 
@@ -20,6 +21,8 @@ export interface Question {
   audio_url?: string | null;
   video_url?: string | null;
   youtube_video_id?: string | null;
+  street_view_url?: string | null;
+  satellite_url?: string | null;
   question_type?: QuestionType;
   difficulty?: QuestionDifficulty;
   points?: number;
@@ -85,6 +88,7 @@ export const QUESTION_CATEGORIES = [
   "Âm nhạc Việt #5",
   "Âm nhạc Việt #6",
   "Âm nhạc Việt #7",
+  "Đoán quốc gia qua Google Map 360°",
   "Doraemon",
   "Conan – Thám tử lừng danh",
   "Phim Hàn Quốc (K-Drama)",

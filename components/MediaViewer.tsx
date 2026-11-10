@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef, useCallback } from "react";
-import { Image as ImageIcon, Music, Play, RotateCcw, Sparkles, Volume2, VolumeX, Youtube } from "lucide-react";
+import { Compass, Globe, Image as ImageIcon, Layers, MapPin, Music, Navigation, Play, RotateCcw, Sparkles, Volume2, VolumeX, Youtube } from "lucide-react";
 import { resolveQuestionImage, CATEGORY_DEFAULT_IMAGES } from "@/lib/questionImages";
 
 interface MediaViewerProps {
@@ -16,6 +16,8 @@ interface MediaViewerProps {
   className?: string;
   isReveal?: boolean;
   timeLimit?: number;
+  streetViewUrl?: string | null;
+  satelliteUrl?: string | null;
 }
 
 export function MediaViewer({
@@ -29,7 +31,9 @@ export function MediaViewer({
   options = [],
   className = "",
   isReveal = false,
-  timeLimit = 20
+  timeLimit = 20,
+  streetViewUrl,
+  satelliteUrl
 }: MediaViewerProps) {
   const [imageError, setImageError] = useState(false);
   const [fallbackTried, setFallbackTried] = useState(false);
@@ -133,11 +137,23 @@ export function MediaViewer({
     return null;
   })();
 
+  const isStreetView =
+    type === "STREET_VIEW_GUESS" ||
+    category === "Đoán quốc gia qua Google Map 360°" ||
+    Boolean(streetViewUrl);
+
+  const [mapViewMode, setMapViewMode] = useState<"street" | "satellite">("street");
+
+  useEffect(() => {
+    setMapViewMode("street");
+  }, [streetViewUrl, prompt]);
+
   const isSongGuess =
-    type === "AUDIO_GUESS" ||
-    type === "VIDEO_GUESS" ||
-    Boolean(cleanYtId) ||
-    Boolean(audioUrl);
+    !isStreetView &&
+    (type === "AUDIO_GUESS" ||
+      type === "VIDEO_GUESS" ||
+      Boolean(cleanYtId) ||
+      Boolean(audioUrl));
 
   // Tự động phát video nhạc mỗi khi bắt đầu đếm câu hỏi & khi người dùng tương tác
   useEffect(() => {
@@ -291,6 +307,72 @@ export function MediaViewer({
 
   return (
     <div className={`w-full overflow-hidden ${className}`}>
+      {/* 0. STREET VIEW / GOOGLE MAPS 360° GEOGUESSR INTERACTIVE VIEWER */}
+      {isStreetView && (
+        <div className="relative aspect-video w-full h-[270px] sm:h-[320px] md:h-[380px] max-h-[420px] overflow-hidden rounded-3xl bg-[#090d16] border-4 border-[#1e293b] shadow-2xl mx-auto flex flex-col select-none">
+          {/* Header controls bar */}
+          <div className="flex items-center justify-between px-3 sm:px-4 py-2 bg-[#0c1322] border-b border-white/10 z-10 text-xs">
+            <div className="flex items-center gap-1.5 font-bold text-amber-300">
+              <Compass size={16} className="text-amber-400" />
+              <span className="hidden sm:inline">Khám phá 360°: Kéo xoay & bấm mũi tên trên đường để di chuyển!</span>
+              <span className="sm:hidden">Kéo xoay & đi tới lui 360°</span>
+            </div>
+
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={() => setMapViewMode("street")}
+                className={`flex items-center gap-1 px-2.5 py-1 rounded-lg font-bold text-[11px] sm:text-xs transition-all ${
+                  mapViewMode === "street"
+                    ? "bg-amber-400 text-slate-950 shadow-md font-black"
+                    : "bg-white/10 text-slate-300 hover:bg-white/20"
+                }`}
+              >
+                <Navigation size={13} />
+                <span>360° Đường phố</span>
+              </button>
+
+              {satelliteUrl && (
+                <button
+                  type="button"
+                  onClick={() => setMapViewMode("satellite")}
+                  className={`flex items-center gap-1 px-2.5 py-1 rounded-lg font-bold text-[11px] sm:text-xs transition-all ${
+                    mapViewMode === "satellite"
+                      ? "bg-emerald-400 text-slate-950 shadow-md font-black"
+                      : "bg-white/10 text-slate-300 hover:bg-white/20"
+                  }`}
+                >
+                  <Layers size={13} />
+                  <span>Vệ tinh 3D</span>
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Iframe View */}
+          <div className="relative w-full flex-1 bg-black">
+            <iframe
+              key={`${mapViewMode}-${streetViewUrl || imageUrl}`}
+              src={mapViewMode === "satellite" && satelliteUrl ? satelliteUrl : (streetViewUrl || imageUrl || "")}
+              title="Google Map 360° Geoguessr"
+              className="w-full h-full border-0"
+              allow="fullscreen; geolocation; accelerometer; gyroscope; magnetometer"
+              loading="eager"
+            />
+
+            {/* Bottom floating tips */}
+            <div className="pointer-events-none absolute bottom-2 left-2 right-2 sm:right-auto px-3 py-1.5 rounded-xl bg-black/80 backdrop-blur-md border border-white/15 text-[11px] sm:text-xs text-white shadow-lg flex items-center gap-2">
+              <span className="flex items-center gap-1 text-amber-300 font-bold shrink-0">
+                <MapPin size={13} /> Gợi ý Geoguessr:
+              </span>
+              <span className="text-slate-200 truncate">
+                Quan sát chữ viết, biển số xe, kiểu cột điện và cảnh quan xung quanh!
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* 1. GUESS THE SONG: YOUTUBE EMBED HOẶC AUDIO */}
       {isSongGuess && cleanYtId && !ytBlocked && (
         <div className="relative aspect-video w-full h-[250px] sm:h-[300px] md:h-[360px] max-h-[420px] overflow-hidden rounded-3xl bg-black border-4 border-black/80 shadow-2xl mx-auto">
@@ -404,7 +486,7 @@ export function MediaViewer({
       )}
 
       {/* 3. ILLUSTRATION IMAGE CHO CÂU TRẮC NGHIỆM: HIỆU ỨNG TỪNG MẢNH GHÉP (MOSAIC TILE REVEAL THEO HÌNH GỬI) */}
-      {!isSongGuess && (
+      {!isSongGuess && !isStreetView && (
         <div className="relative aspect-video w-full h-[250px] sm:h-[300px] md:h-[360px] max-h-[420px] overflow-hidden rounded-3xl bg-[#0f1722] border-4 border-[#223044] shadow-2xl mx-auto flex items-center justify-center p-2 select-none">
           {activeSrc && !imageError ? (
             <div className="relative w-full h-full rounded-2xl overflow-hidden flex items-center justify-center bg-black/50">

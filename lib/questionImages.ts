@@ -468,6 +468,7 @@ export const CATEGORY_DEFAULT_IMAGES: Record<string, string> = {
   "Âm nhạc Việt #5": VERIFIED_IMAGES.son_tung,
   "Âm nhạc Việt #6": VERIFIED_IMAGES.son_tung,
   "Âm nhạc Việt #7": VERIFIED_IMAGES.son_tung,
+  "Đoán quốc gia qua Google Map 360°": VERIFIED_IMAGES.earth,
   "K-Pop": VERIFIED_IMAGES.bts,
   "US-UK": VERIFIED_IMAGES.michael_jackson,
   "Địa lý cơ bản": VERIFIED_IMAGES.earth,
@@ -495,7 +496,10 @@ export const CATEGORY_DEFAULT_IMAGES: Record<string, string> = {
 export function resolveQuestionImage(question: Partial<Question> | null | undefined): string {
   if (!question) return VERIFIED_IMAGES.cinema;
 
-  // 1. Nếu câu hỏi đã có sẵn image_url hợp lệ -> ưu tiên sử dụng
+  // 1. Nếu câu hỏi đã có sẵn image_url hoặc street_view_url hợp lệ -> ưu tiên sử dụng
+  if (question.street_view_url && question.street_view_url.startsWith("http")) {
+    return question.street_view_url;
+  }
   if (question.image_url && question.image_url.startsWith("http")) {
     return question.image_url;
   }
