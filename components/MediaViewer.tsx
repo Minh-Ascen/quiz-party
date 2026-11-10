@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Image as ImageIcon, Music, Play, RotateCcw, Sparkles, VolumeX, Youtube } from "lucide-react";
+import { useEffect, useState, useRef, useCallback } from "react";
+import { Image as ImageIcon, Music, Play, RotateCcw, Sparkles, Volume2, VolumeX, Youtube } from "lucide-react";
 import { resolveQuestionImage, CATEGORY_DEFAULT_IMAGES } from "@/lib/questionImages";
 
 interface MediaViewerProps {
@@ -37,6 +37,28 @@ export function MediaViewer({
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
   const [ytBlocked, setYtBlocked] = useState(false);
+  const [isPlayingYt, setIsPlayingYt] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  // Gửi lệnh điều khiển trực tiếp tới YouTube Player qua postMessage
+  const sendYtCommand = useCallback((func: string, args: any[] = []) => {
+    if (iframeRef.current && iframeRef.current.contentWindow) {
+      try {
+        iframeRef.current.contentWindow.postMessage(
+          JSON.stringify({ event: "command", func, args }),
+          "*"
+        );
+      } catch (err) {
+        // ignore cross-origin sandbox errors
+      }
+    }
+  }, []);
+
+  // Kích hoạt tự động phát video nhạc và bật âm thanh ngay khi bắt đầu đếm câu
+  const triggerPlay = useCallback(() => {
+    sendYtCommand("playVideo");
+    sendYtCommand("unMute");
+  }, [sendYtCommand]);
 
   // Hiệu ứng 20 mảnh ghép che hình ảnh (5 cột x 4 hàng) mở dần theo thời gian
   const TOTAL_TILES = 20;
@@ -101,6 +123,58 @@ export function MediaViewer({
     Boolean(cleanYtId) ||
     Boolean(audioUrl);
 
+  // Tự động phát video nhạc mỗi khi bắt đầu đếm câu hỏi & khi người dùng tương tác
+  useEffect(() => {
+    if (!isSongGuess || !cleanYtId) return;
+
+    setIsPlayingYt(false);
+
+    // Lắng nghe phản hồi từ iframe YouTube
+    const handleYtMessage = (e: MessageEvent) => {
+      if (typeof e.data === "string") {
+        try {
+          const data = JSON.parse(e.data);
+          if (data.event === "onStateChange") {
+            // 1 = PLAYING, 3 = BUFFERING
+            if (data.info === 1 || data.info === 3) {
+              setIsPlayingYt(true);
+            } else if (data.info === 2) {
+              setIsPlayingYt(false);
+            }
+          } else if (data.event === "initialDelivery") {
+            triggerPlay();
+          }
+        } catch {}
+      }
+    };
+    window.addEventListener("message", handleYtMessage);
+
+    // Mọi tương tác của người dùng (click chuột, bấm phím gõ tên bài hát, chạm màn hình) đều kích hoạt phát video
+    const handleUserInteraction = () => {
+      triggerPlay();
+    };
+    window.addEventListener("click", handleUserInteraction, { passive: true });
+    window.addEventListener("keydown", handleUserInteraction, { passive: true });
+    window.addEventListener("touchstart", handleUserInteraction, { passive: true });
+
+    // Hàng loạt xung lệnh phát tự động ngay khi vừa bắt đầu đếm câu hỏi
+    const t1 = setTimeout(triggerPlay, 150);
+    const t2 = setTimeout(triggerPlay, 500);
+    const t3 = setTimeout(triggerPlay, 1200);
+    const t4 = setTimeout(triggerPlay, 2200);
+
+    return () => {
+      window.removeEventListener("message", handleYtMessage);
+      window.removeEventListener("click", handleUserInteraction);
+      window.removeEventListener("keydown", handleUserInteraction);
+      window.removeEventListener("touchstart", handleUserInteraction);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      clearTimeout(t4);
+    };
+  }, [isSongGuess, cleanYtId, triggerPlay]);
+
   const toggleAudio = (url: string) => {
     if (!audioElement) {
       const audio = new Audio(url);
@@ -152,10 +226,37 @@ export function MediaViewer({
             </div>
           )}
 
+          {/* NÚT DỰ PHÒNG CHẠM PHÁT NHẠC (NẾU TRÌNH DUYỆT CHẶN TỰ ĐỘNG PHÁT ÂM THANH) */}
+          {!isPlayingYt && !isReveal && (
+            <button
+              type="button"
+              onClick={() => {
+                setIsPlayingYt(true);
+                triggerPlay();
+              }}
+              className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/35 backdrop-blur-[1px] transition hover:bg-black/20 cursor-pointer group select-none"
+            >
+              <div className="flex items-center gap-2.5 px-6 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-sm sm:text-base shadow-2xl border-2 border-white scale-100 group-hover:scale-105 transition-transform animate-pulse">
+                <Play size={20} fill="currentColor" />
+                <span>Bắt đầu nghe nhạc</span>
+              </div>
+              <span className="mt-2 text-xs font-semibold text-white/90 drop-shadow">
+                (Chạm vào đây nếu trình duyệt chưa tự phát âm thanh)
+              </span>
+            </button>
+          )}
+
           <iframe
+            ref={iframeRef}
             key={`${cleanYtId}-${startTime || 24}`}
-            src={`https://www.youtube.com/embed/${cleanYtId}?autoplay=1&start=${startTime && startTime > 0 ? startTime : 24}&enablejsapi=1&rel=0&modestbranding=1&playsinline=1`}
+            src={`https://www.youtube.com/embed/${cleanYtId}?autoplay=1&mute=0&start=${startTime && startTime > 0 ? startTime : 24}&enablejsapi=1&rel=0&modestbranding=1&playsinline=1&controls=1`}
             title="Đoán tên bài hát qua MV"
+            onLoad={() => {
+              triggerPlay();
+              setTimeout(triggerPlay, 300);
+              setTimeout(triggerPlay, 800);
+              setTimeout(triggerPlay, 1500);
+            }}
             className={`w-full border-0 transition-all duration-300 ${
               !isReveal
                 ? "h-[122%] -mt-10 sm:-mt-14 scale-[1.18]"

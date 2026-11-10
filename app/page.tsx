@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { supabase, isSupabaseConfigured, newPlayerToken } from "@/lib/supabase";
 import {
   AVATAR_OPTIONS,
@@ -60,6 +60,7 @@ export default function Home() {
   const [musicInput, setMusicInput] = useState("");
   const [musicFeedback, setMusicFeedback] = useState<{ type: "success" | "wrong"; message: string } | null>(null);
   const [musicSubmitted, setMusicSubmitted] = useState(false);
+  const musicInputRef = useRef<HTMLInputElement>(null);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [revealStep, setRevealStep] = useState<"answer" | "scoreboard">("answer");
   const [scoreboardStage, setScoreboardStage] = useState<"initial" | "points" | "ranked">("initial");
@@ -220,7 +221,7 @@ export default function Home() {
     setMusicSubmitted(false);
   }, [state?.current_index]);
 
-  // Reset selected answer when entering playing state
+  // Reset selected answer when entering playing state & auto-focus music input
   useEffect(() => {
     if (state?.status === "playing") {
       setSelected(null);
@@ -228,8 +229,13 @@ export default function Home() {
       setMusicInput("");
       setMusicFeedback(null);
       setMusicSubmitted(false);
+
+      // Tự động focus con trỏ vào ô nhập tên bài hát ngay khi bắt đầu đếm câu hỏi
+      setTimeout(() => {
+        musicInputRef.current?.focus();
+      }, 150);
     }
-  }, [state?.status]);
+  }, [state?.status, state?.current_index]);
 
   // Play sound on answer reveal -> Hiển thị Xếp hạng (Scoreboard) với hiệu ứng +Điểm & Thăng hạng -> Tự động chuyển câu
   useEffect(() => {
@@ -1050,6 +1056,7 @@ export default function Home() {
                             {/* Ô NHẬP TÊN BÀI HÁT (UNIKEY TIẾNG VIỆT) */}
                             <div className="relative">
                               <input
+                                ref={musicInputRef}
                                 type="text"
                                 lang="vi"
                                 autoComplete="off"

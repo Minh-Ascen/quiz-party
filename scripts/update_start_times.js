@@ -37,3 +37,4 @@ for (const q of bank) {
 
 fs.writeFileSync(file, JSON.stringify(bank, null, 2), 'utf8');
 console.log(`Đã cập nhật startTime vào ngay giai điệu cho ${updated} bài hát!`);
+
