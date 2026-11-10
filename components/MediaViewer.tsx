@@ -142,10 +142,10 @@ export function MediaViewer({
       {/* 1. GUESS THE SONG: YOUTUBE EMBED HOẶC AUDIO */}
       {isSongGuess && cleanYtId && !ytBlocked && (
         <div className="relative aspect-video w-full h-[250px] sm:h-[300px] md:h-[360px] max-h-[420px] overflow-hidden rounded-3xl bg-black border-4 border-black/80 shadow-2xl mx-auto">
-          {/* LỚP MẶT NẠ CHE TIÊU ĐỀ BÀI HÁT KHI ĐANG ĐOÁN (THEO YÊU CẦU: BỎ TÊN BÀI HÁT TRÊN VIDEO ĐỂ KHÔNG BỊ LỘ) */}
+          {/* LỚP MẶT NẠ OPAQUE 100% CHE HOÀN TOÀN TIÊU ĐỀ BÀI HÁT KHI ĐANG ĐOÁN (KHÔNG BAO GIỜ BỊ LỘ TÊN BÀI) */}
           {!isReveal && (
-            <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-black via-black/95 to-black/70 pointer-events-none z-30 flex items-center justify-center px-4">
-              <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-violet-950/90 border border-violet-500/40 text-white text-xs sm:text-sm font-extrabold shadow-2xl backdrop-blur-md">
+            <div className="absolute top-0 left-0 right-0 h-16 sm:h-20 bg-[#0c0a18] border-b border-violet-500/20 pointer-events-none z-30 flex items-center justify-center px-4 shadow-xl">
+              <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-violet-900/90 border border-violet-400/40 text-white text-xs sm:text-sm font-extrabold shadow-2xl backdrop-blur-md">
                 <Music size={15} className="text-pink-400 animate-bounce" />
                 <span className="tracking-wide text-amber-200">🎵 Lắng nghe giai điệu & đoán tên bài hát!</span>
               </div>
@@ -153,11 +153,13 @@ export function MediaViewer({
           )}
 
           <iframe
-            key={`${cleanYtId}-${startTime || 18}`}
-            src={`https://www.youtube.com/embed/${cleanYtId}?autoplay=1&start=${startTime && startTime > 0 ? startTime : 18}&enablejsapi=1&rel=0&modestbranding=1&playsinline=1`}
+            key={`${cleanYtId}-${startTime || 24}`}
+            src={`https://www.youtube.com/embed/${cleanYtId}?autoplay=1&start=${startTime && startTime > 0 ? startTime : 24}&enablejsapi=1&rel=0&modestbranding=1&playsinline=1`}
             title="Đoán tên bài hát qua MV"
-            className={`h-full w-full border-0 transition-all duration-300 ${
-              !isReveal ? "scale-[1.18] -translate-y-8" : "scale-100 translate-y-0"
+            className={`w-full border-0 transition-all duration-300 ${
+              !isReveal
+                ? "h-[122%] -mt-10 sm:-mt-14 scale-[1.18]"
+                : "h-full mt-0 scale-100"
             }`}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
@@ -241,11 +243,11 @@ export function MediaViewer({
         </div>
       )}
 
-      {/* 3. ILLUSTRATION IMAGE CHO CÂU TRẮC NGHIỆM: HIỆU ỨNG TỪNG MẢNH GHÉP (MOSAIC TILE REVEAL) */}
+      {/* 3. ILLUSTRATION IMAGE CHO CÂU TRẮC NGHIỆM: HIỆU ỨNG TỪNG MẢNH GHÉP (MOSAIC TILE REVEAL THEO HÌNH GỬI) */}
       {!isSongGuess && (
-        <div className="relative aspect-video w-full h-[250px] sm:h-[300px] md:h-[360px] max-h-[420px] overflow-hidden rounded-3xl bg-[#120f22] border-4 border-[#3a3556] shadow-2xl mx-auto flex items-center justify-center p-2 select-none">
+        <div className="relative aspect-video w-full h-[250px] sm:h-[300px] md:h-[360px] max-h-[420px] overflow-hidden rounded-3xl bg-[#0f1722] border-4 border-[#223044] shadow-2xl mx-auto flex items-center justify-center p-2 select-none">
           {activeSrc && !imageError ? (
-            <div className="relative w-full h-full rounded-2xl overflow-hidden flex items-center justify-center bg-black/60">
+            <div className="relative w-full h-full rounded-2xl overflow-hidden flex items-center justify-center bg-black/50">
               {/* Ảnh gốc bên dưới */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -256,7 +258,7 @@ export function MediaViewer({
                 onError={handleImageError}
               />
 
-              {/* Lưới 20 mảnh ghép phủ lên trên ảnh */}
+              {/* Lưới 20 mảnh ghép che phủ ảnh - tự động mở dần từng mảnh theo thời gian (giống hình boyband) */}
               {Array.from({ length: TOTAL_TILES }).map((_, idx) => {
                 const row = Math.floor(idx / 5);
                 const col = idx % 5;
@@ -265,7 +267,7 @@ export function MediaViewer({
                 return (
                   <div
                     key={idx}
-                    className={`absolute border border-black/40 bg-[#1e1a33] shadow-inner transition-all duration-700 ease-out flex items-center justify-center ${
+                    className={`absolute border border-black/30 bg-[#162332] shadow-inner transition-all duration-700 ease-out ${
                       isRevealed
                         ? "opacity-0 scale-75 pointer-events-none"
                         : "opacity-100 scale-100"
@@ -276,27 +278,28 @@ export function MediaViewer({
                       width: "20%",
                       height: "25%"
                     }}
-                  >
-                    <span className="text-[11px] font-mono text-white/20 select-none font-bold">
-                      {idx + 1}
-                    </span>
-                  </div>
+                  />
                 );
               })}
 
               {/* Badge góc dưới: Hiển thị trạng thái mở mảnh ghép */}
-              <div className="absolute bottom-2 left-2 z-10 px-2.5 py-1 rounded-full bg-black/75 backdrop-blur-md border border-white/10 text-[10px] sm:text-xs font-bold text-white/90 shadow-lg">
-                {isReveal ? "✨ Toàn bộ hình ảnh" : `🧩 Đang mở mảnh ghép (${revealedTiles.length}/${TOTAL_TILES})`}
+              <div className="absolute bottom-2 left-2 z-10 px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-white/10 text-[10px] sm:text-xs font-bold text-white/90 shadow-lg flex items-center gap-1.5">
+                {isReveal ? (
+                  <span>✨ Đã mở toàn bộ ảnh</span>
+                ) : (
+                  <span>🧩 Đang mở dần từng mảnh ({revealedTiles.length}/{TOTAL_TILES})</span>
+                )}
               </div>
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center p-4 text-center text-slate-300">
-              <div className="mb-2 grid h-12 w-12 place-items-center rounded-2xl bg-white/10 text-white shadow-inner">
-                <Sparkles size={24} />
+            <div className="flex flex-col items-center justify-center p-6 text-center text-slate-300">
+              <div className="mb-3 grid h-14 w-14 place-items-center rounded-2xl bg-white/10 text-white shadow-inner">
+                <Sparkles size={28} className="text-amber-400 animate-pulse" />
               </div>
-              <span className="text-xs font-black uppercase tracking-wider text-slate-200">
+              <span className="text-sm font-black uppercase tracking-wider text-slate-100">
                 {category}
               </span>
+              <p className="mt-1 text-xs text-slate-400">Hình ảnh minh họa cho câu hỏi</p>
             </div>
           )}
         </div>
