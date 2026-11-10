@@ -64,3 +64,4 @@ const finalBank = [...updatedMusicQuestions, ...nonMusicQuestions];
 fs.writeFileSync(bankPath, JSON.stringify(finalBank, null, 2), 'utf8');
 console.log(`Đã cập nhật thành công ${updatedMusicQuestions.length} câu hỏi nhạc vào 7 part trong questionBank.json!`);
 console.log(`Tổng ngân hàng câu hỏi: ${finalBank.length}`);
+

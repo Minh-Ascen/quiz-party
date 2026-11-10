@@ -59,7 +59,22 @@ export function MediaViewer({
     sendYtCommand("playVideo");
     sendYtCommand("unMute");
     sendYtCommand("setVolume", [100]);
+    setTimeout(() => {
+      sendYtCommand("unMute");
+      sendYtCommand("setVolume", [100]);
+    }, 150);
   }, [sendYtCommand]);
+
+  // Nạp YouTube Iframe API toàn cục một lần duy nhất
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (!(window as any).YT) {
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      const firstScriptTag = document.getElementsByTagName("script")[0];
+      firstScriptTag?.parentNode?.insertBefore(tag, firstScriptTag);
+    }
+  }, []);
 
   // Hiệu ứng 20 mảnh ghép che hình ảnh (5 cột x 4 hàng) mở dần theo thời gian
   const TOTAL_TILES = 20;
@@ -139,8 +154,13 @@ export function MediaViewer({
             // 1 = PLAYING, 3 = BUFFERING
             if (data.info === 1 || data.info === 3) {
               setIsPlayingYt(true);
+              sendYtCommand("unMute");
+              sendYtCommand("setVolume", [100]);
             } else if (data.info === 2) {
-              setIsPlayingYt(false);
+              // Nếu bị tạm dừng, ép phát tiếp ngay lập tức
+              sendYtCommand("playVideo");
+              sendYtCommand("unMute");
+              sendYtCommand("setVolume", [100]);
             }
           } else if (data.event === "initialDelivery") {
             triggerPlay();
@@ -159,10 +179,10 @@ export function MediaViewer({
     window.addEventListener("touchstart", handleUserInteraction, { passive: true });
 
     // Hàng loạt xung lệnh phát tự động ngay khi vừa bắt đầu đếm câu hỏi
-    const t1 = setTimeout(triggerPlay, 150);
-    const t2 = setTimeout(triggerPlay, 500);
-    const t3 = setTimeout(triggerPlay, 1200);
-    const t4 = setTimeout(triggerPlay, 2200);
+    const t1 = setTimeout(triggerPlay, 100);
+    const t2 = setTimeout(triggerPlay, 350);
+    const t3 = setTimeout(triggerPlay, 800);
+    const t4 = setTimeout(triggerPlay, 1600);
 
     return () => {
       window.removeEventListener("message", handleYtMessage);
@@ -174,7 +194,64 @@ export function MediaViewer({
       clearTimeout(t3);
       clearTimeout(t4);
     };
-  }, [isSongGuess, cleanYtId, triggerPlay]);
+  }, [isSongGuess, cleanYtId, triggerPlay, sendYtCommand]);
+
+  // Khởi tạo YouTube Player API trực tiếp trên iframe để bảo đảm video tự động hát 100%
+  useEffect(() => {
+    if (!cleanYtId || !iframeRef.current || typeof window === "undefined") return;
+
+    let playerInstance: any = null;
+    const bindApi = () => {
+      const YT = (window as any).YT;
+      if (YT && YT.Player && iframeRef.current) {
+        try {
+          playerInstance = new YT.Player(iframeRef.current, {
+            events: {
+              onReady: (e: any) => {
+                try {
+                  e.target.playVideo();
+                  e.target.unMute();
+                  e.target.setVolume(100);
+                } catch {}
+              },
+              onStateChange: (e: any) => {
+                if (e.data === 1) {
+                  try {
+                    e.target.unMute();
+                    e.target.setVolume(100);
+                  } catch {}
+                } else if (e.data === 2) {
+                  try {
+                    e.target.playVideo();
+                    e.target.unMute();
+                    e.target.setVolume(100);
+                  } catch {}
+                }
+              }
+            }
+          });
+        } catch {}
+      }
+    };
+
+    if ((window as any).YT && (window as any).YT.Player) {
+      bindApi();
+    } else {
+      const prevCallback = (window as any).onYouTubeIframeAPIReady;
+      (window as any).onYouTubeIframeAPIReady = () => {
+        if (prevCallback) prevCallback();
+        bindApi();
+      };
+    }
+
+    return () => {
+      if (playerInstance && playerInstance.destroy) {
+        try {
+          playerInstance.destroy();
+        } catch {}
+      }
+    };
+  }, [cleanYtId, startTime]);
 
   const toggleAudio = (url: string) => {
     if (!audioElement) {
@@ -229,21 +306,22 @@ export function MediaViewer({
 
           <iframe
             ref={iframeRef}
+            id="yt-player-frame"
             key={`${cleanYtId}-${startTime || 24}`}
-            src={`https://www.youtube.com/embed/${cleanYtId}?autoplay=1&mute=0&start=${startTime && startTime > 0 ? startTime : 24}&enablejsapi=1&rel=0&modestbranding=1&playsinline=1&controls=1`}
+            src={`https://www.youtube.com/embed/${cleanYtId}?autoplay=1&mute=1&start=${startTime && startTime > 0 ? startTime : 24}&enablejsapi=1&rel=0&modestbranding=1&playsinline=1&controls=1&origin=${encodeURIComponent(typeof window !== "undefined" ? window.location.origin : "")}`}
             title="Đoán tên bài hát qua MV"
             onLoad={() => {
               triggerPlay();
-              setTimeout(triggerPlay, 150);
-              setTimeout(triggerPlay, 400);
-              setTimeout(triggerPlay, 900);
+              setTimeout(triggerPlay, 100);
+              setTimeout(triggerPlay, 300);
+              setTimeout(triggerPlay, 700);
             }}
             className={`w-full border-0 transition-all duration-300 ${
               !isReveal
                 ? "h-[122%] -mt-10 sm:-mt-14 scale-[1.18]"
                 : "h-full mt-0 scale-100"
             }`}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allow="autoplay *; encrypted-media *; fullscreen *; accelerometer; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
             onError={() => setYtBlocked(true)}
