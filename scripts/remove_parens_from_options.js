@@ -52,3 +52,4 @@ console.log(`- Số trùng lặp đáp án phát hiện: ${duplicates}`);
 
 fs.writeFileSync(bankPath, JSON.stringify(updatedBank, null, 2), 'utf8');
 console.log(`✅ Đã lưu thành công vào ${bankPath}!`);
+
