@@ -58,6 +58,7 @@ export function MediaViewer({
   const triggerPlay = useCallback(() => {
     sendYtCommand("playVideo");
     sendYtCommand("unMute");
+    sendYtCommand("setVolume", [100]);
   }, [sendYtCommand]);
 
   // Hiệu ứng 20 mảnh ghép che hình ảnh (5 cột x 4 hàng) mở dần theo thời gian
@@ -226,26 +227,6 @@ export function MediaViewer({
             </div>
           )}
 
-          {/* NÚT DỰ PHÒNG CHẠM PHÁT NHẠC (NẾU TRÌNH DUYỆT CHẶN TỰ ĐỘNG PHÁT ÂM THANH) */}
-          {!isPlayingYt && !isReveal && (
-            <button
-              type="button"
-              onClick={() => {
-                setIsPlayingYt(true);
-                triggerPlay();
-              }}
-              className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/35 backdrop-blur-[1px] transition hover:bg-black/20 cursor-pointer group select-none"
-            >
-              <div className="flex items-center gap-2.5 px-6 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-sm sm:text-base shadow-2xl border-2 border-white scale-100 group-hover:scale-105 transition-transform animate-pulse">
-                <Play size={20} fill="currentColor" />
-                <span>Bắt đầu nghe nhạc</span>
-              </div>
-              <span className="mt-2 text-xs font-semibold text-white/90 drop-shadow">
-                (Chạm vào đây nếu trình duyệt chưa tự phát âm thanh)
-              </span>
-            </button>
-          )}
-
           <iframe
             ref={iframeRef}
             key={`${cleanYtId}-${startTime || 24}`}
@@ -253,9 +234,9 @@ export function MediaViewer({
             title="Đoán tên bài hát qua MV"
             onLoad={() => {
               triggerPlay();
-              setTimeout(triggerPlay, 300);
-              setTimeout(triggerPlay, 800);
-              setTimeout(triggerPlay, 1500);
+              setTimeout(triggerPlay, 150);
+              setTimeout(triggerPlay, 400);
+              setTimeout(triggerPlay, 900);
             }}
             className={`w-full border-0 transition-all duration-300 ${
               !isReveal

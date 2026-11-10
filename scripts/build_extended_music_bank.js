@@ -1226,13 +1226,22 @@ const bankPath = './data/questionBank.json';
 const bank = JSON.parse(fs.readFileSync(bankPath, 'utf8'));
 
 // Lọc bỏ danh sách cũ của Âm nhạc Việt Nam
-const nonMusic = bank.filter(q => q.category !== 'Âm nhạc Việt Nam');
+const nonMusic = bank.filter(q => q.category !== 'Âm nhạc Việt Nam' && !q.category.startsWith('Âm nhạc Việt'));
 
-// Tạo danh sách câu hỏi mới
-const newMusicQuestions = FULL_SONG_COLLECTION.map((song, idx) => {
+// Xáo trộn ngẫu nhiên toàn bộ bài hát trước khi chia part
+const shuffledSongs = [...FULL_SONG_COLLECTION];
+for (let i = shuffledSongs.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [shuffledSongs[i], shuffledSongs[j]] = [shuffledSongs[j], shuffledSongs[i]];
+}
+
+// Tạo danh sách câu hỏi mới chia đều vào 7 Part (khoảng 20-21 câu mỗi part)
+const NUM_PARTS = 7;
+const newMusicQuestions = shuffledSongs.map((song, idx) => {
+  const partNo = (idx % NUM_PARTS) + 1;
   const allOpts = [song.title, ...song.distractors];
   const correctTitle = song.title;
-  // Fisher-Yates shuffle
+  // Fisher-Yates shuffle options
   for (let i = allOpts.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [allOpts[i], allOpts[j]] = [allOpts[j], allOpts[i]];
@@ -1240,10 +1249,10 @@ const newMusicQuestions = FULL_SONG_COLLECTION.map((song, idx) => {
   const correctIdx = allOpts.indexOf(correctTitle);
 
   return {
-    id: `q-music-${idx + 1}`,
-    round_no: Math.floor(idx / 10) + 1,
-    question_no: idx + 1,
-    category: "Âm nhạc Việt Nam",
+    id: `q-music-p${partNo}-${idx + 1}`,
+    round_no: partNo,
+    question_no: Math.floor(idx / NUM_PARTS) + 1,
+    category: `Âm nhạc Việt #${partNo}`,
     prompt: "Đây là bài hát nào?",
     options: allOpts,
     correct_index: correctIdx,
@@ -1252,9 +1261,9 @@ const newMusicQuestions = FULL_SONG_COLLECTION.map((song, idx) => {
     audio_url: null,
     video_url: null,
     youtube_video_id: song.ytid,
-    start_time: song.startTime || 16, // Bỏ qua intro, phát ngay giai điệu bài hát!
+    start_time: song.startTime || 24, // Bỏ qua intro, phát ngay giai điệu bài hát!
     question_type: "AUDIO_GUESS",
-    difficulty: idx < 30 ? "easy" : idx < 75 ? "medium" : "hard",
+    difficulty: idx % 3 === 0 ? "easy" : idx % 3 === 1 ? "medium" : "hard",
     points: 1000,
     time_limit: 30,
     source: `${song.artist} - ${song.title}`,

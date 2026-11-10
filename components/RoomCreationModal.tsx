@@ -280,7 +280,7 @@ export function RoomCreationModal({
           <div>
             <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
               <label className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-gray-700">
-                <Layers size={15} className="text-violet-600" /> Chọn chủ đề ({selectedCategories.length}/12)
+                <Layers size={15} className="text-violet-600" /> Chọn chủ đề ({selectedCategories.length}/{QUESTION_CATEGORIES.length})
               </label>
               <div className="flex items-center gap-3 text-xs">
                 <button
@@ -295,7 +295,7 @@ export function RoomCreationModal({
                   onClick={selectAllCategories}
                   className="font-extrabold text-violet-600 hover:underline"
                 >
-                  Chọn tất cả (Trộn 12 chủ đề)
+                  Chọn tất cả (Trộn {QUESTION_CATEGORIES.length} chủ đề)
                 </button>
               </div>
             </div>

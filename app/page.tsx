@@ -637,6 +637,7 @@ export default function Home() {
   const isMusicQuestion = Boolean(
     state?.question && (
       state.question.category === "Âm nhạc Việt Nam" ||
+      state.question.category?.startsWith("Âm nhạc Việt") ||
       state.question.category === "K-Pop" ||
       state.question.category === "US-UK" ||
       state.question.question_type === "AUDIO_GUESS" ||

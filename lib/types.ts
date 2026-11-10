@@ -78,10 +78,16 @@ export interface RoomCreationOptions {
 }
 
 export const QUESTION_CATEGORIES = [
+  "Âm nhạc Việt #1",
+  "Âm nhạc Việt #2",
+  "Âm nhạc Việt #3",
+  "Âm nhạc Việt #4",
+  "Âm nhạc Việt #5",
+  "Âm nhạc Việt #6",
+  "Âm nhạc Việt #7",
   "Doraemon",
   "Conan – Thám tử lừng danh",
   "Phim Hàn Quốc (K-Drama)",
-  "Âm nhạc Việt Nam",
   "K-Pop",
   "US-UK",
   "Địa lý cơ bản",

@@ -63,7 +63,17 @@ export function selectQuestionsForRoom(
   // 1. Lọc NGHIÊM NGẶT theo đúng chủ đề mà Host đã chọn
   const categoryMatched =
     normalizedCategories.length > 0
-      ? pool.filter((q) => normalizedCategories.includes(q.category.trim()))
+      ? pool.filter((q) => {
+          const cat = q.category.trim();
+          if (normalizedCategories.includes(cat)) return true;
+          if (
+            normalizedCategories.includes("Âm nhạc Việt Nam") &&
+            cat.startsWith("Âm nhạc Việt")
+          ) {
+            return true;
+          }
+          return false;
+        })
       : pool;
 
   const activeCategoryPool =
@@ -127,9 +137,11 @@ export function countMatchingQuestions(
 ): number {
   const normalizedCategories = categories.map((c) => c.trim()).filter(Boolean);
   return pool.filter((q) => {
+    const cat = q.category.trim();
     const matchCat =
       normalizedCategories.length === 0 ||
-      normalizedCategories.includes(q.category.trim());
+      normalizedCategories.includes(cat) ||
+      (normalizedCategories.includes("Âm nhạc Việt Nam") && cat.startsWith("Âm nhạc Việt"));
     const matchDiff = difficulty === "all" || q.difficulty === difficulty;
     return matchCat && matchDiff;
   }).length;
