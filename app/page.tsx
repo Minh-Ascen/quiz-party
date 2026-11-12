@@ -482,7 +482,7 @@ export default function Home() {
       const json = await res.json();
       if (json.wrongTry) {
         soundFX.playWrong();
-        setMusicFeedback({ type: "wrong", message: "Chưa chính xác, thử lại nhé!" });
+        setMusicFeedback({ type: "wrong", message: json.message || "Chưa chính xác, hãy nhập đúng tên bài hát nhé!" });
       } else if (json.data) {
         soundFX.playCorrect();
         setMusicSubmitted(true);

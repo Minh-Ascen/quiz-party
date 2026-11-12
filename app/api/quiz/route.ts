@@ -102,6 +102,58 @@ function normalizeVietnamese(str: string): string {
     .trim();
 }
 
+function cleanMusicTitle(str: string): string {
+  if (!str) return "";
+  return normalizeVietnamese(str)
+    .replace(/\s*\([^)]*\)/g, "")
+    .replace(/^(bai hat|bai)\s+/, "")
+    .trim();
+}
+
+function levenshteinDistance(a: string, b: string): number {
+  if (a === b) return 0;
+  if (!a.length) return b.length;
+  if (!b.length) return a.length;
+  const row = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) {
+    let prev = i;
+    for (let j = 1; j <= b.length; j++) {
+      const val = a[i - 1] === b[j - 1] ? row[j - 1] : Math.min(row[j - 1], prev, row[j]) + 1;
+      row[j - 1] = prev;
+      prev = val;
+    }
+    row[b.length] = prev;
+  }
+  return row[b.length];
+}
+
+function isMusicAnswerCorrect(userInput: string, correctTitle: string): boolean {
+  const u = cleanMusicTitle(userInput);
+  const t = cleanMusicTitle(correctTitle);
+  if (!u || !t) return false;
+
+  // 1. Khớp hoàn toàn có dấu hoặc không dấu (vd: 'Nơi này có anh' == 'noi nay co anh')
+  if (u === t) return true;
+
+  // 2. Khớp khi bỏ qua khoảng trắng (vd: 'noinaycoanh' == 'noi nay co anh')
+  const uNoSpace = u.replace(/\s+/g, "");
+  const tNoSpace = t.replace(/\s+/g, "");
+  if (uNoSpace === tNoSpace) return true;
+
+  // 3. Chuẩn hóa số từ '1' <-> 'mot'
+  const uNum = u.replace(/\b1\b/g, "mot");
+  const tNum = t.replace(/\b1\b/g, "mot");
+  if (uNum === tNum || uNum.replace(/\s+/g, "") === tNum.replace(/\s+/g, "")) return true;
+
+  // 4. Cho phép sai số tối đa 1 ký tự đối với bài hát có tên DÀI (>= 12 ký tự)
+  // Tuyệt đối KHÔNG cho phép gõ thiếu từ, gõ tắt, gõ tên ca sĩ hay ký tự đơn 'a'
+  if (t.length >= 12 && Math.abs(u.length - t.length) <= 1) {
+    if (levenshteinDistance(u, t) <= 1) return true;
+  }
+
+  return false;
+}
+
 function generateRoomCode(rooms: Record<string, StoredRoom>): string {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   for (let attempt = 0; attempt < 50; attempt++) {
@@ -470,21 +522,14 @@ export async function POST(req: NextRequest) {
       let pointsAwarded = 0;
 
       if (textAnswer) {
-        // 1. Chế độ đoán tên bài hát (nhập chữ tiếng Việt Unikey)
-        const userNorm = normalizeVietnamese(textAnswer);
-        const correctOpt = currentQ.options && currentQ.correct_index !== undefined ? currentQ.options[currentQ.correct_index] : "";
-        const correctOptNorm = normalizeVietnamese(correctOpt);
-        const sourceNorm = currentQ.source ? normalizeVietnamese(currentQ.source) : "";
+        // 1. Chế độ đoán tên bài hát (nhập chữ tiếng Việt Unikey):
+        // Bắt buộc nhập đúng tên bài hát, tuyệt đối không chấp nhận tên ca sĩ, chữ cái đơn ('a'), hay nhập thiếu từ
+        const correctOpt =
+          currentQ.options && currentQ.correct_index !== undefined
+            ? currentQ.options[currentQ.correct_index]
+            : "";
 
-        let isMatch = false;
-        if (userNorm && correctOptNorm) {
-          if (userNorm === correctOptNorm) isMatch = true;
-          else if (userNorm.length >= 3 && correctOptNorm.includes(userNorm)) isMatch = true;
-          else if (correctOptNorm.length >= 3 && userNorm.includes(correctOptNorm)) isMatch = true;
-        }
-        if (!isMatch && userNorm && sourceNorm) {
-          if (sourceNorm.includes(userNorm) || userNorm.includes(sourceNorm)) isMatch = true;
-        }
+        const isMatch = isMusicAnswerCorrect(textAnswer, correctOpt);
 
         if (isMatch) {
           isCorrect = true;
@@ -494,7 +539,7 @@ export async function POST(req: NextRequest) {
             data: buildClientState(room, playerToken),
             error: null,
             wrongTry: true,
-            message: "Chưa chính xác, thử lại nhé!"
+            message: "Chưa chính xác, hãy nhập đúng tên bài hát nhé!"
           });
         }
       } else {

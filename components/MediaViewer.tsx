@@ -386,11 +386,14 @@ export function MediaViewer({
             </div>
           )}
 
+          {/* LỚP KHIÊN BẢO VỆ TRONG SUỐT: KHÔNG CHO PHÉP TƯƠNG TÁC, PHÓNG TO, THU NHỎ HOẶC CLICK VÀO VIDEO */}
+          <div className="absolute inset-0 z-20 pointer-events-auto cursor-default select-none" />
+
           <iframe
             ref={iframeRef}
             id="yt-player-frame"
             key={`${cleanYtId}-${startTime || 24}`}
-            src={`https://www.youtube.com/embed/${cleanYtId}?autoplay=1&mute=0&start=${startTime && startTime > 0 ? startTime : 24}&enablejsapi=1&rel=0&modestbranding=1&playsinline=1&controls=1&origin=${encodeURIComponent(typeof window !== "undefined" ? window.location.origin : "")}`}
+            src={`https://www.youtube.com/embed/${cleanYtId}?autoplay=1&mute=0&start=${startTime && startTime > 0 ? startTime : 24}&enablejsapi=1&rel=0&modestbranding=1&playsinline=1&controls=0&fs=0&disablekb=1&origin=${encodeURIComponent(typeof window !== "undefined" ? window.location.origin : "")}`}
             title="Đoán tên bài hát qua MV"
             onLoad={() => {
               triggerPlay();
@@ -398,18 +401,17 @@ export function MediaViewer({
               setTimeout(triggerPlay, 300);
               setTimeout(triggerPlay, 700);
             }}
-            className={`w-full border-0 transition-all duration-300 ${
+            className={`w-full border-0 transition-all duration-300 pointer-events-none select-none ${
               !isReveal
                 ? "h-[122%] -mt-10 sm:-mt-14 scale-[1.18]"
                 : "h-full mt-0 scale-100"
             }`}
-            allow="autoplay; encrypted-media; fullscreen; picture-in-picture; accelerometer; gyroscope; web-share"
+            allow="autoplay; encrypted-media; picture-in-picture; accelerometer; gyroscope"
             referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
             onError={() => setYtBlocked(true)}
           />
 
-          <div className="absolute bottom-2.5 right-2.5 z-20 flex items-center gap-1.5 rounded-lg bg-black/85 backdrop-blur-sm px-2.5 py-1 text-[11px] font-bold text-white shadow-md">
+          <div className="absolute bottom-2.5 right-2.5 z-30 flex items-center gap-1.5 rounded-lg bg-black/85 backdrop-blur-sm px-2.5 py-1 text-[11px] font-bold text-white shadow-md">
             <Youtube className="text-red-500" size={14} />
             <span>Đoán bài hát qua MV</span>
             {isReveal && (
@@ -417,7 +419,7 @@ export function MediaViewer({
                 href={`https://www.youtube.com/watch?v=${cleanYtId}`}
                 target="_blank"
                 rel="noreferrer"
-                className="ml-1 text-[10px] text-amber-300 underline hover:text-white"
+                className="ml-1 text-[10px] text-amber-300 underline hover:text-white pointer-events-auto"
                 title="Mở xem MV đầy đủ trên YouTube"
               >
                 Mở YouTube ↗
