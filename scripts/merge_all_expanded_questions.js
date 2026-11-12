@@ -74,3 +74,4 @@ updatedBank.forEach(q => {
 });
 console.log('\nThống kê theo chủ đề:');
 console.table(stats);
+

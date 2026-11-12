@@ -29,3 +29,4 @@ const STREETVIEW_QUESTIONS = STREETVIEW_LOCATIONS.map((loc, idx) => {
 console.log(`Đã tạo thành công ${STREETVIEW_QUESTIONS.length} câu hỏi Street View 360°!`);
 
 module.exports = { STREETVIEW_QUESTIONS };
+

@@ -110,6 +110,83 @@ function cleanMusicTitle(str: string): string {
     .trim();
 }
 
+// Bảng ánh xạ chuyển đổi linh hoạt giữa chữ số và chữ viết tiếng Việt
+const DIGIT_TO_WORDS: Record<string, string> = {
+  "0": "khong",
+  "1": "mot",
+  "2": "hai",
+  "3": "ba",
+  "4": "bon",
+  "5": "nam",
+  "6": "sau",
+  "7": "bay",
+  "8": "tam",
+  "9": "chin",
+  "10": "muoi",
+  "20": "hai muoi",
+  "24": "hai muoi bon",
+  "60": "sau muoi",
+  "100": "mot tram"
+};
+
+const WORD_TO_DIGITS: Record<string, string> = {
+  "khong": "0",
+  "mot": "1",
+  "hai": "2",
+  "ba": "3",
+  "bon": "4",
+  "tu": "4",
+  "nam": "5",
+  "sau": "6",
+  "bay": "7",
+  "tam": "8",
+  "chin": "9",
+  "muoi": "10",
+  "hai muoi bon": "24",
+  "hai tu": "24",
+  "hai muoi": "20",
+  "sau muoi": "60",
+  "mot tram": "100"
+};
+
+function getTitleVariants(cleanStr: string): string[] {
+  const variants = new Set<string>();
+  variants.add(cleanStr);
+  variants.add(cleanStr.replace(/\s+/g, ""));
+
+  // 1. Chuyển chữ số thành chữ (ví dụ: '2 phut hon' -> 'hai phut hon')
+  let wordVer = cleanStr;
+  for (const [digit, word] of Object.entries(DIGIT_TO_WORDS)) {
+    const regex = new RegExp(`\\b${digit}\\b`, "g");
+    wordVer = wordVer.replace(regex, word);
+  }
+  variants.add(wordVer);
+  variants.add(wordVer.replace(/\s+/g, ""));
+
+  // Biến thể 'bon' <-> 'tu' (ví dụ: 'hai muoi bon' <-> 'hai muoi tu')
+  if (wordVer.includes("bon")) {
+    const tuVer = wordVer.replace(/\bbon\b/g, "tu");
+    variants.add(tuVer);
+    variants.add(tuVer.replace(/\s+/g, ""));
+  }
+  if (wordVer.includes("tu")) {
+    const bonVer = wordVer.replace(/\btu\b/g, "bon");
+    variants.add(bonVer);
+    variants.add(bonVer.replace(/\s+/g, ""));
+  }
+
+  // 2. Chuyển chữ thành số (ví dụ: 'hai phut hon' -> '2 phut hon', 'sau muoi nam' -> '60 nam')
+  let digitVer = cleanStr;
+  for (const [word, digit] of Object.entries(WORD_TO_DIGITS)) {
+    const regex = new RegExp(`\\b${word}\\b`, "g");
+    digitVer = digitVer.replace(regex, digit);
+  }
+  variants.add(digitVer);
+  variants.add(digitVer.replace(/\s+/g, ""));
+
+  return Array.from(variants).filter(Boolean);
+}
+
 function levenshteinDistance(a: string, b: string): number {
   if (a === b) return 0;
   if (!a.length) return b.length;
@@ -132,23 +209,20 @@ function isMusicAnswerCorrect(userInput: string, correctTitle: string): boolean 
   const t = cleanMusicTitle(correctTitle);
   if (!u || !t) return false;
 
-  // 1. Khớp hoàn toàn có dấu hoặc không dấu (vd: 'Nơi này có anh' == 'noi nay co anh')
-  if (u === t) return true;
+  const uVariants = getTitleVariants(u);
+  const tVariants = getTitleVariants(t);
 
-  // 2. Khớp khi bỏ qua khoảng trắng (vd: 'noinaycoanh' == 'noi nay co anh')
-  const uNoSpace = u.replace(/\s+/g, "");
-  const tNoSpace = t.replace(/\s+/g, "");
-  if (uNoSpace === tNoSpace) return true;
+  // So khớp chéo giữa các biến thể của User và Target (hỗ trợ cả chữ và số, có dấu và không dấu)
+  for (const uv of uVariants) {
+    for (const tv of tVariants) {
+      if (uv === tv) return true;
+      if (uv.replace(/\s+/g, "") === tv.replace(/\s+/g, "")) return true;
 
-  // 3. Chuẩn hóa số từ '1' <-> 'mot'
-  const uNum = u.replace(/\b1\b/g, "mot");
-  const tNum = t.replace(/\b1\b/g, "mot");
-  if (uNum === tNum || uNum.replace(/\s+/g, "") === tNum.replace(/\s+/g, "")) return true;
-
-  // 4. Cho phép sai số tối đa 1 ký tự đối với bài hát có tên DÀI (>= 12 ký tự)
-  // Tuyệt đối KHÔNG cho phép gõ thiếu từ, gõ tắt, gõ tên ca sĩ hay ký tự đơn 'a'
-  if (t.length >= 12 && Math.abs(u.length - t.length) <= 1) {
-    if (levenshteinDistance(u, t) <= 1) return true;
+      // Cho phép sai số tối đa 1 ký tự đối với bài hát có tên DÀI (>= 12 ký tự)
+      if (tv.length >= 12 && Math.abs(uv.length - tv.length) <= 1) {
+        if (levenshteinDistance(uv, tv) <= 1) return true;
+      }
+    }
   }
 
   return false;

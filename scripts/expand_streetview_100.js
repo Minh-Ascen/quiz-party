@@ -59,3 +59,4 @@ console.log(`- Tổng số câu hỏi hiện tại: ${updatedBank.length} câu (
 
 const svCount = updatedBank.filter(q => q.category === 'Đoán quốc gia qua Google Map 360°').length;
 console.log(`- Tổng số câu 'Đoán quốc gia qua Google Map 360°': ${svCount} câu (tăng thêm +100 câu)`);
+
